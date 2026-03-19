@@ -1,9 +1,72 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Risotto" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="Theme.Risotto" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- ── Brand colors ── -->
+        <item name="colorPrimary">@color/brand_primary</item>
+        <item name="colorPrimaryDark">@color/brand_primary_dark</item>
+        <item name="colorPrimaryVariant">@color/brand_primary_dark</item>
+        <item name="colorSecondary">@color/brand_secondary</item>
+        <item name="colorSecondaryVariant">@color/brand_secondary_dark</item>
+        <item name="colorOnPrimary">@color/text_on_primary</item>
+        <item name="colorOnSecondary">@color/text_on_secondary</item>
+
+        <!-- ── Surface ─── -->
+        <item name="colorSurface">@color/surface_card</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="android:colorBackground">@color/surface_background</item>
+        <item name="colorOnBackground">@color/text_primary</item>
+
+        <!-- ── Status bar ── -->
+        <item name="android:statusBarColor">@color/surface_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- ── Typography ── -->
+        <item name="android:fontFamily">sans-serif</item>
+
+        <!-- ── Shape ── -->
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Risotto.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Risotto.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Risotto.Large</item>
+
     </style>
 
-    <style name="Theme.Risotto" parent="Base.Theme.Risotto" />
+    <!-- ── Splash theme — shown before RisottoApp.onCreate ── -->
+    <style name="Theme.Risotto.Splash" parent="Theme.Risotto">
+        <item name="android:statusBarColor">@color/brand_primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@color/brand_primary</item>
+    </style>
+
+    <!-- ── Shape appearances ── -->
+    <style name="ShapeAppearance.Risotto.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Risotto.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Risotto.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- ── AppBar — standard 4dp elevation per Material spec ── -->
+    <style name="Widget.Risotto.AppBar" parent="Widget.Material3.AppBarLayout">
+        <item name="elevation">4dp</item>
+        <item name="android:background">@color/surface_card</item>
+    </style>
+
+    <!-- ── BottomNavigationView ── -->
+    <style name="Widget.Risotto.BottomNavigation" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/selector_bottom_nav</item>
+        <item name="itemTextColor">@color/selector_bottom_nav</item>
+        <item name="elevation">8dp</item>
+    </style>
+
 </resources>
