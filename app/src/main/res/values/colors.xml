@@ -1,5 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+
+    <!-- ── Brand ── -->
+    <color name="brand_primary">#E85D04</color>
+    <color name="brand_primary_dark">#C14B00</color>
+    <color name="brand_primary_light">#FF8C42</color>
+    <color name="brand_secondary">#FFB703</color>
+    <color name="brand_secondary_dark">#E09E00</color>
+
+    <!-- ── Surface — Light ── -->
+    <color name="surface_background">#FFF8F5</color>
+    <color name="surface_card">#FFFFFF</color>
+    <color name="surface_elevated">#FFFFFF</color>
+
+    <!-- ── Surface — Dark ── -->
+    <color name="surface_background_dark">#1A1A1A</color>
+    <color name="surface_card_dark">#2C2C2C</color>
+    <color name="surface_elevated_dark">#383838</color>
+
+    <!-- ── Text — Light ── -->
+    <color name="text_primary">#1C1C1E</color>
+    <color name="text_secondary">#6C6C70</color>
+    <color name="text_hint">#AEAEB2</color>
+    <color name="text_on_primary">#FFFFFF</color>
+    <color name="text_on_secondary">#1C1C1E</color>
+
+    <!-- ── Text — Dark ── -->
+    <color name="text_primary_dark">#F2F2F7</color>
+    <color name="text_secondary_dark">#AEAEB2</color>
+    <color name="text_hint_dark">#636366</color>
+
+    <!-- ── Status ── -->
+    <color name="status_error">#FF3B30</color>
+    <color name="status_success">#34C759</color>
+    <color name="status_warning">#FF9500</color>
+
+    <!-- ── Divider / Border ── -->
+    <color name="divider_light">#E5E5EA</color>
+    <color name="divider_dark">#3A3A3C</color>
+
+    <!-- ── Shimmer ── -->
+    <color name="shimmer_base">#E0E0E0</color>
+    <color name="shimmer_highlight">#F5F5F5</color>
+
+    <!-- ── Scrim / Overlay ── -->
+    <color name="scrim">#99000000</color>
+    <color name="gradient_start">#00000000</color>
+    <color name="gradient_end">#CC000000</color>
+
 </resources>

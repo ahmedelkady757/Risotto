@@ -1,3 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ── App ── -->
     <string name="app_name">Risotto</string>
+
+    <!-- ── Bottom Navigation ── -->
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_favorites">Favorites</string>
+    <string name="nav_settings">Settings</string>
+    <!-- ── Meal Detail ── -->
+    <string name="detail_title">Meal Detail</string>
+
 </resources>
