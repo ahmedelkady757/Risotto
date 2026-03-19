@@ -2,23 +2,38 @@
 <navigation
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:label="@string/nav_home" />
+        android:name="com.example.risotto.presentation.home.view.HomeFragment"
+        android:label="@string/nav_home"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/searchFragment"
-        android:label="@string/nav_search" />
+        android:name="com.example.risotto.presentation.search.view.SearchFragment"
+        android:label="@string/nav_search"
+        tools:layout="@layout/fragment_search" />
 
     <fragment
         android:id="@+id/favoritesFragment"
-        android:label="@string/nav_favorites" />
+        android:name="com.example.risotto.presentation.favorites.view.FavoritesFragment"
+        android:label="@string/nav_favorites"
+        tools:layout="@layout/fragment_favorites" />
 
     <fragment
         android:id="@+id/mealDetailFragment"
-        android:label="@string/detail_title" />
+        android:name="com.example.risotto.presentation.mealdetail.view.MealDetailFragment"
+        android:label="@string/detail_title"
+        tools:layout="@layout/fragment_meal_detail" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.risotto.presentation.settings.view.SettingsFragment"
+        android:label="@string/nav_settings"
+        tools:layout="@layout/fragment_settings" />
 
 </navigation>

@@ -7,7 +7,7 @@
     <string name="nav_home">الرئيسية</string>
     <string name="nav_search">بحث</string>
     <string name="nav_favorites">المفضلة</string>
-
+    <string name="nav_settings">الإعدادات</string>
     <!-- ── Meal Detail ── -->
     <string name="detail_title">تفاصيل الوجبة</string>
 
