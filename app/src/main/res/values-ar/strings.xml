@@ -4,11 +4,11 @@
     <string name="app_name">Risotto</string>
 
     <!-- ── Bottom Navigation ── -->
-    <string name="nav_home">Home</string>
-    <string name="nav_search">Search</string>
-    <string name="nav_favorites">Favorites</string>
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_search">بحث</string>
+    <string name="nav_favorites">المفضلة</string>
 
     <!-- ── Meal Detail ── -->
-    <string name="detail_title">Meal Detail</string>
+    <string name="detail_title">تفاصيل الوجبة</string>
 
 </resources>
