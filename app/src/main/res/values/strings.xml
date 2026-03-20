@@ -16,5 +16,5 @@
     <string name="home_categories">Categories</string>
     <string name="home_view_recipe">View Recipe</string>
     <string name="home_cd_meal_image">Meal image</string>
-
+    <string name="home_cd_category_image">Category image</string>
 </resources>

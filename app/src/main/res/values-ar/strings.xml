@@ -16,4 +16,5 @@
     <string name="home_categories">الفئات</string>
     <string name="home_view_recipe">عرض الوصفة</string>
     <string name="home_cd_meal_image">صورة الوجبة</string>
+    <string name="home_cd_category_image">صورة الفئة</string>
 </resources>
