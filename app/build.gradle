@@ -54,6 +54,9 @@ dependencies {
     implementation libs.glide
     annotationProcessor libs.glide.compiler
 
+    // YouTube Player
+    implementation libs.youtube.player
+
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
