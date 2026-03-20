@@ -10,7 +10,17 @@
     <string name="nav_settings">الإعدادات</string>
     <!-- ── Meal Detail ── -->
     <string name="detail_title">تفاصيل الوجبة</string>
-
+    <string name="detail_ingredients">المكوّنات</string>
+    <string name="detail_steps">خطوات التحضير</string>
+    <string name="detail_watch_video">مشاهدة الفيديو</string>
+    <string name="detail_add_favorite">أضف إلى المفضلة</string>
+    <string name="detail_remove_favorite">إزالة من المفضلة</string>
+    <string name="detail_added_favorite">تمت الإضافة إلى المفضلة</string>
+    <string name="detail_removed_favorite">تمت الإزالة من المفضلة</string>
+    <string name="detail_cd_meal_image">صورة الوجبة</string>
+    <string name="detail_cd_favorite">تبديل المفضلة</string>
+    <string name="detail_cd_ingredient_image">صورة المكوّن</string>
+    <string name="detail_error_load">تعذّر تحميل تفاصيل الوجبة</string>
     <!-- ── Home Screen ── -->
     <string name="home_meal_of_day">وجبة اليوم</string>
     <string name="home_categories">الفئات</string>

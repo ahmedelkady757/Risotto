@@ -61,7 +61,7 @@ public class MealDetailPresenter implements MealDetailContract.Presenter {
     }
 
 
- 
+
     @Override
     public void toggleFavorite(Meal meal) {
         if (view == null) return;
