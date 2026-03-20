@@ -56,8 +56,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupBottomNavigation() {
         if (navController == null) return;
-        NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        AppLogger.d("MainActivity: BottomNavigation wired to NavController");
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int destId = item.getItemId();
+            NavDestination current = navController.getCurrentDestination();
+
+            if (current != null && current.getId() == destId) {
+                return true;
+            }
+
+
+            if (destId == R.id.homeFragment) {
+                boolean popped = navController.popBackStack(R.id.homeFragment, false);
+                if (!popped) {
+                    navController.navigate(R.id.homeFragment);
+                }
+                AppLogger.logNav("BottomNav -> homeFragment (popBackStack)");
+                return true;
+            }
+
+            return NavigationUI.onNavDestinationSelected(item, navController);
+        });
+
+        AppLogger.d("MainActivity: BottomNavigation custom listener ready");
     }
 
 
@@ -77,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
                         hideBottomNavigation();
                     } else {
                         showBottomNavigation();
+                         if (bottomNavigationView.getSelectedItemId() != destination.getId()) {
+                            if (bottomNavigationView.getMenu().findItem(destination.getId()) != null) {
+                                bottomNavigationView.setSelectedItemId(destination.getId());
+                            }
+                        }
                     }
                 });
     }

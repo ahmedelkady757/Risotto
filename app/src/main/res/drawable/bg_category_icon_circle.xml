@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Warm-tinted circle used as the icon background inside each category card.
+    brand_primary_light at low alpha gives a warm apricot wash that works for
+    all category icons regardless of their own colour.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid android:color="#1FFF8C42" />
+
+</shape>

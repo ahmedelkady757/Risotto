@@ -1,0 +1,118 @@
+package com.example.risotto.presentation.home.presenter;
+
+import com.example.risotto.core.utils.AppLogger;
+import com.example.risotto.data.model.Category;
+import com.example.risotto.data.model.Meal;
+import com.example.risotto.data.repository.MealRepository;
+
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+
+
+public class HomePresenter implements HomeContract.Presenter {
+
+    private final MealRepository repository;
+    private final CompositeDisposable disposables = new CompositeDisposable();
+
+    private HomeContract.View view;
+
+    public HomePresenter(MealRepository repository) {
+        this.repository = repository;
+    }
+
+
+    @Override
+    public void attachView(HomeContract.View view) {
+        this.view = view;
+        AppLogger.d("HomePresenter: attachView");
+    }
+
+    @Override
+    public void detachView() {
+        this.view = null;
+        disposables.clear();
+        AppLogger.d("HomePresenter: detachView — disposables cleared");
+    }
+
+
+    @Override
+    public void loadMealOfDay() {
+        if (view == null) return;
+        view.showLoading();
+        AppLogger.d("HomePresenter: loadMealOfDay");
+
+        Disposable disposable = repository.getRandomMeal()
+                .subscribe(
+                        meal -> {
+                            if (view == null) return;
+                            AppLogger.d("HomePresenter: meal of day loaded → " + meal.getName());
+                            view.hideLoading();
+                            view.showMealOfDay(meal);
+                        },
+                        error -> {
+                            if (view == null) return;
+                            AppLogger.e("HomePresenter: loadMealOfDay error", error);
+                            view.hideLoading();
+                            view.showMealOfDayError(error.getMessage());
+                        }
+                );
+
+        disposables.add(disposable);
+    }
+
+
+    @Override
+    public void loadCategories() {
+        if (view == null) return;
+        AppLogger.d("HomePresenter: loadCategories");
+
+        Disposable disposable = repository.getCategories()
+                .subscribe(
+                        categories -> {
+                            if (view == null) return;
+                            AppLogger.d("HomePresenter: categories loaded → " + categories.size());
+                            view.showCategories(categories);
+                        },
+                        error -> {
+                            if (view == null) return;
+                            AppLogger.e("HomePresenter: loadCategories error", error);
+                            view.showCategoriesError(error.getMessage());
+                        }
+                );
+
+        disposables.add(disposable);
+    }
+
+    @Override
+    public void loadTopMeals() {
+        if (view == null) return;
+        AppLogger.d("HomePresenter: loadTopMeals");
+
+        Disposable disposable = repository.filterByCategory("Seafood")
+                .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals)
+                .subscribe(
+                        meals -> {
+                            if (view == null) return;
+                            AppLogger.d("HomePresenter: top meals loaded → " + meals.size());
+                            view.showTopMeals(meals);
+                        },
+                        error -> {
+                            if (view == null) return;
+                            AppLogger.e("HomePresenter: loadTopMeals error", error);
+                            view.showTopMealsError(error.getMessage());
+                        }
+                );
+
+        disposables.add(disposable);
+    }
+
+    @Override
+    public void onCategorySelected(Category category) {
+        AppLogger.d("HomePresenter: category selected → " + category.getName());
+    }
+
+    @Override
+    public void onMealOfDaySelected(Meal meal) {
+        AppLogger.d("HomePresenter: meal of day selected → " + meal.getName());
+    }
+}
