@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.home.view;
+package com.example.risotto.presentation.home.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

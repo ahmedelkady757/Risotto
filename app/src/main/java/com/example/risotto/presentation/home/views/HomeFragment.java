@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.home.view;
+package com.example.risotto.presentation.home.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import com.example.risotto.presentation.home.presenter.HomeContract;
+import com.example.risotto.presentation.home.presenter.HomePresenter;
+import com.example.risotto.presentation.home.presenter.HomePresenterImpl;
 import com.google.android.material.snackbar.Snackbar;
 
 import com.example.risotto.R;
@@ -21,18 +22,17 @@ import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.api.MealDBApiService;
 import com.example.risotto.data.network.NetworkModule;
 import com.example.risotto.data.repository.MealRepositoryImpl;
-import com.example.risotto.presentation.home.presenter.HomePresenter;
 
 import java.util.List;
 
 
-public class HomeFragment extends Fragment implements HomeContract.View {
+public class HomeFragment extends Fragment implements HomeView {
 
     private static final String TAG_MEAL_OF_DAY = "tag_meal_of_day";
     private static final String TAG_CATEGORIES  = "tag_categories";
     private static final String TAG_TOP_MEALS   = "tag_top_meals";
 
-    private HomeContract.Presenter presenter;
+    private HomePresenter presenter;
     private MealOfDayFragment mealOfDayFragment;
     private CategoriesFragment categoriesFragment;
     private TopMealsFragment topMealsFragment;
@@ -63,7 +63,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
         loadingView = view.findViewById(R.id.view_loading);
 
-         view.findViewById(R.id.search_bar_container).setOnClickListener(v -> {
+        view.findViewById(R.id.search_bar_container).setOnClickListener(v -> {
             AppLogger.logNav("HomeFragment -> SearchFragment via search bar");
             androidx.navigation.NavController navController =
                     Navigation.findNavController(view);
@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                 .create(MealDBApiService.class);
         RemoteDataSourceImpl remoteDataSource = new RemoteDataSourceImpl(apiService);
         MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource);
-        presenter = new HomePresenter(repository);
+        presenter = new HomePresenterImpl(repository);
     }
 
 
@@ -141,6 +141,8 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         }
     }
 
+
+    // ── HomeView ──────────────────────────────────────────────────────────────
 
     @Override
     public void showMealOfDay(Meal meal) {

@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.home.view;
+package com.example.risotto.presentation.home.views;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,9 +72,9 @@ public class TopMealAdapter extends ListAdapter<Meal, TopMealAdapter.TopMealView
             return oldItem.getId().equals(newItem.getId());
         }
 
-            @Override
-            public boolean areContentsTheSame(@NonNull Meal oldItem, @NonNull Meal newItem) {
-                return oldItem.equals(newItem);
-            }
+        @Override
+        public boolean areContentsTheSame(@NonNull Meal oldItem, @NonNull Meal newItem) {
+            return oldItem.equals(newItem);
+        }
     }
 }

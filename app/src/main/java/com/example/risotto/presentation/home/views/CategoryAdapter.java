@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.home.view;
+package com.example.risotto.presentation.home.views;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +71,7 @@ public class CategoryAdapter extends ListAdapter<Category, CategoryAdapter.Categ
 
         CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivCategory    = itemView.findViewById(R.id.iv_category);
+            ivCategory     = itemView.findViewById(R.id.iv_category);
             tvCategoryName = itemView.findViewById(R.id.tv_category_name);
         }
 

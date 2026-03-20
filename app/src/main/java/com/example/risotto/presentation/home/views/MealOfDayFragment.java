@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.home.view;
+package com.example.risotto.presentation.home.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -51,9 +51,9 @@ public class MealOfDayFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         AppLogger.logFragment("MealOfDayFragment", "onViewCreated");
 
-        ivMealOfDay  = view.findViewById(R.id.iv_meal_of_day);
-        tvMealName   = view.findViewById(R.id.tv_meal_name);
-        tvMealArea   = view.findViewById(R.id.tv_meal_area);
+        ivMealOfDay   = view.findViewById(R.id.iv_meal_of_day);
+        tvMealName    = view.findViewById(R.id.tv_meal_name);
+        tvMealArea    = view.findViewById(R.id.tv_meal_area);
         btnViewRecipe = view.findViewById(R.id.btn_view_recipe);
     }
 
