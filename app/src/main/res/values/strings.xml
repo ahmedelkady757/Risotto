@@ -11,4 +11,10 @@
     <!-- ── Meal Detail ── -->
     <string name="detail_title">Meal Detail</string>
 
+    <!-- ── Home Screen ── -->
+    <string name="home_meal_of_day">Meal of the Day</string>
+    <string name="home_categories">Categories</string>
+    <string name="home_view_recipe">View Recipe</string>
+    <string name="home_cd_meal_image">Meal image</string>
+
 </resources>

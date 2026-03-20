@@ -11,4 +11,9 @@
     <!-- ── Meal Detail ── -->
     <string name="detail_title">تفاصيل الوجبة</string>
 
+    <!-- ── Home Screen ── -->
+    <string name="home_meal_of_day">وجبة اليوم</string>
+    <string name="home_categories">الفئات</string>
+    <string name="home_view_recipe">عرض الوصفة</string>
+    <string name="home_cd_meal_image">صورة الوجبة</string>
 </resources>
