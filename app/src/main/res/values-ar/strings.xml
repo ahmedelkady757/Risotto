@@ -23,4 +23,6 @@
     <string name="home_tagline">ماذا نطبخ اليوم؟</string>
     <string name="home_search_hint">ابحث عن وجبة…</string>
     <string name="home_see_all">عرض الكل</string>
+    <string name="home_inspire_title">🍽️  هل أنت مغامر؟</string>
+    <string name="home_inspire_body">استكشف مئات الوصفات من حول العالم. ابحث بالمكوّن أو البلد أو الفئة لتجد طبقك المفضّل القادم.</string>
 </resources>

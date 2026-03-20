@@ -83,6 +83,28 @@ public class HomePresenter implements HomeContract.Presenter {
         disposables.add(disposable);
     }
 
+    @Override
+    public void loadTopMeals() {
+        if (view == null) return;
+        AppLogger.d("HomePresenter: loadTopMeals");
+
+        Disposable disposable = repository.filterByCategory("Seafood")
+                .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals)
+                .subscribe(
+                        meals -> {
+                            if (view == null) return;
+                            AppLogger.d("HomePresenter: top meals loaded → " + meals.size());
+                            view.showTopMeals(meals);
+                        },
+                        error -> {
+                            if (view == null) return;
+                            AppLogger.e("HomePresenter: loadTopMeals error", error);
+                            view.showTopMealsError(error.getMessage());
+                        }
+                );
+
+        disposables.add(disposable);
+    }
 
     @Override
     public void onCategorySelected(Category category) {

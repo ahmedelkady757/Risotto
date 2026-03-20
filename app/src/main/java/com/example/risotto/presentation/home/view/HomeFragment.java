@@ -30,10 +30,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
 
     private static final String TAG_MEAL_OF_DAY = "tag_meal_of_day";
     private static final String TAG_CATEGORIES  = "tag_categories";
+    private static final String TAG_TOP_MEALS   = "tag_top_meals";
 
     private HomeContract.Presenter presenter;
     private MealOfDayFragment mealOfDayFragment;
     private CategoriesFragment categoriesFragment;
+    private TopMealsFragment topMealsFragment;
     private View loadingView;
     private View rootView;
 
@@ -84,6 +86,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         presenter.attachView(this);
         presenter.loadMealOfDay();
         presenter.loadCategories();
+        presenter.loadTopMeals();
     }
 
     @Override
@@ -94,6 +97,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         rootView           = null;
         mealOfDayFragment  = null;
         categoriesFragment = null;
+        topMealsFragment   = null;
         AppLogger.logFragment("HomeFragment", "onDestroyView");
     }
 
@@ -126,6 +130,15 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                     .replace(R.id.container_categories, categoriesFragment, TAG_CATEGORIES)
                     .commit();
         }
+
+        topMealsFragment = (TopMealsFragment) getChildFragmentManager()
+                .findFragmentByTag(TAG_TOP_MEALS);
+        if (topMealsFragment == null) {
+            topMealsFragment = new TopMealsFragment();
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.container_top_meals, topMealsFragment, TAG_TOP_MEALS)
+                    .commit();
+        }
     }
 
 
@@ -153,6 +166,17 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     public void showCategoriesError(String message) {
         AppLogger.e("HomeFragment: categories error -> " + message);
         showSnackbar(getString(R.string.home_error_categories));
+    }
+
+    @Override
+    public void showTopMeals(List<Meal> topMeals) {
+        if (topMealsFragment == null) return;
+        topMealsFragment.bindTopMeals(topMeals, this::navigateToDetail);
+    }
+
+    @Override
+    public void showTopMealsError(String message) {
+        AppLogger.e("HomeFragment: top meals error -> " + message);
     }
 
     @Override

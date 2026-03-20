@@ -2,28 +2,38 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="100dp"
-    android:layout_height="120dp"
-    android:layout_marginEnd="10dp"
+    android:layout_width="110dp"
+    android:layout_height="130dp"
+    android:layout_marginEnd="12dp"
     android:clickable="true"
     android:focusable="true"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="2dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
     app:rippleColor="@color/brand_primary_light">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@color/surface_card"
+        android:paddingTop="12dp"
+        android:paddingBottom="10dp">
 
-        <ImageView
-            android:id="@+id/iv_category"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/home_cd_category_image" />
+        <FrameLayout
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:background="@drawable/bg_category_icon_circle">
 
+            <ImageView
+                android:id="@+id/iv_category"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/home_cd_category_image" />
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/tv_category_name"
@@ -31,13 +41,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
+            android:paddingStart="6dp"
+            android:paddingEnd="6dp"
             android:textSize="12sp"
             android:textStyle="bold"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textColor="?android:attr/textColorPrimary" />
+            android:textColor="@color/text_primary" />
 
     </LinearLayout>
 

@@ -23,4 +23,6 @@
     <string name="home_tagline">What are we cooking today?</string>
     <string name="home_search_hint">Search for a meal…</string>
     <string name="home_see_all">See All</string>
+    <string name="home_inspire_title">🍽️  Feeling Adventurous?</string>
+    <string name="home_inspire_body">Explore hundreds of recipes from around the world. Search by ingredient, country, or category to find your next favourite dish.</string>
 </resources>

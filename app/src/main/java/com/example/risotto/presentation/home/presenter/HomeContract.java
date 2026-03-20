@@ -17,6 +17,9 @@ public interface HomeContract {
         void showCategories(List<Category> categories);
         void showCategoriesError(String message);
 
+        void showTopMeals(List<Meal> topMeals);
+        void showTopMealsError(String message);
+
         void showLoading();
         void hideLoading();
     }
@@ -31,6 +34,8 @@ public interface HomeContract {
         void loadMealOfDay();
 
         void loadCategories();
+
+        void loadTopMeals();
 
         void onCategorySelected(Category category);
 
