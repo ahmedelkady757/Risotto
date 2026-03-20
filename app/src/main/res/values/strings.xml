@@ -21,7 +21,7 @@
     <string name="detail_cd_favorite">Toggle favorite</string>
     <string name="detail_cd_ingredient_image">Ingredient image</string>
     <string name="detail_error_load">Could not load meal details</string>
-
+    <string name="detail_video_unavailable">Video not available for embedding</string>
     <!-- ── Home Screen ── -->
     <string name="home_meal_of_day">Meal of the Day</string>
     <string name="home_categories">Categories</string>

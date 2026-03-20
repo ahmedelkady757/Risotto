@@ -49,15 +49,19 @@ dependencies {
     // Navigation
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
 
     // Image loading
     implementation libs.glide
     annotationProcessor libs.glide.compiler
 
-    // YouTube Player
-    implementation libs.youtube.player
+    implementation libs.youtube.player.core
 
     testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+   testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 }

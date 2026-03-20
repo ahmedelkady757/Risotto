@@ -21,6 +21,7 @@
     <string name="detail_cd_favorite">تبديل المفضلة</string>
     <string name="detail_cd_ingredient_image">صورة المكوّن</string>
     <string name="detail_error_load">تعذّر تحميل تفاصيل الوجبة</string>
+    <string name="detail_video_unavailable">الفيديو غير متوفر</string>
     <!-- ── Home Screen ── -->
     <string name="home_meal_of_day">وجبة اليوم</string>
     <string name="home_categories">الفئات</string>
