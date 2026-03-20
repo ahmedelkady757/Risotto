@@ -17,4 +17,10 @@
     <string name="home_view_recipe">View Recipe</string>
     <string name="home_cd_meal_image">Meal image</string>
     <string name="home_cd_category_image">Category image</string>
+    <string name="home_error_meal_of_day">Could not load meal of the day</string>
+    <string name="home_error_categories">Could not load categories</string>
+    <string name="home_greeting">Good day, foodie 👋</string>
+    <string name="home_tagline">What are we cooking today?</string>
+    <string name="home_search_hint">Search for a meal…</string>
+    <string name="home_see_all">See All</string>
 </resources>

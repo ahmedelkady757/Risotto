@@ -17,4 +17,10 @@
     <string name="home_view_recipe">عرض الوصفة</string>
     <string name="home_cd_meal_image">صورة الوجبة</string>
     <string name="home_cd_category_image">صورة الفئة</string>
+    <string name="home_error_meal_of_day">تعذّر تحميل وجبة اليوم</string>
+    <string name="home_error_categories">تعذّر تحميل الفئات</string>
+    <string name="home_greeting">أهلاً، أيها الطاهي 👋</string>
+    <string name="home_tagline">ماذا نطبخ اليوم؟</string>
+    <string name="home_search_hint">ابحث عن وجبة…</string>
+    <string name="home_see_all">عرض الكل</string>
 </resources>
