@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.home.view;
+package com.example.risotto.presentation.home.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +19,6 @@ import java.util.List;
 
 
 public class CategoriesFragment extends Fragment {
-
 
     private RecyclerView rvCategories;
     private CategoryAdapter adapter;
