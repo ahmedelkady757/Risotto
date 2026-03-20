@@ -10,7 +10,18 @@
     <string name="nav_settings">Settings</string>
     <!-- ── Meal Detail ── -->
     <string name="detail_title">Meal Detail</string>
-
+    <string name="detail_ingredients">Ingredients</string>
+    <string name="detail_steps">Steps</string>
+    <string name="detail_watch_video">Watch Video</string>
+    <string name="detail_add_favorite">Add to Favorites</string>
+    <string name="detail_remove_favorite">Remove from Favorites</string>
+    <string name="detail_added_favorite">Added to favorites</string>
+    <string name="detail_removed_favorite">Removed from favorites</string>
+    <string name="detail_cd_meal_image">Meal image</string>
+    <string name="detail_cd_favorite">Toggle favorite</string>
+    <string name="detail_cd_ingredient_image">Ingredient image</string>
+    <string name="detail_error_load">Could not load meal details</string>
+    <string name="detail_video_unavailable">Video not available for embedding</string>
     <!-- ── Home Screen ── -->
     <string name="home_meal_of_day">Meal of the Day</string>
     <string name="home_categories">Categories</string>

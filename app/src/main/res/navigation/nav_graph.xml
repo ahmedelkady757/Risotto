@@ -32,10 +32,19 @@
 
     <fragment
         android:id="@+id/mealDetailFragment"
-        android:name="com.example.risotto.presentation.mealdetail.view.MealDetailFragment"
+        android:name="com.example.risotto.presentation.mealdetail.views.MealDetailFragment"
         android:label="@string/detail_title"
-        tools:layout="@layout/fragment_meal_detail" />
+        tools:layout="@layout/fragment_meal_detail">
 
+        <argument
+            android:name="mealId"
+            app:argType="string" />
+        <argument
+            android:name="mealName"
+            app:argType="string"
+            android:defaultValue="" />
+
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.risotto.presentation.settings.view.SettingsFragment"
