@@ -56,7 +56,7 @@ public interface MealDBApiService {
     @GET("filter.php")
     Single<FilterResponse> filterByArea(@Query("a") String area);
 
-    
+
     @GET("filter.php")
     Single<FilterResponse> filterByIngredient(@Query("i") String ingredient);
 }
