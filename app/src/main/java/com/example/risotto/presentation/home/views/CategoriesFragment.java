@@ -47,6 +47,12 @@ public class CategoriesFragment extends Fragment {
         rvCategories.setLayoutManager(
                 new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         );
+
+        if (pendingCategories != null && pendingListener != null) {
+            bindCategories(pendingCategories, pendingListener);
+            pendingCategories = null;
+            pendingListener = null;
+        }
     }
 
     @Override
@@ -56,9 +62,16 @@ public class CategoriesFragment extends Fragment {
         adapter = null;
     }
 
+    private List<Category> pendingCategories;
+    private CategoryAdapter.OnCategoryClickListener pendingListener;
+
     public void bindCategories(List<Category> categories,
                                CategoryAdapter.OnCategoryClickListener listener) {
-        if (rvCategories == null) return;
+        if (rvCategories == null) {
+            pendingCategories = categories;
+            pendingListener = listener;
+            return;
+        }
 
         if (adapter == null) {
             adapter = new CategoryAdapter(listener);

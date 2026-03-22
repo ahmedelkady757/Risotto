@@ -18,4 +18,5 @@ public interface HomeView {
 
     void showLoading();
     void hideLoading();
+    void hideRefresh();
 }

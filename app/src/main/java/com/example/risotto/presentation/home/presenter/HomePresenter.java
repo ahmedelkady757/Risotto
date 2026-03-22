@@ -16,6 +16,8 @@ public interface HomePresenter {
 
     void loadTopMeals();
 
+    void refreshData();
+
     void onCategorySelected(Category category);
 
     void onMealOfDaySelected(Meal meal);

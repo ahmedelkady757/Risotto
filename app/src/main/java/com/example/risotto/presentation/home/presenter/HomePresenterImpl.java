@@ -17,6 +17,10 @@ public class HomePresenterImpl implements HomePresenter {
 
     private HomeView view;
 
+    private static Meal cachedMealOfDay;
+    private static java.util.List<Category> cachedCategories;
+    private static java.util.List<Meal> cachedTopMeals;
+
     public HomePresenterImpl(MealRepository repository) {
         this.repository = repository;
     }
@@ -37,14 +41,36 @@ public class HomePresenterImpl implements HomePresenter {
 
 
     @Override
+    public void refreshData() {
+        cachedMealOfDay = null;
+        cachedCategories = null;
+        cachedTopMeals = null;
+
+        loadMealOfDay();
+        loadCategories();
+        loadTopMeals();
+        
+        if (view != null) {
+            view.hideRefresh();
+        }
+    }
+
+    @Override
     public void loadMealOfDay() {
         if (view == null) return;
+        
+        if (cachedMealOfDay != null) {
+            view.showMealOfDay(cachedMealOfDay);
+            return;
+        }
+
         view.showLoading();
         AppLogger.d("HomePresenter: loadMealOfDay");
 
         Disposable disposable = repository.getRandomMeal()
                 .subscribe(
                         meal -> {
+                            cachedMealOfDay = meal;
                             if (view == null) return;
                             AppLogger.d("HomePresenter: meal of day loaded → " + meal.getName());
                             view.hideLoading();
@@ -65,11 +91,18 @@ public class HomePresenterImpl implements HomePresenter {
     @Override
     public void loadCategories() {
         if (view == null) return;
+
+        if (cachedCategories != null) {
+            view.showCategories(cachedCategories);
+            return;
+        }
+
         AppLogger.d("HomePresenter: loadCategories");
 
         Disposable disposable = repository.getCategories()
                 .subscribe(
                         categories -> {
+                            cachedCategories = categories;
                             if (view == null) return;
                             AppLogger.d("HomePresenter: categories loaded → " + categories.size());
                             view.showCategories(categories);
@@ -87,12 +120,19 @@ public class HomePresenterImpl implements HomePresenter {
     @Override
     public void loadTopMeals() {
         if (view == null) return;
+
+        if (cachedTopMeals != null) {
+            view.showTopMeals(cachedTopMeals);
+            return;
+        }
+
         AppLogger.d("HomePresenter: loadTopMeals");
 
         Disposable disposable = repository.filterByCategory("Seafood")
                 .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals)
                 .subscribe(
                         meals -> {
+                            cachedTopMeals = meals;
                             if (view == null) return;
                             AppLogger.d("HomePresenter: top meals loaded → " + meals.size());
                             view.showTopMeals(meals);

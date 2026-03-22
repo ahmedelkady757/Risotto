@@ -39,6 +39,12 @@ public class TopMealsFragment extends Fragment {
         AppLogger.logFragment("TopMealsFragment", "onViewCreated");
 
         rvTopMeals = view.findViewById(R.id.rv_top_meals);
+
+        if (pendingTopMeals != null && pendingListener != null) {
+            bindTopMeals(pendingTopMeals, pendingListener);
+            pendingTopMeals = null;
+            pendingListener = null;
+        }
     }
 
     @Override
@@ -49,8 +55,15 @@ public class TopMealsFragment extends Fragment {
         adapter = null;
     }
 
+    private List<Meal> pendingTopMeals;
+    private TopMealAdapter.OnTopMealClickListener pendingListener;
+
     public void bindTopMeals(List<Meal> topMeals, TopMealAdapter.OnTopMealClickListener listener) {
-        if (rvTopMeals == null) return;
+        if (rvTopMeals == null) {
+            pendingTopMeals = topMeals;
+            pendingListener = listener;
+            return;
+        }
         if (adapter == null) {
             adapter = new TopMealAdapter(listener);
             rvTopMeals.setAdapter(adapter);

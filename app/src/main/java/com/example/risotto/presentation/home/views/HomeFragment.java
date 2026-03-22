@@ -23,6 +23,8 @@ import com.example.risotto.data.network.api.MealDBApiService;
 import com.example.risotto.data.network.NetworkModule;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import java.util.List;
 
 
@@ -37,8 +39,8 @@ public class HomeFragment extends Fragment implements HomeView {
     private CategoriesFragment categoriesFragment;
     private TopMealsFragment topMealsFragment;
     private View loadingView;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private View rootView;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +64,11 @@ public class HomeFragment extends Fragment implements HomeView {
         AppLogger.logFragment("HomeFragment", "onViewCreated");
 
         loadingView = view.findViewById(R.id.view_loading);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            presenter.refreshData();
+        });
 
         view.findViewById(R.id.search_bar_container).setOnClickListener(v -> {
             AppLogger.logNav("HomeFragment -> SearchFragment via search bar");
@@ -189,6 +196,13 @@ public class HomeFragment extends Fragment implements HomeView {
     @Override
     public void hideLoading() {
         if (loadingView != null) loadingView.setVisibility(View.GONE);
+    }
+    
+    @Override
+    public void hideRefresh() {
+        if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
 

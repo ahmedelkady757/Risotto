@@ -55,6 +55,12 @@ public class MealOfDayFragment extends Fragment {
         tvMealName    = view.findViewById(R.id.tv_meal_name);
         tvMealArea    = view.findViewById(R.id.tv_meal_area);
         btnViewRecipe = view.findViewById(R.id.btn_view_recipe);
+
+        if (pendingMeal != null && pendingListener != null) {
+            bindMeal(pendingMeal, pendingListener);
+            pendingMeal = null;
+            pendingListener = null;
+        }
     }
 
     @Override
@@ -67,8 +73,15 @@ public class MealOfDayFragment extends Fragment {
     }
 
 
+    private Meal pendingMeal;
+    private OnViewRecipeClickListener pendingListener;
+
     public void bindMeal(Meal meal, OnViewRecipeClickListener listener) {
-        if (tvMealName == null) return;
+        if (tvMealName == null) {
+            pendingMeal = meal;
+            pendingListener = listener;
+            return;
+        }
 
         tvMealName.setText(meal.getName());
         tvMealArea.setText(meal.getArea());
