@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         AppLogger.logFragment("MainActivity", "onCreate");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setVisibility(android.view.View.GONE); // hidden until home loads
 
         setupNavController();
         setupBottomNavigation();
@@ -115,16 +116,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showBottomNavigation() {
+        if (bottomNavigationView.getVisibility() == android.view.View.VISIBLE) return;
+        bottomNavigationView.setVisibility(android.view.View.VISIBLE);
         bottomNavigationView.animate()
                 .translationY(0f)
-                .setDuration(200)
+                .setDuration(220)
                 .start();
     }
 
     private void hideBottomNavigation() {
+        if (bottomNavigationView.getVisibility() == android.view.View.GONE) return;
         bottomNavigationView.animate()
                 .translationY(bottomNavigationView.getHeight())
                 .setDuration(200)
+                .withEndAction(() -> bottomNavigationView.setVisibility(android.view.View.GONE))
                 .start();
     }
 }
