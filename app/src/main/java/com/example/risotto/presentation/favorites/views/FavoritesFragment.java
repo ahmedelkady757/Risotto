@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.favorites.view;
+package com.example.risotto.presentation.favorites.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
