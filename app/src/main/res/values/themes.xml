@@ -31,6 +31,23 @@
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Risotto.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Risotto.Large</item>
 
+        <!-- ── TextInputLayout ── -->
+        <item name="textInputStyle">@style/Widget.Risotto.TextInputLayout</item>
+
+    </style>
+
+    <!-- ── TextInputLayout — adapts to light/dark via Material 3 surface roles ── -->
+    <style name="Widget.Risotto.TextInputLayout"
+        parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Stroke: grey at rest, brand orange when focused -->
+        <item name="boxStrokeColor">@color/text_input_stroke</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <!-- Floating label: grey at rest, brand orange when focused -->
+        <item name="hintTextColor">@color/text_input_hint</item>
+        <!-- Let Material 3 handle box background automatically (adapts to dark mode) -->
+        <item name="boxBackgroundMode">outline</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Risotto.Small</item>
     </style>
 
     <!-- ── Splash theme — shown before RisottoApp.onCreate ── -->
