@@ -1,9 +1,7 @@
 package com.example.risotto.data.repository.meal;
 
 import com.example.risotto.core.utils.AppLogger;
-import com.example.risotto.core.helper.ConnectivityBanner;
-import com.example.risotto.core.helper.RxHelper;
-import com.example.risotto.data.datasource.remote.meal.RemoteDataSource;
+import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSource;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
 
@@ -16,9 +14,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealRepositoryImpl implements MealRepository {
 
-    private final RemoteDataSource remoteDataSource;
+    private final MealRemoteDataSource remoteDataSource;
 
-    public MealRepositoryImpl(RemoteDataSource remoteDataSource) {
+    public MealRepositoryImpl(MealRemoteDataSource remoteDataSource) {
         this.remoteDataSource = remoteDataSource;
     }
 

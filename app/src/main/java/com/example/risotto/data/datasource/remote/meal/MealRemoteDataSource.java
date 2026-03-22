@@ -8,7 +8,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 
-public interface RemoteDataSource {
+public interface MealRemoteDataSource {
 
     Single<Meal> getRandomMeal();
 

@@ -2,7 +2,7 @@ package com.example.risotto.presentation.mealdetail.presenter;
 
 import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Meal;
-import com.example.risotto.data.repository.MealRepository;
+import com.example.risotto.data.repository.meal.MealRepository;
 import com.example.risotto.presentation.mealdetail.views.MealDetailView;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

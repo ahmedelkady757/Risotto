@@ -1,6 +1,6 @@
 package com.example.risotto.presentation.auth.presenter;
 
-import com.example.risotto.data.repository.AuthRepository;
+import com.example.risotto.data.repository.auth.AuthRepository;
 import com.example.risotto.presentation.auth.views.SplashView;
 
 public class SplashPresenterImpl implements SplashPresenter {

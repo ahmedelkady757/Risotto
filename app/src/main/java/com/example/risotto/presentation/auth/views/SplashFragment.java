@@ -12,8 +12,8 @@ import androidx.navigation.Navigation;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.risotto.R;
-import com.example.risotto.data.datasource.remote.AuthRemoteDataSourceImpl;
-import com.example.risotto.data.repository.AuthRepositoryImpl;
+import com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl;
+import com.example.risotto.data.repository.auth.AuthRepositoryImpl;
 import com.example.risotto.presentation.auth.presenter.SplashPresenter;
 import com.example.risotto.presentation.auth.presenter.SplashPresenterImpl;
 import com.google.firebase.auth.FirebaseAuth;

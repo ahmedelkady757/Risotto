@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.example.risotto.presentation.mealdetail.views.MealDetailView;
 import com.example.risotto.presentation.mealdetail.presenter.MealDetailPresenter;
 import com.example.risotto.presentation.mealdetail.presenter.MealDetailPresenterImpl;
 import com.google.android.material.snackbar.Snackbar;
@@ -28,11 +27,11 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.example.risotto.R;
 import com.example.risotto.core.helper.YoutubeHelper;
 import com.example.risotto.core.utils.AppLogger;
-import com.example.risotto.data.datasource.remote.RemoteDataSourceImpl;
+import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.NetworkModule;
 import com.example.risotto.data.network.api.MealDBApiService;
-import com.example.risotto.data.repository.MealRepositoryImpl;
+import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 
 
 public class MealDetailFragment extends Fragment implements MealDetailView {
@@ -129,7 +128,7 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
     private void initPresenter() {
         MealDBApiService apiService = NetworkModule.getInstance()
                 .getRetrofit().create(MealDBApiService.class);
-        RemoteDataSourceImpl remoteDataSource = new RemoteDataSourceImpl(apiService);
+        MealRemoteDataSourceImpl remoteDataSource = new MealRemoteDataSourceImpl(apiService);
         MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource);
         presenter = new MealDetailPresenterImpl(repository);
     }
