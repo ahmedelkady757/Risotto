@@ -38,6 +38,9 @@ googleid = "1.1.1"
 # Lottie
 lottie = "6.6.0"
 
+# Room
+room = "2.6.1"
+
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -79,6 +82,11 @@ googleid                        = { group = "com.google.android.libraries.identi
 
 # Lottie
 lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
+
+# Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-rxjava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "room" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 google-services     = { id = "com.google.gms.google-services", version = "4.4.2" }

@@ -65,55 +65,46 @@ public class HomePresenterImpl implements HomePresenter {
         }
 
         view.showLoading();
-        AppLogger.d("HomePresenter: loadMealOfDay");
-
         Disposable disposable = repository.getRandomMeal()
                 .subscribe(
                         meal -> {
-                            cachedMealOfDay = meal;
                             if (view == null) return;
-                            AppLogger.d("HomePresenter: meal of day loaded → " + meal.getName());
+                            cachedMealOfDay = meal;
                             view.hideLoading();
                             view.showMealOfDay(meal);
                         },
                         error -> {
-                            if (view == null) return;
-                            AppLogger.e("HomePresenter: loadMealOfDay error", error);
-                            view.hideLoading();
-                            view.showMealOfDayError(error.getMessage());
+                            if (view != null) {
+                                view.hideLoading();
+                                view.showMealOfDayError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
+                            }
                         }
                 );
-
         disposables.add(disposable);
     }
-
 
     @Override
     public void loadCategories() {
         if (view == null) return;
 
-        if (cachedCategories != null) {
+        if (cachedCategories != null && !cachedCategories.isEmpty()) {
             view.showCategories(cachedCategories);
             return;
         }
 
-        AppLogger.d("HomePresenter: loadCategories");
-
         Disposable disposable = repository.getCategories()
                 .subscribe(
                         categories -> {
-                            cachedCategories = categories;
                             if (view == null) return;
-                            AppLogger.d("HomePresenter: categories loaded → " + categories.size());
+                            cachedCategories = categories;
                             view.showCategories(categories);
                         },
                         error -> {
-                            if (view == null) return;
-                            AppLogger.e("HomePresenter: loadCategories error", error);
-                            view.showCategoriesError(error.getMessage());
+                            if (view != null) {
+                                view.showCategoriesError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
+                            }
                         }
                 );
-
         disposables.add(disposable);
     }
 
@@ -121,29 +112,25 @@ public class HomePresenterImpl implements HomePresenter {
     public void loadTopMeals() {
         if (view == null) return;
 
-        if (cachedTopMeals != null) {
+        if (cachedTopMeals != null && !cachedTopMeals.isEmpty()) {
             view.showTopMeals(cachedTopMeals);
             return;
         }
-
-        AppLogger.d("HomePresenter: loadTopMeals");
 
         Disposable disposable = repository.filterByCategory("Seafood")
                 .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals)
                 .subscribe(
                         meals -> {
-                            cachedTopMeals = meals;
                             if (view == null) return;
-                            AppLogger.d("HomePresenter: top meals loaded → " + meals.size());
+                            cachedTopMeals = meals;
                             view.showTopMeals(meals);
                         },
                         error -> {
-                            if (view == null) return;
-                            AppLogger.e("HomePresenter: loadTopMeals error", error);
-                            view.showTopMealsError(error.getMessage());
+                            if (view != null) {
+                                view.showTopMealsError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
+                            }
                         }
                 );
-
         disposables.add(disposable);
     }
 
