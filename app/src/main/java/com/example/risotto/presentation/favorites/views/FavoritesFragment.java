@@ -121,7 +121,7 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
     public void onMealClick(Meal meal) {
         // Navigate to Meal Detail
         Bundle bundle = new Bundle();
-        bundle.putString("MEAL_ID", meal.getId());
+        bundle.putString("mealId", meal.getId());
         Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
     }
 
