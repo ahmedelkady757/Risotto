@@ -85,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
     private void observeDestinationChanges() {
         if (navController == null) return;
 
+        java.util.Set<Integer> noNavDestinations = new java.util.HashSet<>();
+        noNavDestinations.add(R.id.splashFragment);
+        noNavDestinations.add(R.id.loginFragment);
+        noNavDestinations.add(R.id.registerFragment);
+        noNavDestinations.add(R.id.mealDetailFragment);
+
         navController.addOnDestinationChangedListener(
                 (@NonNull NavController controller,
                  @NonNull NavDestination destination,
@@ -94,11 +100,11 @@ public class MainActivity extends AppCompatActivity {
                             ? destination.getLabel().toString()
                             : String.valueOf(destination.getId()));
 
-                    if (destination.getId() == R.id.mealDetailFragment) {
+                    if (noNavDestinations.contains(destination.getId())) {
                         hideBottomNavigation();
                     } else {
                         showBottomNavigation();
-                         if (bottomNavigationView.getSelectedItemId() != destination.getId()) {
+                        if (bottomNavigationView.getSelectedItemId() != destination.getId()) {
                             if (bottomNavigationView.getMenu().findItem(destination.getId()) != null) {
                                 bottomNavigationView.setSelectedItemId(destination.getId());
                             }
