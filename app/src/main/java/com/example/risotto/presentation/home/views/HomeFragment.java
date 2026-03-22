@@ -117,7 +117,7 @@ public class HomeFragment extends Fragment implements HomeView {
 
         com.example.risotto.data.db.AppDatabase db = com.example.risotto.data.db.AppDatabase.getInstance(requireContext());
         com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl mealLocal =
-                new com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl(db.cachedMealDao());
+                new com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao());
 
         MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource, mealLocal);
         presenter = new HomePresenterImpl(repository);

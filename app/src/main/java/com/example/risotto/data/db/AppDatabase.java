@@ -8,12 +8,14 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.example.risotto.data.db.converter.IngredientListConverter;
+import com.example.risotto.data.db.dao.CachedCategoryDao;
 import com.example.risotto.data.db.dao.CachedMealDao;
 import com.example.risotto.data.db.dao.FavoriteDao;
+import com.example.risotto.data.db.entity.CachedCategoryEntity;
 import com.example.risotto.data.db.entity.CachedMealEntity;
 import com.example.risotto.data.db.entity.FavoriteMealEntity;
 
-@Database(entities = {FavoriteMealEntity.class, CachedMealEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {FavoriteMealEntity.class, CachedMealEntity.class, CachedCategoryEntity.class}, version = 3, exportSchema = false)
 @TypeConverters({IngredientListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -21,6 +23,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract FavoriteDao favoriteDao();
     public abstract CachedMealDao cachedMealDao();
+    public abstract CachedCategoryDao cachedCategoryDao();
 
     public static AppDatabase getInstance(Context context) {
         if (INSTANCE == null) {

@@ -29,6 +29,10 @@ public class MealRepositoryImpl implements MealRepository {
         AppLogger.d("MealRepository: getRandomMeal");
         return remoteDataSource.getRandomMeal()
                 .flatMap(meal -> localDataSource.cacheMeal(meal).toSingleDefault(meal))
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("MealRepository: Network failed, trying local cache for random meal");
+                    return localDataSource.getCachedRandomMeal();
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -37,6 +41,10 @@ public class MealRepositoryImpl implements MealRepository {
     public Single<List<Meal>> getLatestMeals() {
         AppLogger.d("MealRepository: getLatestMeals");
         return remoteDataSource.getLatestMeals()
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("MealRepository: Network failed, trying local cache for top meals");
+                    return localDataSource.getCachedTopMeals();
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -45,6 +53,11 @@ public class MealRepositoryImpl implements MealRepository {
     public Single<List<Category>> getCategories() {
         AppLogger.d("MealRepository: getCategories");
         return remoteDataSource.getCategories()
+                .flatMap(categories -> localDataSource.cacheCategories(categories).toSingleDefault(categories))
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("MealRepository: Network failed, trying local cache for categories");
+                    return localDataSource.getCachedCategories();
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -88,6 +101,10 @@ public class MealRepositoryImpl implements MealRepository {
                     return io.reactivex.rxjava3.core.Observable.fromIterable(meals)
                             .flatMapCompletable(meal -> localDataSource.cacheMeal(meal))
                             .toSingleDefault(meals);
+                })
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("MealRepository: Network failed, trying local cache for filterByCategory");
+                    return localDataSource.getCachedTopMeals();
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
