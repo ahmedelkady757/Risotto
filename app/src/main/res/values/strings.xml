@@ -60,6 +60,9 @@
     <string name="auth_error_invalid_email">Enter a valid email address</string>
     <string name="auth_error_short_password">Password must be at least 6 characters</string>
 
+    <!-- Google Sign-In Web Client ID -->
+    <string name="default_web_client_id" translatable="false">2908724283-oemvnf7k8ukiutes717880lg207mi7hh.apps.googleusercontent.com</string>
+
     <!-- Auth Guard (locked screen) -->
     <string name="locked_title">Sign In Required</string>
     <string name="locked_message">Create an account or sign in to access this feature</string>

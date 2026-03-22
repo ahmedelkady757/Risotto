@@ -14,16 +14,31 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.risotto.R;
-import com.example.risotto.RisottoApp;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import android.os.CancellationSignal;
+import androidx.core.content.ContextCompat;
+import androidx.credentials.Credential;
+import androidx.credentials.CredentialManager;
+import androidx.credentials.CredentialManagerCallback;
+import androidx.credentials.CustomCredential;
+import androidx.credentials.GetCredentialRequest;
+import androidx.credentials.GetCredentialResponse;
+import androidx.credentials.exceptions.GetCredentialException;
+
+import com.google.android.libraries.identity.googleid.GetGoogleIdOption;
+import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.GoogleAuthProvider;
+
 
 public class LoginFragment extends Fragment {
 
     private FirebaseAuth auth;
+    private CredentialManager credentialManager;
 
     private TextInputLayout           tilEmail;
     private TextInputLayout           tilPassword;
@@ -45,6 +60,7 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         auth = FirebaseAuth.getInstance();
+        credentialManager = CredentialManager.create(requireContext());
 
         tilEmail    = view.findViewById(R.id.til_email);
         tilPassword = view.findViewById(R.id.til_password);
@@ -94,9 +110,57 @@ public class LoginFragment extends Fragment {
 
 
     private void handleGoogleSignIn(View root) {
-        // Google Sign-In via Firebase is configured in Sprint 4 continuation.
-        // For now, show a placeholder toast — full implementation in next slice.
-        Toast.makeText(requireContext(), "Google Sign-In coming soon", Toast.LENGTH_SHORT).show();
+        setLoading(true);
+
+        GetGoogleIdOption googleIdOption = new GetGoogleIdOption.Builder()
+                .setFilterByAuthorizedAccounts(false)
+                .setServerClientId(getString(R.string.default_web_client_id))
+                .setAutoSelectEnabled(true)
+                .build();
+
+        GetCredentialRequest request = new GetCredentialRequest.Builder()
+                .addCredentialOption(googleIdOption)
+                .build();
+
+        credentialManager.getCredentialAsync(
+                requireActivity(),
+                request,
+                new CancellationSignal(),
+                ContextCompat.getMainExecutor(requireContext()),
+                new CredentialManagerCallback<GetCredentialResponse, GetCredentialException>() {
+                    @Override
+                    public void onResult(GetCredentialResponse result) {
+                        try {
+                            Credential credential = result.getCredential();
+                            if (credential instanceof CustomCredential &&
+                                    credential.getType().equals(GoogleIdTokenCredential.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL)) {
+
+                                GoogleIdTokenCredential googleId = GoogleIdTokenCredential.createFrom(credential.getData());
+                                AuthCredential authCredential = GoogleAuthProvider.getCredential(googleId.getIdToken(), null);
+
+                                auth.signInWithCredential(authCredential)
+                                        .addOnSuccessListener(authResult -> navigateToHome(root))
+                                        .addOnFailureListener(e -> {
+                                            setLoading(false);
+                                            Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                        });
+                            } else {
+                                setLoading(false);
+                                Toast.makeText(requireContext(), "Unexpected credential type", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            setLoading(false);
+                            Toast.makeText(requireContext(), "Auth error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(GetCredentialException e) {
+                        setLoading(false);
+                        Toast.makeText(requireContext(), "Google sign-in canceled or failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 
 

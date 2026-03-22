@@ -12,7 +12,20 @@
           "package_name": "com.example.risotto"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "2908724283-3peuk9o1etc4jkeed672uhn722gsu383.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.risotto",
+            "certificate_hash": "b8cfa865e3bbe1fd2ea39f0295e20f2506173eaf"
+          }
+        },
+        {
+          "client_id": "2908724283-oemvnf7k8ukiutes717880lg207mi7hh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAEMNu1VrA3oVMBfyaNmz_PatNrSp6VCXE"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "2908724283-oemvnf7k8ukiutes717880lg207mi7hh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
