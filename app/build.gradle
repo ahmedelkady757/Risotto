@@ -38,6 +38,7 @@ dependencies {
     implementation libs.constraintlayout
 
     // Network
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation libs.retrofit
     implementation libs.retrofit.converter.gson
     implementation libs.retrofit.adapter.rxjava3

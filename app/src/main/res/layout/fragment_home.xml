@@ -6,157 +6,164 @@
     android:background="@color/surface_background">
 
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="88dp">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/brand_primary"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingTop="24dp"
-                android:paddingBottom="28dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_greeting"
-                    android:textSize="13sp"
-                    android:letterSpacing="0.05"
-                    android:textColor="@color/text_on_primary"
-                    android:alpha="0.80" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="@string/home_tagline"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_on_primary" />
+                android:paddingBottom="88dp">
 
                 <LinearLayout
-                    android:id="@+id/search_bar_container"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="18dp"
-                    android:background="@drawable/bg_search_bar"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_search"
-                        android:alpha="0.45"
-                        android:contentDescription="@null" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/brand_primary"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="28dp">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="12dp"
-                        android:text="@string/home_search_hint"
-                        android:textSize="14sp"
-                        android:textColor="@color/text_hint" />
+                        android:text="@string/home_greeting"
+                        android:textSize="13sp"
+                        android:letterSpacing="0.05"
+                        android:textColor="@color/text_on_primary"
+                        android:alpha="0.80" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/home_tagline"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_on_primary" />
+
+                    <LinearLayout
+                        android:id="@+id/search_bar_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="18dp"
+                        android:background="@drawable/bg_search_bar"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:foreground="?attr/selectableItemBackground">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_search"
+                            android:alpha="0.45"
+                            android:contentDescription="@null" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="12dp"
+                            android:text="@string/home_search_hint"
+                            android:textSize="14sp"
+                            android:textColor="@color/text_hint" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingTop="24dp"
-                android:paddingBottom="10dp"
-                android:text="@string/home_meal_of_day"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.01"
-                android:textColor="@color/text_primary" />
-
-            <FrameLayout
-                android:id="@+id/container_meal_of_day"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="12dp"
-                android:paddingTop="28dp"
-                android:paddingBottom="10dp">
-
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/home_categories"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="24dp"
+                    android:paddingBottom="10dp"
+                    android:text="@string/home_meal_of_day"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.01"
                     android:textColor="@color/text_primary" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_see_all_categories"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:id="@+id/container_meal_of_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_see_all"
-                    android:textSize="13sp"
-                    android:textColor="@color/brand_primary"
-                    app:backgroundTint="@android:color/transparent"
-                    app:rippleColor="@color/brand_primary_light"
-                    style="@style/Widget.Material3.Button.TextButton" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="28dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/home_categories"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.01"
+                        android:textColor="@color/text_primary" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_see_all_categories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_see_all"
+                        android:textSize="13sp"
+                        android:textColor="@color/brand_primary"
+                        app:backgroundTint="@android:color/transparent"
+                        app:rippleColor="@color/brand_primary_light"
+                        style="@style/Widget.Material3.Button.TextButton" />
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:id="@+id/container_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="28dp"
+                    android:paddingBottom="10dp"
+                    android:text="Top Meals"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.01"
+                    android:textColor="@color/text_primary" />
+
+                <FrameLayout
+                    android:id="@+id/container_top_meals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
-            <FrameLayout
-                android:id="@+id/container_categories"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        </androidx.core.widget.NestedScrollView>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingTop="28dp"
-                android:paddingBottom="10dp"
-                android:text="Top Meals"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.01"
-                android:textColor="@color/text_primary" />
-
-            <FrameLayout
-                android:id="@+id/container_top_meals"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/view_loading"
