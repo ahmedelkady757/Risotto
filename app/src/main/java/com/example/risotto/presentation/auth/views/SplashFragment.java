@@ -12,31 +12,44 @@ import androidx.navigation.Navigation;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.risotto.R;
+import com.example.risotto.data.datasource.remote.AuthRemoteDataSourceImpl;
+import com.example.risotto.data.repository.AuthRepositoryImpl;
+import com.example.risotto.presentation.auth.presenter.SplashPresenter;
+import com.example.risotto.presentation.auth.presenter.SplashPresenterImpl;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
-/**
- * Splash screen — plays a Lottie animation, then checks Firebase auth state.
- *
- * Navigation outcomes:
- *   • No user at all           → loginFragment
- *   • Anonymous user (guest)   → homeFragment  (limited access — auth guard in individual fragments)
- *   • Real user (email/Google) → homeFragment  (full access)
- */
-public class SplashFragment extends Fragment {
+public class SplashFragment extends Fragment implements SplashView {
+
+    private SplashPresenter presenter;
+    private View rootView;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initPresenter();
+    }
+    
+    private void initPresenter() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        AuthRemoteDataSourceImpl remoteDataSource = new AuthRemoteDataSourceImpl(auth);
+        AuthRepositoryImpl repository = new AuthRepositoryImpl(remoteDataSource);
+        presenter = new SplashPresenterImpl(repository);
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_splash, container, false);
+        rootView = inflater.inflate(R.layout.fragment_splash, container, false);
+        return rootView;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        presenter.attachView(this);
 
         // Fade in app name + tagline
         view.findViewById(R.id.tv_app_name).animate().alpha(1f).setStartDelay(400).setDuration(600).start();
@@ -51,22 +64,32 @@ public class SplashFragment extends Fragment {
             @Override
             public void onAnimationEnd(android.animation.Animator a) {
                 if (!isAdded() || getView() == null) return;
-                navigateBasedOnAuthState(getView());
+                presenter.decideNextScreen();
             }
         });
     }
 
-    private void navigateBasedOnAuthState(View view) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.detachView();
+        rootView = null;
+    }
 
-        if (user == null) {
-            // Never logged in → show Login
-            Navigation.findNavController(view)
+    // --- SplashView Implementation ---
+
+    @Override
+    public void navigateToLogin() {
+        if (rootView != null) {
+            Navigation.findNavController(rootView)
                     .navigate(R.id.action_splash_to_login);
-        } else {
-            // Either anonymous or real user → go straight to Home
-            // (individual fragments handle their own auth guard)
-            Navigation.findNavController(view)
+        }
+    }
+
+    @Override
+    public void navigateToHome() {
+        if (rootView != null) {
+            Navigation.findNavController(rootView)
                     .navigate(R.id.action_splash_to_home);
         }
     }
