@@ -1,7 +1,9 @@
-package com.example.risotto.data.repository;
+package com.example.risotto.data.repository.meal;
 
 import com.example.risotto.core.utils.AppLogger;
-import com.example.risotto.data.datasource.remote.RemoteDataSource;
+import com.example.risotto.core.helper.ConnectivityBanner;
+import com.example.risotto.core.helper.RxHelper;
+import com.example.risotto.data.datasource.remote.meal.RemoteDataSource;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
 

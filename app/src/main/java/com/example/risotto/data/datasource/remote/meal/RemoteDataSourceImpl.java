@@ -1,4 +1,4 @@
-package com.example.risotto.data.datasource.remote;
+package com.example.risotto.data.datasource.remote.meal;
 
 import com.example.risotto.core.helper.CategoryMapper;
 import com.example.risotto.core.helper.MealMapper;
