@@ -34,12 +34,56 @@ public class MainActivity extends AppCompatActivity {
         setupNavController();
         setupBottomNavigation();
         observeDestinationChanges();
+        setupNetworkListener();
+    }
+
+    private android.net.ConnectivityManager.NetworkCallback networkCallback;
+    private android.widget.TextView tvOfflineBanner;
+
+    private void setupNetworkListener() {
+        tvOfflineBanner = findViewById(R.id.tv_offline_banner);
+        android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) return;
+
+        networkCallback = new android.net.ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(@NonNull android.net.Network network) {
+                runOnUiThread(() -> {
+                    if (tvOfflineBanner != null) tvOfflineBanner.setVisibility(android.view.View.GONE);
+                });
+            }
+
+            @Override
+            public void onLost(@NonNull android.net.Network network) {
+                runOnUiThread(() -> {
+                    if (tvOfflineBanner != null) tvOfflineBanner.setVisibility(android.view.View.VISIBLE);
+                });
+            }
+        };
+
+        android.net.NetworkRequest request = new android.net.NetworkRequest.Builder()
+                .addCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .build();
+        connectivityManager.registerNetworkCallback(request, networkCallback);
+
+        // Check initial state
+        android.net.NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        if (!isConnected && tvOfflineBanner != null) {
+            tvOfflineBanner.setVisibility(android.view.View.VISIBLE);
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         AppLogger.logFragment("MainActivity", "onDestroy");
+        if (networkCallback != null) {
+            android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+            if (connectivityManager != null) {
+                connectivityManager.unregisterNetworkCallback(networkCallback);
+            }
+        }
     }
 
     private void setupNavController() {

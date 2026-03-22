@@ -66,6 +66,19 @@ public class HomeFragment extends Fragment implements HomeView {
         loadingView = view.findViewById(R.id.view_loading);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
 
+        android.widget.TextView tvGreeting = view.findViewById(R.id.tv_greeting);
+        if (tvGreeting != null) {
+            com.google.firebase.auth.FirebaseUser user = com.google.firebase.auth.FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null && !user.isAnonymous() && user.getDisplayName() != null && !user.getDisplayName().isEmpty()) {
+                tvGreeting.setText("Hello, " + user.getDisplayName() + "!");
+            } else if (user != null && !user.isAnonymous() && user.getEmail() != null) {
+                String name = user.getEmail().split("@")[0];
+                tvGreeting.setText("Hello, " + name + "!");
+            } else {
+                tvGreeting.setText("Hello, Guest!");
+            }
+        }
+
         swipeRefreshLayout.setOnRefreshListener(() -> {
             presenter.refreshData();
         });
