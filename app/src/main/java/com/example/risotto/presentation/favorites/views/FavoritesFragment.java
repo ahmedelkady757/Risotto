@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.favorites.view;
+package com.example.risotto.presentation.favorites.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.risotto.R;
 import com.example.risotto.core.utils.AppLogger;
+import com.example.risotto.core.utils.AuthGuardHelper;
 
 
 public class FavoritesFragment extends Fragment {
@@ -33,5 +34,13 @@ public class FavoritesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         AppLogger.logFragment("FavoritesFragment", "onViewCreated");
+
+        if (AuthGuardHelper.guardIfGuest(view, (ViewGroup) view)) return;
+
+        loadFavorites();
+    }
+
+    private void loadFavorites() {
+        AppLogger.d("FavoritesFragment: loadFavorites (real user)");
     }
 }

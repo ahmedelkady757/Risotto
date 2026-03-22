@@ -4,8 +4,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
 
+    <!-- ── Splash ── -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.risotto.presentation.auth.views.SplashFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash">
+
+        <action
+            android:id="@+id/action_splash_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_splash_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <!-- ── Login ── -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.risotto.presentation.auth.views.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/registerFragment" />
+
+        <action
+            android:id="@+id/action_login_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <!-- ── Register ── -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.risotto.presentation.auth.views.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+
+        <action
+            android:id="@+id/action_register_to_home"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+
+    </fragment>
+
+    <!-- ── Home ── -->
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.risotto.presentation.home.views.HomeFragment"
@@ -18,18 +74,21 @@
 
     </fragment>
 
+    <!-- ── Search ── -->
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.risotto.presentation.search.view.SearchFragment"
         android:label="@string/nav_search"
         tools:layout="@layout/fragment_search" />
 
+    <!-- ── Favorites ── -->
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.risotto.presentation.favorites.view.FavoritesFragment"
+        android:name="com.example.risotto.presentation.favorites.views.FavoritesFragment"
         android:label="@string/nav_favorites"
         tools:layout="@layout/fragment_favorites" />
 
+    <!-- ── Meal Detail ── -->
     <fragment
         android:id="@+id/mealDetailFragment"
         android:name="com.example.risotto.presentation.mealdetail.views.MealDetailFragment"
@@ -45,6 +104,8 @@
             android:defaultValue="" />
 
     </fragment>
+
+    <!-- ── Settings ── -->
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.risotto.presentation.settings.view.SettingsFragment"

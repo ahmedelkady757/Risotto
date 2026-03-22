@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         AppLogger.logFragment("MainActivity", "onCreate");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setVisibility(android.view.View.GONE); // hidden until home loads
 
         setupNavController();
         setupBottomNavigation();
@@ -85,6 +86,12 @@ public class MainActivity extends AppCompatActivity {
     private void observeDestinationChanges() {
         if (navController == null) return;
 
+        java.util.Set<Integer> noNavDestinations = new java.util.HashSet<>();
+        noNavDestinations.add(R.id.splashFragment);
+        noNavDestinations.add(R.id.loginFragment);
+        noNavDestinations.add(R.id.registerFragment);
+        noNavDestinations.add(R.id.mealDetailFragment);
+
         navController.addOnDestinationChangedListener(
                 (@NonNull NavController controller,
                  @NonNull NavDestination destination,
@@ -94,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
                             ? destination.getLabel().toString()
                             : String.valueOf(destination.getId()));
 
-                    if (destination.getId() == R.id.mealDetailFragment) {
+                    if (noNavDestinations.contains(destination.getId())) {
                         hideBottomNavigation();
                     } else {
                         showBottomNavigation();
-                         if (bottomNavigationView.getSelectedItemId() != destination.getId()) {
+                        if (bottomNavigationView.getSelectedItemId() != destination.getId()) {
                             if (bottomNavigationView.getMenu().findItem(destination.getId()) != null) {
                                 bottomNavigationView.setSelectedItemId(destination.getId());
                             }
@@ -109,16 +116,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void showBottomNavigation() {
+        if (bottomNavigationView.getVisibility() == android.view.View.VISIBLE) return;
+        bottomNavigationView.setVisibility(android.view.View.VISIBLE);
         bottomNavigationView.animate()
                 .translationY(0f)
-                .setDuration(200)
+                .setDuration(220)
                 .start();
     }
 
     private void hideBottomNavigation() {
+        if (bottomNavigationView.getVisibility() == android.view.View.GONE) return;
         bottomNavigationView.animate()
                 .translationY(bottomNavigationView.getHeight())
                 .setDuration(200)
+                .withEndAction(() -> bottomNavigationView.setVisibility(android.view.View.GONE))
                 .start();
     }
 }

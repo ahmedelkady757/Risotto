@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -57,6 +58,18 @@ dependencies {
     annotationProcessor libs.glide.compiler
 
     implementation libs.youtube.player.core
+
+    // Firebase (BOM ensures all Firebase libs use compatible versions)
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.auth
+
+    // Google Sign-In via Credential Manager
+    implementation libs.credentials
+    implementation libs.credentials.play.services.auth
+    implementation libs.googleid
+
+    // Lottie animations
+    implementation libs.lottie
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
