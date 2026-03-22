@@ -12,8 +12,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.risotto.R;
-import com.example.risotto.data.datasource.remote.AuthRemoteDataSourceImpl;
-import com.example.risotto.data.repository.AuthRepositoryImpl;
+import com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl;
+import com.example.risotto.data.repository.auth.AuthRepositoryImpl;
 import com.example.risotto.presentation.auth.presenter.RegisterPresenter;
 import com.example.risotto.presentation.auth.presenter.RegisterPresenterImpl;
 import com.google.android.material.progressindicator.CircularProgressIndicator;

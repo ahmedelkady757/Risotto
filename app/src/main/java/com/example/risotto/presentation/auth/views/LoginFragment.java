@@ -21,8 +21,8 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.example.risotto.R;
-import com.example.risotto.data.datasource.remote.AuthRemoteDataSourceImpl;
-import com.example.risotto.data.repository.AuthRepositoryImpl;
+import com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl;
+import com.example.risotto.data.repository.auth.AuthRepositoryImpl;
 import com.example.risotto.presentation.auth.presenter.LoginPresenter;
 import com.example.risotto.presentation.auth.presenter.LoginPresenterImpl;
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption;

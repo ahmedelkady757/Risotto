@@ -3,7 +3,7 @@ package com.example.risotto.presentation.auth.presenter;
 import android.text.TextUtils;
 import android.util.Patterns;
 
-import com.example.risotto.data.repository.AuthRepository;
+import com.example.risotto.data.repository.auth.AuthRepository;
 import com.example.risotto.presentation.auth.views.RegisterView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

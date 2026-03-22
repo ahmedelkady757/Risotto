@@ -12,11 +12,11 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 
 
-public class RemoteDataSourceImpl implements RemoteDataSource {
+public class MealRemoteDataSourceImpl implements MealRemoteDataSource {
 
     private final MealDBApiService apiService;
 
-    public RemoteDataSourceImpl(MealDBApiService apiService) {
+    public MealRemoteDataSourceImpl(MealDBApiService apiService) {
         this.apiService = apiService;
     }
 

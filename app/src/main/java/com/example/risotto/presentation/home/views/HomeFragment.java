@@ -16,12 +16,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 import com.example.risotto.R;
 import com.example.risotto.core.utils.AppLogger;
-import com.example.risotto.data.datasource.remote.RemoteDataSourceImpl;
+import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.api.MealDBApiService;
 import com.example.risotto.data.network.NetworkModule;
-import com.example.risotto.data.repository.MealRepositoryImpl;
+import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 
 import java.util.List;
 
@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment implements HomeView {
         MealDBApiService apiService = NetworkModule.getInstance()
                 .getRetrofit()
                 .create(MealDBApiService.class);
-        RemoteDataSourceImpl remoteDataSource = new RemoteDataSourceImpl(apiService);
+        MealRemoteDataSourceImpl remoteDataSource = new MealRemoteDataSourceImpl(apiService);
         MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource);
         presenter = new HomePresenterImpl(repository);
     }

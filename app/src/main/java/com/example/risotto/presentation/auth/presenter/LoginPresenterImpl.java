@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 
 import com.example.risotto.core.utils.AppLogger;
-import com.example.risotto.data.repository.AuthRepository;
+import com.example.risotto.data.repository.auth.AuthRepository;
 import com.example.risotto.presentation.auth.views.LoginView;
 import com.google.firebase.auth.AuthCredential;
 
