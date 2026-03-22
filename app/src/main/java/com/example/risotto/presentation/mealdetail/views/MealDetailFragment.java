@@ -130,7 +130,14 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
                 .getRetrofit().create(MealDBApiService.class);
         MealRemoteDataSourceImpl remoteDataSource = new MealRemoteDataSourceImpl(apiService);
         MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource);
-        presenter = new MealDetailPresenterImpl(repository);
+
+        com.example.risotto.data.db.AppDatabase db = com.example.risotto.data.db.AppDatabase.getInstance(requireContext());
+        com.example.risotto.data.datasource.local.favorite.FavoriteLocalDataSourceImpl favLocal = 
+                new com.example.risotto.data.datasource.local.favorite.FavoriteLocalDataSourceImpl(db.favoriteDao());
+        com.example.risotto.data.repository.favorite.FavoriteRepositoryImpl favoriteRepository = 
+                new com.example.risotto.data.repository.favorite.FavoriteRepositoryImpl(favLocal);
+
+        presenter = new MealDetailPresenterImpl(repository, favoriteRepository);
     }
 
     private void bindViews(View view) {

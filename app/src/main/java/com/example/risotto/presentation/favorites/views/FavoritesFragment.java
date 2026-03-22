@@ -63,6 +63,13 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        android.widget.FrameLayout container = view.findViewById(R.id.fl_container);
+        if (com.example.risotto.core.utils.AuthGuardHelper.guardIfGuest(view, container)) {
+            // Unmount/hide local UI elements and skip presenter loading entirely
+            view.findViewById(R.id.toolbar).setVisibility(View.GONE);
+            return;
+        }
+
         initViews(view);
         presenter.attachView(this);
         presenter.loadFavorites();

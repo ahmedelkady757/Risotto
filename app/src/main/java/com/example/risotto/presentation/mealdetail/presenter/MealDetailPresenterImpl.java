@@ -1,25 +1,29 @@
 package com.example.risotto.presentation.mealdetail.presenter;
 
+import com.example.risotto.RisottoApp;
 import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Meal;
+import com.example.risotto.data.repository.favorite.FavoriteRepository;
 import com.example.risotto.data.repository.meal.MealRepository;
 import com.example.risotto.presentation.mealdetail.views.MealDetailView;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
-
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealDetailPresenterImpl implements MealDetailPresenter {
 
     private final MealRepository repository;
+    private final FavoriteRepository favoriteRepository;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     private MealDetailView view;
 
-    public MealDetailPresenterImpl(MealRepository repository) {
+    public MealDetailPresenterImpl(MealRepository repository, FavoriteRepository favoriteRepository) {
         this.repository = repository;
+        this.favoriteRepository = favoriteRepository;
     }
-
 
     @Override
     public void attachView(MealDetailView view) {
@@ -31,53 +35,72 @@ public class MealDetailPresenterImpl implements MealDetailPresenter {
     public void detachView() {
         this.view = null;
         disposables.clear();
-        AppLogger.d("MealDetailPresenter: detachView — disposables cleared");
+        AppLogger.d("MealDetailPresenter: detachView cleared");
     }
-
 
     @Override
     public void loadMealDetail(String mealId) {
         if (view == null) return;
         view.showLoading();
-        AppLogger.d("MealDetailPresenter: loadMealDetail → " + mealId);
 
-        Disposable disposable = repository.getMealById(mealId)
+        Disposable disposable = io.reactivex.rxjava3.core.Single.zip(
+                        repository.getMealById(mealId),
+                        favoriteRepository.isFavorite(mealId).onErrorReturnItem(false),
+                        (meal, isFav) -> {
+                            meal.setFavorite(isFav);
+                            return meal;
+                        }
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meal -> {
                             if (view == null) return;
-                            AppLogger.d("MealDetailPresenter: meal loaded → " + meal.getName());
                             view.hideLoading();
                             view.showMealDetail(meal);
                             view.updateFavoriteState(meal.isFavorite());
                         },
                         error -> {
                             if (view == null) return;
-                            AppLogger.e("MealDetailPresenter: loadMealDetail error", error);
                             view.hideLoading();
-                            view.showError(error.getMessage());
+                            view.showError("Failed to load: " + error.getMessage());
                         }
                 );
 
         disposables.add(disposable);
     }
 
-
     @Override
     public void toggleFavorite(Meal meal) {
         if (view == null) return;
 
+        if (!RisottoApp.isRealUser()) {
+            view.showError("You must be logged in to save favorites.");
+            return;
+        }
+
         boolean newState = !meal.isFavorite();
         meal.setFavorite(newState);
-
-        AppLogger.d("MealDetailPresenter: toggleFavorite → " + meal.getName()
-                + " isFavorite=" + newState);
-
         view.updateFavoriteState(newState);
 
         if (newState) {
-            view.showFavoriteAdded();
+            Disposable d = favoriteRepository.addFavorite(meal)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            () -> view.showFavoriteAdded(),
+                            error -> view.showError("Could not add favorite: " + error.getMessage())
+                    );
+            disposables.add(d);
         } else {
-            view.showFavoriteRemoved();
+            Disposable d = favoriteRepository.removeFavoriteById(meal.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            () -> view.showFavoriteRemoved(),
+                            error -> view.showError("Could not remove favorite: " + error.getMessage())
+                    );
+            disposables.add(d);
         }
     }
 }
