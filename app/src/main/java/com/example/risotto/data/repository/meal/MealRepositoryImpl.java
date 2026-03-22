@@ -15,9 +15,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class MealRepositoryImpl implements MealRepository {
 
     private final MealRemoteDataSource remoteDataSource;
+    private final com.example.risotto.data.datasource.local.meal.MealLocalDataSource localDataSource;
 
-    public MealRepositoryImpl(MealRemoteDataSource remoteDataSource) {
+    public MealRepositoryImpl(MealRemoteDataSource remoteDataSource, 
+                              com.example.risotto.data.datasource.local.meal.MealLocalDataSource localDataSource) {
         this.remoteDataSource = remoteDataSource;
+        this.localDataSource = localDataSource;
     }
 
 
@@ -25,6 +28,7 @@ public class MealRepositoryImpl implements MealRepository {
     public Single<Meal> getRandomMeal() {
         AppLogger.d("MealRepository: getRandomMeal");
         return remoteDataSource.getRandomMeal()
+                .flatMap(meal -> localDataSource.cacheMeal(meal).toSingleDefault(meal))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -50,6 +54,11 @@ public class MealRepositoryImpl implements MealRepository {
     public Single<Meal> getMealById(String id) {
         AppLogger.d("MealRepository: getMealById → " + id);
         return remoteDataSource.getMealById(id)
+                .flatMap(meal -> localDataSource.cacheMeal(meal).toSingleDefault(meal))
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("MealRepository: Network failed, trying local cache for " + id);
+                    return localDataSource.getCachedMealById(id);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -75,6 +84,11 @@ public class MealRepositoryImpl implements MealRepository {
     public Single<List<Meal>> filterByCategory(String category) {
         AppLogger.d("MealRepository: filterByCategory → " + category);
         return remoteDataSource.filterByCategory(category)
+                .flatMap(meals -> {
+                    return io.reactivex.rxjava3.core.Observable.fromIterable(meals)
+                            .flatMapCompletable(meal -> localDataSource.cacheMeal(meal))
+                            .toSingleDefault(meals);
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

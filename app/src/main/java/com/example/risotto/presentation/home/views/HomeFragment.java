@@ -114,7 +114,12 @@ public class HomeFragment extends Fragment implements HomeView {
                 .getRetrofit()
                 .create(MealDBApiService.class);
         MealRemoteDataSourceImpl remoteDataSource = new MealRemoteDataSourceImpl(apiService);
-        MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource);
+
+        com.example.risotto.data.db.AppDatabase db = com.example.risotto.data.db.AppDatabase.getInstance(requireContext());
+        com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl mealLocal =
+                new com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl(db.cachedMealDao());
+
+        MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource, mealLocal);
         presenter = new HomePresenterImpl(repository);
     }
 

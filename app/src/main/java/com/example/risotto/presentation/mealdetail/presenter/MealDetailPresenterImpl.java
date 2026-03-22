@@ -63,7 +63,7 @@ public class MealDetailPresenterImpl implements MealDetailPresenter {
                         error -> {
                             if (view == null) return;
                             view.hideLoading();
-                            view.showError("Failed to load: " + error.getMessage());
+                            view.showError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
                         }
                 );
 
