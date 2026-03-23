@@ -14,12 +14,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.risotto.R;
 import com.example.risotto.core.utils.AppLogger;
 
-
 public class MainActivity extends AppCompatActivity {
 
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +40,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupNetworkListener() {
         tvOfflineBanner = findViewById(R.id.tv_offline_banner);
-        android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager == null) return;
+        android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(
+                android.content.Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null)
+            return;
 
         networkCallback = new android.net.ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(@NonNull android.net.Network network) {
                 runOnUiThread(() -> {
-                    if (tvOfflineBanner != null) tvOfflineBanner.setVisibility(android.view.View.GONE);
+                    if (tvOfflineBanner != null)
+                        tvOfflineBanner.setVisibility(android.view.View.GONE);
                 });
             }
 
             @Override
             public void onLost(@NonNull android.net.Network network) {
                 runOnUiThread(() -> {
-                    if (tvOfflineBanner != null) tvOfflineBanner.setVisibility(android.view.View.VISIBLE);
+                    if (tvOfflineBanner != null)
+                        tvOfflineBanner.setVisibility(android.view.View.VISIBLE);
                 });
             }
         };
@@ -67,8 +69,13 @@ public class MainActivity extends AppCompatActivity {
         connectivityManager.registerNetworkCallback(request, networkCallback);
 
         // Check initial state
-        android.net.NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        boolean isConnected = false;
+        android.net.Network activeNetwork = connectivityManager.getActiveNetwork();
+        if (activeNetwork != null) {
+            android.net.NetworkCapabilities caps = connectivityManager.getNetworkCapabilities(activeNetwork);
+            isConnected = caps != null && caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        }
+
         if (!isConnected && tvOfflineBanner != null) {
             tvOfflineBanner.setVisibility(android.view.View.VISIBLE);
         }
@@ -79,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         AppLogger.logFragment("MainActivity", "onDestroy");
         if (networkCallback != null) {
-            android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(android.content.Context.CONNECTIVITY_SERVICE);
+            android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(
+                    android.content.Context.CONNECTIVITY_SERVICE);
             if (connectivityManager != null) {
                 connectivityManager.unregisterNetworkCallback(networkCallback);
             }
@@ -100,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupBottomNavigation() {
-        if (navController == null) return;
+        if (navController == null)
+            return;
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int destId = item.getItemId();
@@ -109,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
             if (current != null && current.getId() == destId) {
                 return true;
             }
-
 
             if (destId == R.id.homeFragment) {
                 boolean popped = navController.popBackStack(R.id.homeFragment, false);
@@ -126,9 +134,9 @@ public class MainActivity extends AppCompatActivity {
         AppLogger.d("MainActivity: BottomNavigation custom listener ready");
     }
 
-
     private void observeDestinationChanges() {
-        if (navController == null) return;
+        if (navController == null)
+            return;
 
         java.util.Set<Integer> noNavDestinations = new java.util.HashSet<>();
         noNavDestinations.add(R.id.splashFragment);
@@ -138,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
 
         navController.addOnDestinationChangedListener(
                 (@NonNull NavController controller,
-                 @NonNull NavDestination destination,
-                 Bundle arguments) -> {
+                        @NonNull NavDestination destination,
+                        Bundle arguments) -> {
 
                     AppLogger.logNav(destination.getLabel() != null
                             ? destination.getLabel().toString()
@@ -158,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
-
     private void showBottomNavigation() {
-        if (bottomNavigationView.getVisibility() == android.view.View.VISIBLE) return;
+        if (bottomNavigationView.getVisibility() == android.view.View.VISIBLE)
+            return;
         bottomNavigationView.setVisibility(android.view.View.VISIBLE);
         bottomNavigationView.animate()
                 .translationY(0f)
@@ -169,7 +177,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hideBottomNavigation() {
-        if (bottomNavigationView.getVisibility() == android.view.View.GONE) return;
+        if (bottomNavigationView.getVisibility() == android.view.View.GONE)
+            return;
         bottomNavigationView.animate()
                 .translationY(bottomNavigationView.getHeight())
                 .setDuration(200)

@@ -75,5 +75,9 @@
     <string name="settings_logout_success">Logged out successfully</string>
     <string name="settings_user_name_default">User Name</string>
     <string name="settings_user_email_default">user@example.com</string>
-
+    <!-- ── Search ── -->
+    <string name="search_hint">Find your favorite meal…</string>
+    <string name="search_no_results">No meals found for this query</string>
+    <string name="search_error">An error occurred during search</string>
+    <string name="search_start_typing">Start typing to find delicious meals</string>
 </resources>
