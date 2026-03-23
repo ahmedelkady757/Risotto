@@ -72,6 +72,40 @@
             android:id="@+id/action_home_to_mealDetail"
             app:destination="@id/mealDetailFragment" />
 
+        <action
+            android:id="@+id/action_home_to_allCategories"
+            app:destination="@id/allCategoriesFragment" />
+
+        <action
+            android:id="@+id/action_home_to_categoryMeals"
+            app:destination="@id/categoryMealsFragment" />
+
+    </fragment>
+
+    <!-- ── Categories ── -->
+    <fragment
+        android:id="@+id/allCategoriesFragment"
+        android:name="com.example.risotto.presentation.categories.view.AllCategoriesFragment"
+        android:label="@string/home_categories"
+        tools:layout="@layout/fragment_all_categories">
+
+        <action
+            android:id="@+id/action_allCategories_to_categoryMeals"
+            app:destination="@id/categoryMealsFragment" />
+
+    </fragment>
+
+    <!-- ── Category Meals ── -->
+    <fragment
+        android:id="@+id/categoryMealsFragment"
+        android:name="com.example.risotto.presentation.categories.view.CategoryMealsFragment"
+        android:label="Category Meals"
+        tools:layout="@layout/fragment_category_meals">
+
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+
     </fragment>
 
     <!-- ── Search ── -->

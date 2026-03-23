@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.common.adapters;
+package com.example.risotto.presentation.search.view;
 
 import android.view.LayoutInflater;
 import android.view.View;

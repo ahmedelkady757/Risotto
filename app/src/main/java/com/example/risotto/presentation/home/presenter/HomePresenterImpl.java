@@ -96,8 +96,11 @@ public class HomePresenterImpl implements HomePresenter {
                 .subscribe(
                         categories -> {
                             if (view == null) return;
-                            cachedCategories = categories;
-                            view.showCategories(categories);
+                            java.util.List<Category> limited = categories.size() > 6 
+                                    ? categories.subList(0, 6) 
+                                    : categories;
+                            cachedCategories = limited;
+                            view.showCategories(limited);
                         },
                         error -> {
                             if (view != null) {
