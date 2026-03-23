@@ -4,6 +4,7 @@ import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.repository.meal.MealRepository;
 import com.example.risotto.presentation.search.view.MealSearchView;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -41,18 +42,20 @@ public class SearchPresenterImpl implements SearchPresenter {
                 .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
                 .switchMapSingle(query -> {
                     if (query.isEmpty()) {
-                        return io.reactivex.rxjava3.core.Single.just(java.util.Collections.emptyList());
+                        return io.reactivex.rxjava3.core.Single
+                                .just(java.util.Collections.<com.example.risotto.data.model.Meal>emptyList());
                     }
                     return repository.searchMealsByName(query)
-                            .onErrorReturnItem(java.util.Collections.emptyList());
+                            .onErrorReturnItem(java.util.Collections.<com.example.risotto.data.model.Meal>emptyList());
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> {
                             if (view != null) {
                                 view.hideLoading();
-                                view.showResults((java.util.List<com.example.risotto.data.model.Meal>) meals);
-                                if (((java.util.List<?>)meals).isEmpty()) {
+                                List<com.example.risotto.data.model.Meal> mealList = (List<com.example.risotto.data.model.Meal>) meals;
+                                view.showResults(mealList);
+                                if (mealList.isEmpty()) {
                                     view.showEmptyState("No meals found for this query");
                                 }
                             }
@@ -63,8 +66,7 @@ public class SearchPresenterImpl implements SearchPresenter {
                                 view.hideLoading();
                                 view.showError("An error occurred during search");
                             }
-                        }
-                ));
+                        }));
     }
 
     @Override
