@@ -98,7 +98,8 @@ public class HomeFragment extends Fragment implements HomeView {
         });
 
         view.findViewById(R.id.btn_see_all_categories).setOnClickListener(v -> {
-            AppLogger.logNav("HomeFragment -> CategoriesFragment (coming sprint)");
+            AppLogger.logNav("HomeFragment -> AllCategoriesFragment");
+            Navigation.findNavController(view).navigate(R.id.action_home_to_allCategories);
         });
 
         attachChildFragments();
@@ -185,7 +186,10 @@ public class HomeFragment extends Fragment implements HomeView {
     public void showCategories(List<Category> categories) {
         if (categoriesFragment == null) return;
         categoriesFragment.bindCategories(categories, category -> {
-            presenter.onCategorySelected(category);
+            AppLogger.logNav("HomeFragment -> CategoryMeals: " + category.getName());
+            Bundle args = new Bundle();
+            args.putString("categoryName", category.getName());
+            Navigation.findNavController(rootView).navigate(R.id.action_home_to_categoryMeals, args);
         });
     }
 
