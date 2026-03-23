@@ -70,17 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Check initial state
         boolean isConnected = false;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            android.net.Network activeNetwork = connectivityManager.getActiveNetwork();
-            if (activeNetwork != null) {
-                android.net.NetworkCapabilities caps = connectivityManager.getNetworkCapabilities(activeNetwork);
-                isConnected = caps != null
-                        && caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET);
-            }
-        } else {
-            @SuppressWarnings("deprecation")
-            android.net.NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-            isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+        android.net.Network activeNetwork = connectivityManager.getActiveNetwork();
+        if (activeNetwork != null) {
+            android.net.NetworkCapabilities caps = connectivityManager.getNetworkCapabilities(activeNetwork);
+            isConnected = caps != null && caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET);
         }
 
         if (!isConnected && tvOfflineBanner != null) {
