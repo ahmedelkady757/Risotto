@@ -115,6 +115,22 @@ public class SearchFragment extends Fragment implements MealSearchView {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        etSearch.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void hideKeyboard() {
+        android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) requireContext()
+                .getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
+        if (imm != null && etSearch != null) {
+            imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
+        }
     }
 
     @Override
