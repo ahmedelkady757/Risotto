@@ -41,6 +41,11 @@ public class SettingsFragment extends Fragment implements SettingsView {
         return rootView;
     }
 
+    private android.widget.TextView tvUserName;
+    private android.widget.TextView tvUserEmail;
+    private android.widget.ImageView ivUserPhoto;
+    private android.widget.Button btnLogout;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -48,9 +53,40 @@ public class SettingsFragment extends Fragment implements SettingsView {
 
         flContainer = view.findViewById(R.id.fl_container);
         flContent = view.findViewById(R.id.fl_content);
+        tvUserName = view.findViewById(R.id.tv_user_name);
+        tvUserEmail = view.findViewById(R.id.tv_user_email);
+        ivUserPhoto = view.findViewById(R.id.iv_user_photo);
+        btnLogout = view.findViewById(R.id.btn_logout);
+
+        btnLogout.setOnClickListener(v -> presenter.logout());
 
         presenter.attachView(this);
         presenter.checkAuthAndUpdate();
+    }
+
+    @Override
+    public void showUserProfile(String name, String email, String photoUrl) {
+        if (tvUserName != null) tvUserName.setText(name != null ? name : "Real User");
+        if (tvUserEmail != null) tvUserEmail.setText(email);
+        if (ivUserPhoto != null && photoUrl != null) {
+            com.bumptech.glide.Glide.with(this)
+                    .load(photoUrl)
+                    .placeholder(R.drawable.ic_profile_placeholder)
+                    .into(ivUserPhoto);
+        }
+    }
+
+    @Override
+    public void navigateToSplash() {
+        androidx.navigation.Navigation.findNavController(requireView())
+                .navigate(R.id.loginFragment, null, new androidx.navigation.NavOptions.Builder()
+                        .setPopUpTo(R.id.nav_graph, true)
+                        .build());
+    }
+
+    @Override
+    public void showLogoutSuccess() {
+        android.widget.Toast.makeText(getContext(), getString(R.string.settings_logout_success), android.widget.Toast.LENGTH_SHORT).show();
     }
 
     @Override

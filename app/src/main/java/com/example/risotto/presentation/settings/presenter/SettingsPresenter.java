@@ -6,5 +6,6 @@ public interface SettingsPresenter {
     void attachView(SettingsView view);
     void detachView();
     void checkAuthAndUpdate();
+    void logout();
 }
 
