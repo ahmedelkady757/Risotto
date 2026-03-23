@@ -35,7 +35,7 @@ import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
-import com.example.risotto.presentation.home.views.TopMealAdapter;
+import com.example.risotto.presentation.common.adapters.MealAdapter;
 import com.example.risotto.presentation.search.presenter.SearchPresenter;
 import com.example.risotto.presentation.search.presenter.SearchPresenterImpl;
 
@@ -50,7 +50,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
     private View viewLoading;
 
     private SearchPresenter presenter;
-    private TopMealAdapter adapter;
+    private MealAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
     }
 
     private void setupRecyclerView() {
-        adapter = new TopMealAdapter(meal -> {
+        adapter = new MealAdapter(meal -> {
             Bundle bundle = new Bundle();
             bundle.putString("mealId", meal.getId());
             Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
