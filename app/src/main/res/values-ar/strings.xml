@@ -43,4 +43,9 @@
     <string name="settings_logout_success">تم تسجيل الخروج بنجاح</string>
     <string name="settings_user_name_default">اسم المستخدم</string>
     <string name="settings_user_email_default">user@example.com</string>
+    <!-- ── Search ── -->
+    <string name="search_hint">ابحث عن وجبتك المفضلة…</string>
+    <string name="search_no_results">لم يتم العثور على وجبات لهذا البحث</string>
+    <string name="search_error">حدث خطأ أثناء البحث</string>
+    <string name="search_start_typing">ابدأ الكتابة للعثور على وجبات لذيذة</string>
 </resources>
