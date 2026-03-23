@@ -9,18 +9,17 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
-import io.reactivex.rxjava3.subjects.PublishSubject;
+import io.reactivex.rxjava3.subjects.BehaviorSubject;
 
 public class SearchPresenterImpl implements SearchPresenter {
 
     private final MealRepository repository;
     private MealSearchView view;
     private final CompositeDisposable disposables = new CompositeDisposable();
-    private final PublishSubject<String> searchSubject = PublishSubject.create();
+    private final BehaviorSubject<String> searchSubject = BehaviorSubject.create();
 
     public SearchPresenterImpl(MealRepository repository) {
         this.repository = repository;
-        setupSearchDebounce();
     }
 
     private void setupSearchDebounce() {
@@ -72,6 +71,9 @@ public class SearchPresenterImpl implements SearchPresenter {
     @Override
     public void attachView(MealSearchView view) {
         this.view = view;
+        if (disposables.size() == 0) {
+            setupSearchDebounce();
+        }
     }
 
     @Override

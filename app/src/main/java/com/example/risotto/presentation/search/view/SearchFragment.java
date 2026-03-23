@@ -83,6 +83,12 @@ public class SearchFragment extends Fragment implements MealSearchView {
         setupSearchListener();
 
         presenter.attachView(this);
+
+        // Restore results if there is already text (e.g. returning from detail)
+        String query = etSearch.getText().toString().trim();
+        if (!query.isEmpty()) {
+            presenter.search(query);
+        }
     }
 
     private void setupRecyclerView() {
