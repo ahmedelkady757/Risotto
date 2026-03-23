@@ -1,18 +1,6 @@
 package com.example.risotto.presentation.search.view;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
-
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -34,6 +22,8 @@ import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.model.Meal;
+import com.example.risotto.data.network.NetworkModule;
+import com.example.risotto.data.network.api.MealDBApiService;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 import com.example.risotto.presentation.common.adapters.MealAdapter;
 import com.example.risotto.presentation.search.presenter.SearchPresenter;
@@ -61,9 +51,12 @@ public class SearchFragment extends Fragment implements MealSearchView {
 
     private void initPresenter() {
         AppDatabase db = AppDatabase.getInstance(requireContext());
+        MealDBApiService apiService = NetworkModule.getInstance()
+                .getRetrofit().create(MealDBApiService.class);
+
         presenter = new SearchPresenterImpl(
                 new MealRepositoryImpl(
-                        new MealRemoteDataSourceImpl(),
+                        new MealRemoteDataSourceImpl(apiService),
                         new MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao())));
     }
 
