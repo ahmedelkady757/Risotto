@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
+import com.example.risotto.RisottoApp;
 import com.example.risotto.data.datasource.local.favorite.FavoriteLocalDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.db.dao.FavoriteDao;
@@ -35,6 +36,9 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
     private RecyclerView rvFavorites;
     private ProgressBar progressBar;
     private LinearLayout layoutEmptyState;
+    private android.widget.FrameLayout flContainer;
+    private View toolbarView;
+    private boolean viewsInitialized = false;
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -63,14 +67,49 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        android.widget.FrameLayout container = view.findViewById(R.id.fl_container);
-        if (com.example.risotto.core.utils.AuthGuardHelper.guardIfGuest(view, container)) {
-            // Unmount/hide local UI elements and skip presenter loading entirely
-            view.findViewById(R.id.toolbar).setVisibility(View.GONE);
+        flContainer = view.findViewById(R.id.fl_container);
+        toolbarView = view.findViewById(R.id.toolbar);
+
+        if (!RisottoApp.isRealUser()) {
+            // Guest: show inline auth guard prompt and skip loading favorites.
+            com.example.risotto.core.utils.AuthGuardHelper.guardIfGuest(view, flContainer);
+            if (toolbarView != null) toolbarView.setVisibility(View.GONE);
             return;
         }
 
-        initViews(view);
+        // Real user: show favorites immediately.
+        if (!viewsInitialized) {
+            initViews(view);
+            viewsInitialized = true;
+        }
+        presenter.attachView(this);
+        presenter.loadFavorites();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (getView() == null) return;
+
+        if (flContainer == null) flContainer = getView().findViewById(R.id.fl_container);
+        if (toolbarView == null) toolbarView = getView().findViewById(R.id.toolbar);
+
+        if (!RisottoApp.isRealUser()) {
+            // Still guest: ensure guard is visible.
+            com.example.risotto.core.utils.AuthGuardHelper.guardIfGuest(getView(), flContainer);
+            if (toolbarView != null) toolbarView.setVisibility(View.GONE);
+            return;
+        }
+
+        // Auth is now real: remove inline guard overlay and load favorites.
+        com.example.risotto.core.utils.AuthGuardHelper.removeGuardIfPresent(flContainer);
+        if (toolbarView != null) toolbarView.setVisibility(View.VISIBLE);
+
+        if (!viewsInitialized) {
+            initViews(getView());
+            viewsInitialized = true;
+        }
+
         presenter.attachView(this);
         presenter.loadFavorites();
     }
@@ -135,5 +174,14 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
     public void onDestroyView() {
         super.onDestroyView();
         presenter.detachView();
+
+        // Reset view references; fragment may be recreated later.
+        adapter = null;
+        rvFavorites = null;
+        progressBar = null;
+        layoutEmptyState = null;
+        flContainer = null;
+        toolbarView = null;
+        viewsInitialized = false;
     }
 }
