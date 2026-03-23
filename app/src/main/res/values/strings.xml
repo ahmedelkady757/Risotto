@@ -68,5 +68,12 @@
     <string name="locked_message">Create an account or sign in to access this feature</string>
     <string name="locked_btn_login">Sign In</string>
     <string name="locked_btn_signup">Create Account</string>
+    <!-- ── Settings ── -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_account_section">Account</string>
+    <string name="settings_logout">Log Out</string>
+    <string name="settings_logout_success">Logged out successfully</string>
+    <string name="settings_user_name_default">User Name</string>
+    <string name="settings_user_email_default">user@example.com</string>
 
 </resources>

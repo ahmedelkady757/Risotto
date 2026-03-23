@@ -108,7 +108,7 @@
     <!-- ── Settings ── -->
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.risotto.presentation.settings.view.SettingsFragment"
+        android:name="com.example.risotto.presentation.settings.views.SettingsFragment"
         android:label="@string/nav_settings"
         tools:layout="@layout/fragment_settings" />
 

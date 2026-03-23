@@ -34,6 +34,7 @@
     <color name="status_error">#FF3B30</color>
     <color name="status_success">#34C759</color>
     <color name="status_warning">#FF9500</color>
+    <color name="error_color">@color/status_error</color>
 
     <!-- ── Divider / Border ── -->
     <color name="divider_light">#E5E5EA</color>
