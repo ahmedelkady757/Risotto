@@ -1,32 +1,31 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.services)
 }
 
 android {
-    namespace 'com.example.risotto'
-    compileSdk {
-        version = release(36)
-    }
+    namespace = 'com.example.risotto'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "com.example.risotto"
-        minSdk 24
-        targetSdk 36
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.example.risotto"
+        minSdk = 24
+        targetSdk = 36
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
@@ -35,6 +34,50 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+
+    // Network
+    implementation libs.swiperefreshlayout
+    implementation libs.retrofit
+    implementation libs.retrofit.converter.gson
+    implementation libs.retrofit.adapter.rxjava3
+    implementation libs.okhttp
+    implementation libs.okhttp.logging.interceptor
+
+    // RxJava
+    implementation libs.rxjava
+    implementation libs.rxandroid
+    // Navigation
+    implementation libs.navigation.fragment
+    implementation libs.navigation.ui
+    implementation libs.androidx.navigation.fragment
+    implementation libs.androidx.navigation.ui
+
+    // Image loading
+    implementation libs.glide
+    annotationProcessor libs.glide.compiler
+
+    implementation libs.youtube.player.core
+
+    // Firebase (BOM ensures all Firebase libs use compatible versions)
+    implementation platform(libs.firebase.bom)
+    implementation libs.firebase.auth
+
+    // Google Sign-In via Credential Manager
+    implementation libs.credentials
+    implementation libs.credentials.play.services.auth
+    implementation libs.googleid
+
+    // Lottie animations
+    implementation libs.lottie
+
+    // Room
+    implementation libs.room.runtime
+    annotationProcessor libs.room.compiler
+    implementation libs.room.rxjava3
+
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core

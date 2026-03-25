@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Semi-transparent white pill used on the Meal of Day card
+    to show the origin country / area label on top of the hero image.
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#55FFFFFF" />
+    <corners android:radius="20dp" />
+
+</shape>
