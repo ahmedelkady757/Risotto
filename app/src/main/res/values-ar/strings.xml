@@ -46,6 +46,7 @@
     <!-- ── Search ── -->
     <string name="search_hint">ابحث عن وجبتك المفضلة…</string>
     <string name="search_no_results">لم يتم العثور على وجبات لهذا البحث</string>
+    <string name="search_no_results_subtitle">لم نتمكن من العثور على أي وجبة تطابق بحثك. جرب كلمة رئيسية أخرى!</string>
     <string name="search_error">حدث خطأ أثناء البحث</string>
     <string name="search_start_typing">ابدأ الكتابة للعثور على وجبات لذيذة</string>
 

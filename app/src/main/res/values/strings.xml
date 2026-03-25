@@ -81,6 +81,7 @@
     <!-- ── Search ── -->
     <string name="search_hint">Find your favorite meal…</string>
     <string name="search_no_results">No meals found for this query</string>
+    <string name="search_no_results_subtitle">We couldn\u0027t find any meal matching your search. Try another keyword!</string>
     <string name="search_error">An error occurred during search</string>
     <string name="search_start_typing">Start typing to find delicious meals</string>
 </resources>

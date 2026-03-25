@@ -35,6 +35,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
     private EditText etSearch;
     private RecyclerView rvResults;
     private View viewEmptyState;
+    private View viewNoResults;
     private TextView tvEmptyMessage;
     private View viewLoading;
 
@@ -75,6 +76,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
         etSearch = view.findViewById(R.id.et_search);
         rvResults = view.findViewById(R.id.rv_search_results);
         viewEmptyState = view.findViewById(R.id.view_empty_state);
+        viewNoResults = view.findViewById(R.id.view_no_results);
         tvEmptyMessage = view.findViewById(R.id.tv_empty_message);
         viewLoading = view.findViewById(R.id.view_loading);
 
@@ -131,8 +133,10 @@ public class SearchFragment extends Fragment implements MealSearchView {
         adapter.submitList(meals);
         if (meals.isEmpty()) {
             rvResults.setVisibility(View.GONE);
+            viewNoResults.setVisibility(View.VISIBLE);
         } else {
             rvResults.setVisibility(View.VISIBLE);
+            viewNoResults.setVisibility(View.GONE);
             hideEmptyState();
         }
     }
@@ -154,7 +158,13 @@ public class SearchFragment extends Fragment implements MealSearchView {
 
     @Override
     public void showEmptyState(String message) {
-        viewEmptyState.setVisibility(View.VISIBLE);
+        if (message.contains("typing")) {
+            viewEmptyState.setVisibility(View.VISIBLE);
+            viewNoResults.setVisibility(View.GONE);
+        } else {
+            viewEmptyState.setVisibility(View.GONE);
+            viewNoResults.setVisibility(View.VISIBLE);
+        }
         tvEmptyMessage.setText(message);
         rvResults.setVisibility(View.GONE);
     }
@@ -162,6 +172,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
     @Override
     public void hideEmptyState() {
         viewEmptyState.setVisibility(View.GONE);
+        viewNoResults.setVisibility(View.GONE);
     }
 
     @Override
