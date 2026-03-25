@@ -34,14 +34,6 @@ public class MealRemoteDataSourceImpl implements MealRemoteDataSource {
 
 
     @Override
-    public Single<List<Meal>> getLatestMeals() {
-        AppLogger.d("RemoteDataSource: getLatestMeals");
-        return apiService.getLatestMeals()
-                .map(response -> MealMapper.fromDtoList(response.getMeals()));
-    }
-
-
-    @Override
     public Single<Meal> getMealById(String id) {
         AppLogger.d("RemoteDataSource: getMealById → " + id);
         return apiService.getMealById(id)
@@ -60,12 +52,7 @@ public class MealRemoteDataSourceImpl implements MealRemoteDataSource {
                 .map(response -> MealMapper.fromDtoList(response.getMeals()));
     }
 
-    @Override
-    public Single<List<Meal>> searchMealsByFirstLetter(String letter) {
-        AppLogger.d("RemoteDataSource: searchMealsByFirstLetter → " + letter);
-        return apiService.searchMealsByFirstLetter(letter)
-                .map(response -> MealMapper.fromDtoList(response.getMeals()));
-    }
+
 
 
     @Override
@@ -83,39 +70,6 @@ public class MealRemoteDataSourceImpl implements MealRemoteDataSource {
                 .map(response -> MealMapper.fromFilterDtoList(response.getMeals()));
     }
 
-    @Override
-    public Single<List<Meal>> filterByArea(String area) {
-        AppLogger.d("RemoteDataSource: filterByArea → " + area);
-        return apiService.filterByArea(area)
-                .map(response -> MealMapper.fromFilterDtoList(response.getMeals()));
-    }
-
-    @Override
-    public Single<List<Meal>> filterByIngredient(String ingredient) {
-        AppLogger.d("RemoteDataSource: filterByIngredient → " + ingredient);
-        return apiService.filterByIngredient(ingredient)
-                .map(response -> MealMapper.fromFilterDtoList(response.getMeals()));
-    }
 
 
-    @Override
-    public Single<List<Meal>> listAllAreas() {
-        AppLogger.d("RemoteDataSource: listAllAreas");
-        return apiService.listAllAreas("list")
-                .map(response -> MealMapper.fromDtoList(response.getMeals()));
-    }
-
-    @Override
-    public Single<List<Meal>> listAllCategories() {
-        AppLogger.d("RemoteDataSource: listAllCategories");
-        return apiService.listAllCategories("list")
-                .map(response -> MealMapper.fromDtoList(response.getMeals()));
-    }
-
-    @Override
-    public Single<List<Meal>> listAllIngredients() {
-        AppLogger.d("RemoteDataSource: listAllIngredients");
-        return apiService.listAllIngredients("list")
-                .map(response -> MealMapper.fromDtoList(response.getMeals()));
-    }
 }

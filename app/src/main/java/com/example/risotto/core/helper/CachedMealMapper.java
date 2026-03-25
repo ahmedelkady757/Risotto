@@ -35,4 +35,13 @@ public class CachedMealMapper {
                 meal.getIngredients()
         );
     }
+
+    public static List<Meal> toMealList(List<com.example.risotto.data.db.entity.CachedMealEntity> entities) {
+        if (entities == null) return new java.util.ArrayList<>();
+        List<Meal> meals = new java.util.ArrayList<>();
+        for (com.example.risotto.data.db.entity.CachedMealEntity entity : entities) {
+            meals.add(toMeal(entity));
+        }
+        return meals;
+    }
 }

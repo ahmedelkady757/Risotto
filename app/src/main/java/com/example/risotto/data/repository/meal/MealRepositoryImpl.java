@@ -37,17 +37,7 @@ public class MealRepositoryImpl implements MealRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    @Override
-    public Single<List<Meal>> getLatestMeals() {
-        AppLogger.d("MealRepository: getLatestMeals");
-        return remoteDataSource.getLatestMeals()
-                .onErrorResumeNext(error -> {
-                    AppLogger.w("MealRepository: Network failed, trying local cache for top meals");
-                    return localDataSource.getCachedTopMeals();
-                })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
+
 
     @Override
     public Single<List<Category>> getCategories() {
@@ -56,7 +46,7 @@ public class MealRepositoryImpl implements MealRepository {
                 .flatMap(categories -> localDataSource.cacheCategories(categories).toSingleDefault(categories))
                 .onErrorResumeNext(error -> {
                     AppLogger.w("MealRepository: Network failed, trying local cache for categories");
-                    return localDataSource.getCachedCategories();
+                    return localDataSource.getCachedCategories().firstOrError();
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -85,13 +75,7 @@ public class MealRepositoryImpl implements MealRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    @Override
-    public Single<List<Meal>> searchMealsByFirstLetter(String letter) {
-        AppLogger.d("MealRepository: searchMealsByFirstLetter → " + letter);
-        return remoteDataSource.searchMealsByFirstLetter(letter)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
+
 
     @Override
     public Single<List<Meal>> filterByCategory(String category) {
@@ -104,41 +88,10 @@ public class MealRepositoryImpl implements MealRepository {
                 })
                 .onErrorResumeNext(error -> {
                     AppLogger.w("MealRepository: Network failed, trying local cache for filterByCategory");
-                    return localDataSource.getCachedTopMeals();
+                    return localDataSource.getCachedTopMeals().firstOrError();
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    @Override
-    public Single<List<Meal>> filterByArea(String area) {
-        AppLogger.d("MealRepository: filterByArea → " + area);
-        return remoteDataSource.filterByArea(area)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public Single<List<Meal>> filterByIngredient(String ingredient) {
-        AppLogger.d("MealRepository: filterByIngredient → " + ingredient);
-        return remoteDataSource.filterByIngredient(ingredient)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public Single<List<Meal>> listAllAreas() {
-        AppLogger.d("MealRepository: listAllAreas");
-        return remoteDataSource.listAllAreas()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    @Override
-    public Single<List<Meal>> listAllIngredients() {
-        AppLogger.d("MealRepository: listAllIngredients");
-        return remoteDataSource.listAllIngredients()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
 }

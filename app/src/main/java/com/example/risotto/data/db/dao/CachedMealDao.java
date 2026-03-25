@@ -8,6 +8,7 @@ import androidx.room.Query;
 import com.example.risotto.data.db.entity.CachedMealEntity;
 
 import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 @Dao
@@ -20,7 +21,7 @@ public interface CachedMealDao {
     Single<CachedMealEntity> getMealById(String mealId);
 
     @Query("SELECT * FROM cached_meals LIMIT 10")
-    Single<java.util.List<CachedMealEntity>> getTopMeals();
+    Flowable<java.util.List<CachedMealEntity>> getTopMeals();
 
     @Query("SELECT * FROM cached_meals ORDER BY RANDOM() LIMIT 1")
     Single<CachedMealEntity> getRandomMeal();

@@ -27,4 +27,22 @@ public class CachedCategoryMapper {
                 category.getDescription()
         );
     }
+
+    public static List<Category> toCategoryList(List<com.example.risotto.data.db.entity.CachedCategoryEntity> entities) {
+        if (entities == null) return new java.util.ArrayList<>();
+        List<Category> categories = new java.util.ArrayList<>();
+        for (com.example.risotto.data.db.entity.CachedCategoryEntity entity : entities) {
+            categories.add(toCategory(entity));
+        }
+        return categories;
+    }
+
+    public static List<com.example.risotto.data.db.entity.CachedCategoryEntity> toEntityList(List<Category> categories) {
+        if (categories == null) return new java.util.ArrayList<>();
+        List<com.example.risotto.data.db.entity.CachedCategoryEntity> entities = new java.util.ArrayList<>();
+        for (Category category : categories) {
+            entities.add(toEntity(category));
+        }
+        return entities;
+    }
 }
