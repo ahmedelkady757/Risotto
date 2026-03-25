@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
+import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.presentation.home.presenter.HomePresenter;
 import com.example.risotto.presentation.home.presenter.HomePresenterImpl;
 import com.google.android.material.snackbar.Snackbar;
@@ -123,12 +125,12 @@ public class HomeFragment extends Fragment implements HomeView {
                 .create(MealDBApiService.class);
         MealRemoteDataSourceImpl remoteDataSource = new MealRemoteDataSourceImpl(apiService);
 
-        com.example.risotto.data.db.AppDatabase db = com.example.risotto.data.db.AppDatabase.getInstance(requireContext());
-        com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl mealLocal =
-                new com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao());
+      AppDatabase db = AppDatabase.getInstance(requireContext());
+      MealLocalDataSourceImpl mealLocal =
+                new MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao());
 
         MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource, mealLocal);
-        presenter = new HomePresenterImpl(repository);
+        presenter = new HomePresenterImpl(requireContext(), repository);
     }
 
 

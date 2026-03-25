@@ -1,6 +1,11 @@
 package com.example.risotto.presentation.auth.presenter;
 
+import com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSource;
+import com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl;
+import com.example.risotto.data.network.services.FirebaseService;
+import com.example.risotto.data.network.services.FirebaseServiceImpl;
 import com.example.risotto.data.repository.auth.AuthRepository;
+import com.example.risotto.data.repository.auth.AuthRepositoryImpl;
 import com.example.risotto.presentation.auth.views.SplashView;
 
 public class SplashPresenterImpl implements SplashPresenter {
@@ -9,9 +14,9 @@ public class SplashPresenterImpl implements SplashPresenter {
     private SplashView view;
 
     public SplashPresenterImpl(android.content.Context context) {
-        com.example.risotto.data.network.services.FirebaseService service = new com.example.risotto.data.network.services.FirebaseServiceImpl();
-        com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSource dataSource = new com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl(service);
-        this.repository = new com.example.risotto.data.repository.auth.AuthRepositoryImpl(dataSource);
+        FirebaseService service = new FirebaseServiceImpl();
+        AuthRemoteDataSource dataSource = new AuthRemoteDataSourceImpl(service);
+        this.repository = new AuthRepositoryImpl(dataSource);
     }
 
     @Override

@@ -9,6 +9,7 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.risotto.core.utils.NetworkHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.risotto.R;
@@ -37,57 +38,29 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupNetworkListener() {
         tvOfflineBanner = findViewById(R.id.tv_offline_banner);
-        android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(
-                android.content.Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager == null)
-            return;
-
-        networkCallback = new android.net.ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onAvailable(@NonNull android.net.Network network) {
-                runOnUiThread(() -> {
-                    if (tvOfflineBanner != null)
-                        tvOfflineBanner.setVisibility(android.view.View.GONE);
-                });
-            }
-
-            @Override
-            public void onLost(@NonNull android.net.Network network) {
-                runOnUiThread(() -> {
-                    if (tvOfflineBanner != null)
-                        tvOfflineBanner.setVisibility(android.view.View.VISIBLE);
-                });
-            }
-        };
-
-        android.net.NetworkRequest request = new android.net.NetworkRequest.Builder()
-                .addCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                .build();
-        connectivityManager.registerNetworkCallback(request, networkCallback);
-
-        // Check initial state
-        boolean isConnected = false;
-        android.net.Network activeNetwork = connectivityManager.getActiveNetwork();
-        if (activeNetwork != null) {
-            android.net.NetworkCapabilities caps = connectivityManager.getNetworkCapabilities(activeNetwork);
-            isConnected = caps != null && caps.hasCapability(android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET);
+        if (tvOfflineBanner != null) {
+            tvOfflineBanner.setText(R.string.error_offline_banner);
         }
 
-        if (!isConnected && tvOfflineBanner != null) {
-            tvOfflineBanner.setVisibility(android.view.View.VISIBLE);
+        networkCallback = NetworkHelper.registerNetworkCallback(this, isConnected -> {
+            runOnUiThread(() -> {
+                if (tvOfflineBanner != null) {
+                    tvOfflineBanner.setVisibility(isConnected ? android.view.View.GONE : android.view.View.VISIBLE);
+                }
+            });
+        });
+
+        // Initial check
+        boolean currentlyConnected = NetworkHelper.isConnected(this);
+        if (tvOfflineBanner != null) {
+            tvOfflineBanner.setVisibility(currentlyConnected ? android.view.View.GONE : android.view.View.VISIBLE);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (networkCallback != null) {
-            android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(
-                    android.content.Context.CONNECTIVITY_SERVICE);
-            if (connectivityManager != null) {
-                connectivityManager.unregisterNetworkCallback(networkCallback);
-            }
-        }
+       NetworkHelper.unregisterNetworkCallback(this, networkCallback);
     }
 
     private void setupNavController() {

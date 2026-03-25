@@ -13,13 +13,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealDetailPresenterImpl implements MealDetailPresenter {
 
+    private final android.content.Context context;
     private final MealRepository repository;
     private final FavoriteRepository favoriteRepository;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
     private MealDetailView view;
 
-    public MealDetailPresenterImpl(MealRepository repository, FavoriteRepository favoriteRepository) {
+    public MealDetailPresenterImpl(android.content.Context context, MealRepository repository, FavoriteRepository favoriteRepository) {
+        this.context = context;
         this.repository = repository;
         this.favoriteRepository = favoriteRepository;
     }
@@ -64,7 +66,7 @@ public class MealDetailPresenterImpl implements MealDetailPresenter {
                         error -> {
                             if (view == null) return;
                             view.hideLoading();
-                            view.showError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
+                            view.showError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(context, error));
                         }
                 );
 

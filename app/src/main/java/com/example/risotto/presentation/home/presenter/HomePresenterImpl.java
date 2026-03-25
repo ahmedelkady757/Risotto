@@ -1,5 +1,6 @@
 package com.example.risotto.presentation.home.presenter;
 
+import com.example.risotto.core.utils.ErrorMapper;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.repository.meal.MealRepository;
@@ -13,6 +14,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomePresenterImpl implements HomePresenter {
 
+    private final android.content.Context context;
     private final MealRepository repository;
     private final CompositeDisposable disposables = new CompositeDisposable();
 
@@ -22,7 +24,8 @@ public class HomePresenterImpl implements HomePresenter {
     private static java.util.List<Category> cachedCategories;
     private static java.util.List<Meal> cachedTopMeals;
 
-    public HomePresenterImpl(MealRepository repository) {
+    public HomePresenterImpl(android.content.Context context, MealRepository repository) {
+        this.context = context;
         this.repository = repository;
     }
 
@@ -81,7 +84,7 @@ public class HomePresenterImpl implements HomePresenter {
                         error -> {
                             if (view != null) {
                                 view.hideLoading();
-                                view.showMealOfDayError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
+                                view.showMealOfDayError(ErrorMapper.getErrorMessage(context, error));
                             }
                         }
                 );
@@ -115,7 +118,7 @@ public class HomePresenterImpl implements HomePresenter {
                         },
                         error -> {
                             if (view != null) {
-                                view.showCategoriesError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
+                                view.showCategoriesError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(context, error));
                             }
                         }
                 );
@@ -151,7 +154,7 @@ public class HomePresenterImpl implements HomePresenter {
                         },
                         error -> {
                             if (view != null) {
-                                view.showTopMealsError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(error));
+                                view.showTopMealsError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(context, error));
                             }
                         }
                 );

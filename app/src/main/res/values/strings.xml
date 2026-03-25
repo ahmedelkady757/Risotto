@@ -65,6 +65,14 @@
     <string name="auth_error_password_required">Password is required</string>
     <string name="auth_error_unexpected">Unexpected credential type</string>
     <string name="auth_error_google_failed">Google sign-in canceled or failed</string>
+    <!-- ── Error Handling ── -->
+    <string name="error_network">No internet connection. Please check your network and try again.</string>
+    <string name="error_timeout">Connection timed out. Please try again.</string>
+    <string name="error_auth_invalid_credentials">Invalid email or password.</string>
+    <string name="error_auth_user_exists">This email is already registered.</string>
+    <string name="error_auth_weak_password">Password is too weak.</string>
+    <string name="error_auth_generic">Authentication failed. Please try again.</string>
+    <string name="error_offline_banner">Offline Mode</string>
 
     <!-- Google Sign-In Web Client ID -->
     <string name="default_web_client_id" translatable="false">2908724283-oemvnf7k8ukiutes717880lg207mi7hh.apps.googleusercontent.com</string>

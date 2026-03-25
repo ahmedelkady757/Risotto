@@ -1,8 +1,8 @@
 package com.example.risotto.presentation.auth.presenter;
 
-import android.text.TextUtils;
-import android.util.Patterns;
-
+import com.example.risotto.R;
+import com.example.risotto.core.utils.AuthValidator;
+import com.example.risotto.core.utils.ErrorMapper;
 import com.example.risotto.data.repository.auth.AuthRepository;
 import com.example.risotto.presentation.auth.views.LoginView;
 import com.google.firebase.auth.AuthCredential;
@@ -44,19 +44,19 @@ public class LoginPresenterImpl implements LoginPresenter {
         view.clearErrors();
 
         boolean hasError = false;
-        if (TextUtils.isEmpty(email)) {
-            view.showEmailError(context.getString(com.example.risotto.R.string.auth_error_email_required));
+        if (!AuthValidator.isNotEmpty(email)) {
+            view.showEmailError(context.getString(R.string.auth_error_email_required));
             hasError = true;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            view.showEmailError(context.getString(com.example.risotto.R.string.auth_error_invalid_email));
+        } else if (!AuthValidator.isValidEmail(email)) {
+            view.showEmailError(context.getString(R.string.auth_error_invalid_email));
             hasError = true;
         }
 
-        if (TextUtils.isEmpty(password)) {
-            view.showPasswordError(context.getString(com.example.risotto.R.string.auth_error_password_required));
+        if (!AuthValidator.isNotEmpty(password)) {
+            view.showPasswordError(context.getString(R.string.auth_error_password_required));
             hasError = true;
-        } else if (password.length() < 6) {
-            view.showPasswordError(context.getString(com.example.risotto.R.string.auth_error_short_password));
+        } else if (!AuthValidator.isValidPassword(password)) {
+            view.showPasswordError(context.getString(R.string.auth_error_short_password));
             hasError = true;
         }
 
@@ -77,7 +77,7 @@ public class LoginPresenterImpl implements LoginPresenter {
                         error -> {
                             if (view != null) {
                                 view.hideLoading();
-                                view.showError(error.getMessage());
+                                view.showError(ErrorMapper.getErrorMessage(context, error));
                             }
                         }
                 );
