@@ -2,7 +2,7 @@ package com.example.risotto.presentation.search.presenter;
 
 import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.repository.meal.MealRepository;
-import com.example.risotto.presentation.search.view.MealSearchView;
+import com.example.risotto.presentation.search.views.MealSearchView;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

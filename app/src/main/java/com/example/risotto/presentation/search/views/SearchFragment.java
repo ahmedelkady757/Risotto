@@ -1,13 +1,11 @@
-package com.example.risotto.presentation.categories.view;
+package com.example.risotto.presentation.search.views;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,31 +23,29 @@ import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.NetworkModule;
-import com.example.risotto.data.network.api.MealDBApiService;
+import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
-import com.example.risotto.presentation.categories.presenter.CategoryMealsPresenter;
-import com.example.risotto.presentation.categories.presenter.CategoryMealsPresenterImpl;
-import com.example.risotto.presentation.search.view.MealAdapter;
+import com.example.risotto.presentation.search.presenter.SearchPresenter;
+import com.example.risotto.presentation.search.presenter.SearchPresenterImpl;
 
 import java.util.List;
 
-public class CategoryMealsFragment extends Fragment implements CategoryMealsView {
+public class SearchFragment extends Fragment implements MealSearchView {
 
-    private String categoryName;
-    private TextView tvCategoryTitle;
     private EditText etSearch;
-    private RecyclerView rvMeals;
+    private RecyclerView rvResults;
+    private View viewEmptyState;
+    private View viewNoResults;
+    private TextView tvEmptyMessage;
     private View viewLoading;
-    
-    private CategoryMealsPresenter presenter;
-    private com.example.risotto.presentation.search.view.MealAdapter adapter;
+
+    private SearchPresenter presenter;
+    private MealAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            categoryName = getArguments().getString("categoryName");
-        }
+        AppLogger.logFragment("SearchFragment", "onCreate");
         initPresenter();
     }
 
@@ -58,7 +54,7 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
         MealDBApiService apiService = NetworkModule.getInstance()
                 .getRetrofit().create(MealDBApiService.class);
 
-        presenter = new CategoryMealsPresenterImpl(
+        presenter = new SearchPresenterImpl(
                 new MealRepositoryImpl(
                         new MealRemoteDataSourceImpl(apiService),
                         new MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao())));
@@ -67,70 +63,81 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_category_meals, container, false);
+            @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("CategoryMealsFragment", "onViewCreated: " + categoryName);
+        AppLogger.logFragment("SearchFragment", "onViewCreated");
 
-        tvCategoryTitle = view.findViewById(R.id.tv_category_title);
-        etSearch = view.findViewById(R.id.et_category_search);
-        rvMeals = view.findViewById(R.id.rv_category_meals);
+        etSearch = view.findViewById(R.id.et_search);
+        rvResults = view.findViewById(R.id.rv_search_results);
+        viewEmptyState = view.findViewById(R.id.view_empty_state);
+        viewNoResults = view.findViewById(R.id.view_no_results);
+        tvEmptyMessage = view.findViewById(R.id.tv_empty_message);
         viewLoading = view.findViewById(R.id.view_loading);
-
-        if (categoryName != null) {
-            tvCategoryTitle.setText(categoryName);
-        }
 
         setupRecyclerView();
         setupSearchListener();
 
         presenter.attachView(this);
-        if (categoryName != null) {
-            presenter.loadMealsByCategory(categoryName);
-        }
     }
 
     private void setupRecyclerView() {
-        adapter = new com.example.risotto.presentation.search.view.MealAdapter(meal -> {
+        adapter = new MealAdapter(meal -> {
             Bundle bundle = new Bundle();
             bundle.putString("mealId", meal.getId());
             Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
         });
-        rvMeals.setAdapter(adapter);
+        rvResults.setAdapter(adapter);
     }
 
     private void setupSearchListener() {
         etSearch.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                presenter.filterMeals(s.toString());
+                presenter.search(s.toString());
             }
-            @Override public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            hideKeyboard();
-            return true;
+            if (actionId == android.view.inputmethod.EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard();
+                return true;
+            }
+            return false;
         });
     }
 
     private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        android.view.inputmethod.InputMethodManager imm = (android.view.inputmethod.InputMethodManager) requireContext()
+                .getSystemService(android.content.Context.INPUT_METHOD_SERVICE);
         if (imm != null && etSearch != null) {
             imm.hideSoftInputFromWindow(etSearch.getWindowToken(), 0);
         }
     }
 
     @Override
-    public void showMeals(List<Meal> meals) {
-        if (adapter != null) {
-            adapter.submitList(meals);
+    public void showResults(List<Meal> meals) {
+        adapter.submitList(meals);
+        if (meals.isEmpty()) {
+            rvResults.setVisibility(View.GONE);
+            viewNoResults.setVisibility(View.VISIBLE);
+        } else {
+            rvResults.setVisibility(View.VISIBLE);
+            viewNoResults.setVisibility(View.GONE);
+            hideEmptyState();
         }
     }
 
@@ -147,6 +154,25 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
     @Override
     public void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showEmptyState(String message) {
+        if (message.contains("typing")) {
+            viewEmptyState.setVisibility(View.VISIBLE);
+            viewNoResults.setVisibility(View.GONE);
+        } else {
+            viewEmptyState.setVisibility(View.GONE);
+            viewNoResults.setVisibility(View.VISIBLE);
+        }
+        tvEmptyMessage.setText(message);
+        rvResults.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideEmptyState() {
+        viewEmptyState.setVisibility(View.GONE);
+        viewNoResults.setVisibility(View.GONE);
     }
 
     @Override

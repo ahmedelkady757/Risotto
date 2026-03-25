@@ -8,8 +8,10 @@ public class SplashPresenterImpl implements SplashPresenter {
     private final AuthRepository repository;
     private SplashView view;
 
-    public SplashPresenterImpl(AuthRepository repository) {
-        this.repository = repository;
+    public SplashPresenterImpl(android.content.Context context) {
+        com.example.risotto.data.network.services.FirebaseService service = new com.example.risotto.data.network.services.FirebaseServiceImpl();
+        com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSource dataSource = new com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl(service);
+        this.repository = new com.example.risotto.data.repository.auth.AuthRepositoryImpl(dataSource);
     }
 
     @Override

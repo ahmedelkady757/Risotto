@@ -5,7 +5,7 @@ import com.example.risotto.core.helper.MealMapper;
 import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
-import com.example.risotto.data.network.api.MealDBApiService;
+import com.example.risotto.data.network.services.MealDBApiService;
 
 import java.util.List;
 

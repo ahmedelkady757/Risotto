@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.search.view;
+package com.example.risotto.presentation.search.views;
 
 import com.example.risotto.data.model.Meal;
 import java.util.List;

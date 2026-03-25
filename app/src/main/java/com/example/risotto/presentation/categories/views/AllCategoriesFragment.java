@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.categories.view;
+package com.example.risotto.presentation.categories.views;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +19,7 @@ import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.network.NetworkModule;
-import com.example.risotto.data.network.api.MealDBApiService;
+import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 import com.example.risotto.presentation.categories.presenter.AllCategoriesPresenter;
 import com.example.risotto.presentation.categories.presenter.AllCategoriesPresenterImpl;

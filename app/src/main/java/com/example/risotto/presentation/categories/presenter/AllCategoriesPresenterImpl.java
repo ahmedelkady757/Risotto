@@ -2,7 +2,7 @@ package com.example.risotto.presentation.categories.presenter;
 
 import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.repository.meal.MealRepository;
-import com.example.risotto.presentation.categories.view.AllCategoriesView;
+import com.example.risotto.presentation.categories.views.AllCategoriesView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;

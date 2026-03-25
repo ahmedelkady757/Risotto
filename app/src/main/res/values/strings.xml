@@ -57,9 +57,12 @@
     <string name="auth_have_account">Already have an account?</string>
     <string name="auth_btn_signin_link">Sign In</string>
     <string name="auth_or">or</string>
+    <string name="auth_error_username_required">Username is required</string>
     <string name="auth_error_empty_fields">Please fill in all fields</string>
     <string name="auth_error_invalid_email">Enter a valid email address</string>
     <string name="auth_error_short_password">Password must be at least 6 characters</string>
+    <string name="auth_error_email_required">Email is required</string>
+    <string name="auth_error_password_required">Password is required</string>
     <string name="auth_error_unexpected">Unexpected credential type</string>
     <string name="auth_error_google_failed">Google sign-in canceled or failed</string>
 

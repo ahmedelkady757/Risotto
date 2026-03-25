@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.categories.view;
+package com.example.risotto.presentation.categories.views;
 
 import com.example.risotto.data.model.Category;
 import java.util.List;

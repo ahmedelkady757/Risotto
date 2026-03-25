@@ -85,7 +85,7 @@
     <!-- ── Categories ── -->
     <fragment
         android:id="@+id/allCategoriesFragment"
-        android:name="com.example.risotto.presentation.categories.view.AllCategoriesFragment"
+        android:name="com.example.risotto.presentation.categories.views.AllCategoriesFragment"
         android:label="@string/home_categories"
         tools:layout="@layout/fragment_all_categories">
 
@@ -98,7 +98,7 @@
     <!-- ── Category Meals ── -->
     <fragment
         android:id="@+id/categoryMealsFragment"
-        android:name="com.example.risotto.presentation.categories.view.CategoryMealsFragment"
+        android:name="com.example.risotto.presentation.categories.views.CategoryMealsFragment"
         android:label="Category Meals"
         tools:layout="@layout/fragment_category_meals">
 
@@ -111,7 +111,7 @@
     <!-- ── Search ── -->
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.risotto.presentation.search.view.SearchFragment"
+        android:name="com.example.risotto.presentation.search.views.SearchFragment"
         android:label="@string/nav_search"
         tools:layout="@layout/fragment_search" />
 

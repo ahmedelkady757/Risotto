@@ -54,10 +54,7 @@ public class LoginFragment extends Fragment implements LoginView {
     }
 
     private void initPresenter() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        AuthRemoteDataSourceImpl remoteDataSource = new AuthRemoteDataSourceImpl(auth);
-        AuthRepositoryImpl repository = new AuthRepositoryImpl(remoteDataSource);
-        presenter = new LoginPresenterImpl(repository);
+        presenter = new LoginPresenterImpl(requireContext());
     }
 
     @Nullable
@@ -87,7 +84,7 @@ public class LoginFragment extends Fragment implements LoginView {
             presenter.loginWithEmail(email, password);
         });
 
-        view.findViewById(R.id.btn_google).setOnClickListener(v -> handleGoogleSignIn());
+        view.findViewById(R.id.btn_google).setOnClickListener(v -> presenter.onGoogleSignInClicked());
         view.findViewById(R.id.btn_guest).setOnClickListener(v -> presenter.loginAsGuest());
         view.findViewById(R.id.btn_go_register).setOnClickListener(v ->
                 Navigation.findNavController(view).navigate(R.id.action_login_to_register));
@@ -190,6 +187,11 @@ public class LoginFragment extends Fragment implements LoginView {
     @Override
     public void showPasswordError(String message) {
         if (tilPassword != null) tilPassword.setError(message);
+    }
+
+    @Override
+    public void showGoogleSignInPicker() {
+        handleGoogleSignIn();
     }
 
     private String text(TextInputEditText et) {

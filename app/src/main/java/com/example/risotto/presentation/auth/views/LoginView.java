@@ -8,4 +8,5 @@ public interface LoginView {
     void clearErrors();
     void showEmailError(String message);
     void showPasswordError(String message);
+    void showGoogleSignInPicker();
 }

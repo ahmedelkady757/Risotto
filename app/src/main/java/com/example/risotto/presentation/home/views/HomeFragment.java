@@ -19,7 +19,7 @@ import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
-import com.example.risotto.data.network.api.MealDBApiService;
+import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.network.NetworkModule;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 

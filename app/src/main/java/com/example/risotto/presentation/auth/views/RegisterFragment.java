@@ -42,10 +42,7 @@ public class RegisterFragment extends Fragment implements RegisterView {
     }
 
     private void initPresenter() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        AuthRemoteDataSourceImpl remoteDataSource = new AuthRemoteDataSourceImpl(auth);
-        AuthRepositoryImpl repository = new AuthRepositoryImpl(remoteDataSource);
-        presenter = new RegisterPresenterImpl(repository);
+        presenter = new RegisterPresenterImpl(requireContext());
     }
 
     @Nullable

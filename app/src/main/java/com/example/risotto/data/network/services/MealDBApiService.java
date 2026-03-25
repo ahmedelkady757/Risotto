@@ -1,4 +1,4 @@
-package com.example.risotto.data.network.api;
+package com.example.risotto.data.network.services;
 
 import com.example.risotto.data.network.dto.CategoryResponse;
 import com.example.risotto.data.network.dto.FilterResponse;
