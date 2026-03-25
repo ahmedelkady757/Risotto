@@ -11,7 +11,7 @@ import com.example.risotto.data.db.entity.FavoriteMealEntity;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 @Dao
@@ -24,7 +24,7 @@ public interface FavoriteDao {
     Completable deleteFavorite(FavoriteMealEntity favoriteMealEntity);
 
     @Query("SELECT * FROM favorite_meals WHERE userId = :userId")
-    Flowable<List<FavoriteMealEntity>> getFavoritesForUser(String userId);
+    Observable<List<FavoriteMealEntity>> getFavoritesForUser(String userId);
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_meals WHERE userId = :userId AND id = :mealId LIMIT 1)")
     Single<Boolean> isFavorite(String userId, String mealId);

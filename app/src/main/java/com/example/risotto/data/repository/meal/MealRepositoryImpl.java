@@ -9,7 +9,7 @@ import com.example.risotto.data.model.Meal;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public class MealRepositoryImpl implements MealRepository {
@@ -73,12 +73,12 @@ public class MealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public Flowable<List<Meal>> getCachedTopMeals() {
+    public Observable<List<Meal>> getCachedTopMeals() {
         return localDataSource.getCachedTopMeals();
     }
 
     @Override
-    public Flowable<List<Category>> getCachedCategories() {
+    public Observable<List<Category>> getCachedCategories() {
         return localDataSource.getCachedCategories();
     }
 }

@@ -4,7 +4,7 @@ import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
 import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public interface MealLocalDataSource {
@@ -12,7 +12,7 @@ public interface MealLocalDataSource {
     Completable cacheCategories(List<com.example.risotto.data.model.Category> categories);
     
     Single<Meal> getCachedMealById(String id);
-    Flowable<List<Meal>> getCachedTopMeals();
+    Observable<List<Meal>> getCachedTopMeals();
     Single<Meal> getCachedRandomMeal();
-    Flowable<List<Category>> getCachedCategories();
+    Observable<List<Category>> getCachedCategories();
 }

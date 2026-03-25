@@ -8,7 +8,7 @@ import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
 import java.util.List;
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public class MealLocalDataSourceImpl implements MealLocalDataSource {
@@ -38,7 +38,7 @@ public class MealLocalDataSourceImpl implements MealLocalDataSource {
     }
 
     @Override
-    public Flowable<List<Meal>> getCachedTopMeals() {
+    public Observable<List<Meal>> getCachedTopMeals() {
         return cachedMealDao.getTopMeals()
                 .map(CachedMealMapper::toMealList);
     }
@@ -50,7 +50,7 @@ public class MealLocalDataSourceImpl implements MealLocalDataSource {
     }
 
     @Override
-    public Flowable<List<Category>> getCachedCategories() {
+    public Observable<List<Category>> getCachedCategories() {
         return cachedCategoryDao.getAllCategories()
                 .map(CachedCategoryMapper::toCategoryList);
     }

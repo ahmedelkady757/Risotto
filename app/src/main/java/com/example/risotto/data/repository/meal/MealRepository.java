@@ -6,7 +6,7 @@ import com.example.risotto.data.model.Meal;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 
@@ -24,6 +24,6 @@ public interface MealRepository {
     Completable cacheCategories(List<Category> categories);
     Single<Meal> getCachedRandomMeal();
     Single<Meal> getCachedMealById(String id);
-    Flowable<List<Meal>> getCachedTopMeals();
-    Flowable<List<Category>> getCachedCategories();
+    Observable<List<Meal>> getCachedTopMeals();
+    Observable<List<Category>> getCachedCategories();
 }

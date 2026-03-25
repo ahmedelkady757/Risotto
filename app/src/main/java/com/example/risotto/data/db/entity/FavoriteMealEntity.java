@@ -77,33 +77,21 @@ public class FavoriteMealEntity {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
 
     public String getInstructions() {
         return instructions;
     }
 
-    public void setInstructions(String instructions) {
-        this.instructions = instructions;
-    }
 
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
 
-    public void setThumbnailUrl(String thumbnailUrl) {
-        this.thumbnailUrl = thumbnailUrl;
-    }
 
     public String getYoutubeUrl() {
         return youtubeUrl;
     }
 
-    public void setYoutubeUrl(String youtubeUrl) {
-        this.youtubeUrl = youtubeUrl;
-    }
 
     public String getTags() {
         return tags;
