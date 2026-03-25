@@ -56,9 +56,12 @@
     <string name="auth_btn_register">Create Account</string>
     <string name="auth_have_account">Already have an account?</string>
     <string name="auth_btn_signin_link">Sign In</string>
+    <string name="auth_or">or</string>
     <string name="auth_error_empty_fields">Please fill in all fields</string>
     <string name="auth_error_invalid_email">Enter a valid email address</string>
     <string name="auth_error_short_password">Password must be at least 6 characters</string>
+    <string name="auth_error_unexpected">Unexpected credential type</string>
+    <string name="auth_error_google_failed">Google sign-in canceled or failed</string>
 
     <!-- Google Sign-In Web Client ID -->
     <string name="default_web_client_id" translatable="false">2908724283-oemvnf7k8ukiutes717880lg207mi7hh.apps.googleusercontent.com</string>

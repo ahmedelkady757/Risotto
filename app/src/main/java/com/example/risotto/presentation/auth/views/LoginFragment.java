@@ -135,16 +135,16 @@ public class LoginFragment extends Fragment implements LoginView {
                                 AuthCredential authCredential = GoogleAuthProvider.getCredential(googleId.getIdToken(), null);
                                 presenter.loginWithGoogle(authCredential);
                             } else {
-                                showError("Unexpected credential type");
+                                showError(getString(R.string.auth_error_unexpected));
                             }
                         } catch (Exception e) {
-                            showError("Auth error: " + e.getMessage());
+                            showError(e.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(GetCredentialException e) {
-                        showError("Google sign-in canceled or failed");
+                        showError(getString(R.string.auth_error_google_failed));
                     }
                 }
         );
