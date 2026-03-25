@@ -13,5 +13,6 @@ public interface FavoriteRepository {
     Completable removeFavoriteById(String mealId);
     Observable<List<Meal>> getFavorites();
     Single<Boolean> isFavorite(String mealId);
+    Single<Meal> getFavoriteById(String mealId);
     Completable clearFavorites();
 }

@@ -13,5 +13,8 @@ public interface FavoriteLocalDataSource {
     Completable removeFavoriteById(String mealId, String userId);
     Observable<List<Meal>> getFavorites(String userId);
     Single<Boolean> isFavorite(String mealId, String userId);
+
+    Single<Meal> getFavoriteById(String mealId, String userId);
+
     Completable clearFavorites(String userId);
 }

@@ -46,7 +46,12 @@ public class MealDetailPresenterImpl implements MealDetailPresenter {
                         repository.getMealById(mealId)
                                 .flatMap(meal -> repository.cacheMeal(meal).toSingleDefault(meal))
                                 .onErrorResumeNext(error -> {
-                                    return repository.getCachedMealById(mealId);
+                                    // First try the general cache
+                                    return repository.getCachedMealById(mealId)
+                                            .onErrorResumeNext(cacheError -> {
+                                                // If not in general cache, try favorites as a backup
+                                                return favoriteRepository.getFavoriteById(mealId);
+                                            });
                                 }),
                         favoriteRepository.isFavorite(mealId).onErrorReturnItem(false),
                         (meal, isFav) -> {

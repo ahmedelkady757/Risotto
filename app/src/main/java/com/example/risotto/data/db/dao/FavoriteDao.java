@@ -32,6 +32,9 @@ public interface FavoriteDao {
     @Query("DELETE FROM favorite_meals WHERE userId = :userId AND id = :mealId")
     Completable removeFavoriteById(String userId, String mealId);
 
+    @Query("SELECT * FROM favorite_meals WHERE userId = :userId AND id = :mealId LIMIT 1")
+    Single<FavoriteMealEntity> getFavoriteById(String userId, String mealId);
+
     @Query("DELETE FROM favorite_meals WHERE userId = :userId")
     Completable clearFavoritesForUser(String userId);
 }

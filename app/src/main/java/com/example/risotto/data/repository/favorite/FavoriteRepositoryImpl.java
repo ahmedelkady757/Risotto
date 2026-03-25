@@ -49,6 +49,11 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
     }
 
     @Override
+    public Single<Meal> getFavoriteById(String mealId) {
+        return localDataSource.getFavoriteById(mealId, getCurrentUserId());
+    }
+
+    @Override
     public Completable clearFavorites() {
         return localDataSource.clearFavorites(getCurrentUserId());
     }

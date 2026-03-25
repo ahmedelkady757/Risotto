@@ -43,6 +43,12 @@ public class FavoriteLocalDataSourceImpl implements FavoriteLocalDataSource {
     }
 
     @Override
+    public Single<Meal> getFavoriteById(String mealId, String userId) {
+        return favoriteDao.getFavoriteById(userId, mealId)
+                .map(FavoriteMealMapper::toMeal);
+    }
+
+    @Override
     public Completable clearFavorites(String userId) {
         return favoriteDao.clearFavoritesForUser(userId);
     }
