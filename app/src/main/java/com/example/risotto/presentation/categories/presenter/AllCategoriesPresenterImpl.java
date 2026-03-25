@@ -35,6 +35,11 @@ public class AllCategoriesPresenterImpl implements AllCategoriesPresenter {
 
         view.showLoading();
         disposables.add(repository.getCategories()
+                .flatMap(categories -> repository.cacheCategories(categories).toSingleDefault(categories))
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("AllCategoriesPresenter: Remote failed, checking local cache...");
+                    return repository.getCachedCategories().firstOrError();
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

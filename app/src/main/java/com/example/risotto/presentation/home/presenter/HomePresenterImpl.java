@@ -6,8 +6,10 @@ import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.repository.meal.MealRepository;
 import com.example.risotto.presentation.home.views.HomeView;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 public class HomePresenterImpl implements HomePresenter {
@@ -66,6 +68,13 @@ public class HomePresenterImpl implements HomePresenter {
 
         view.showLoading();
         Disposable disposable = repository.getRandomMeal()
+                .flatMap(meal -> repository.cacheMeal(meal).toSingleDefault(meal))
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("HomePresenter: Network failed, trying local cache for random meal");
+                    return repository.getCachedRandomMeal();
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meal -> {
                             if (view == null) return;
@@ -93,6 +102,13 @@ public class HomePresenterImpl implements HomePresenter {
         }
 
         Disposable disposable = repository.getCategories()
+                .flatMap(categories -> repository.cacheCategories(categories).toSingleDefault(categories))
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("HomePresenter: Network failed, trying local cache for categories");
+                    return repository.getCachedCategories().firstOrError();
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         categories -> {
                             if (view == null) return;
@@ -121,7 +137,18 @@ public class HomePresenterImpl implements HomePresenter {
         }
 
         Disposable disposable = repository.filterByCategory("Seafood")
+                .flatMap(meals -> {
+                    return io.reactivex.rxjava3.core.Observable.fromIterable(meals)
+                            .flatMapCompletable(meal -> repository.cacheMeal(meal))
+                            .toSingleDefault(meals);
+                })
+                .onErrorResumeNext(error -> {
+                    AppLogger.w("HomePresenter: Network failed, trying local cache for top meals");
+                    return repository.getCachedTopMeals().firstOrError();
+                })
                 .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         meals -> {
                             if (view == null) return;

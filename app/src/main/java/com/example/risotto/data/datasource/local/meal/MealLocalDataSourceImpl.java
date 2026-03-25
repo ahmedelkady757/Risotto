@@ -6,9 +6,7 @@ import com.example.risotto.data.db.dao.CachedCategoryDao;
 import com.example.risotto.data.db.dao.CachedMealDao;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
-
 import java.util.List;
-
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;

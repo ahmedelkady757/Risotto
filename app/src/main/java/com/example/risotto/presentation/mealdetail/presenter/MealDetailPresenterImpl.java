@@ -44,7 +44,12 @@ public class MealDetailPresenterImpl implements MealDetailPresenter {
         view.showLoading();
 
         Disposable disposable = io.reactivex.rxjava3.core.Single.zip(
-                        repository.getMealById(mealId),
+                        repository.getMealById(mealId)
+                                .flatMap(meal -> repository.cacheMeal(meal).toSingleDefault(meal))
+                                .onErrorResumeNext(error -> {
+                                    AppLogger.w("MealDetailPresenter: Remote failed, using cache for " + mealId);
+                                    return repository.getCachedMealById(mealId);
+                                }),
                         favoriteRepository.isFavorite(mealId).onErrorReturnItem(false),
                         (meal, isFav) -> {
                             meal.setFavorite(isFav);
