@@ -36,6 +36,8 @@
     <string name="home_see_all">عرض الكل</string>
     <string name="home_inspire_title">🍽️  هل أنت مغامر؟</string>
     <string name="home_inspire_body">استكشف مئات الوصفات من حول العالم. ابحث بالمكوّن أو البلد أو الفئة لتجد طبقك المفضّل القادم.</string>
+    <string name="home_top_meals">أفضل الأطباق</string>
+
     <!-- ── Settings ── -->
     <string name="settings_title">الإعدادات</string>
     <string name="settings_account_section">الحساب</string>
@@ -80,4 +82,11 @@
     <string name="locked_message">أنشئ حساباً أو سجل الدخول للوصول إلى هذه الميزة</string>
     <string name="locked_btn_login">تسجيل الدخول</string>
     <string name="locked_btn_signup">إنشاء حساب</string>
+    <!-- ── Confirmation Dialog ── -->
+    <string name="dialog_confirm_remove_favorite_title">إزالة من المفضلة</string>
+    <string name="dialog_confirm_remove_favorite_message">هل أنت متأكد أنك تريد إزالة \"%1$s\" من المفضلة؟</string>
+    <string name="dialog_confirm_clear_all_title">مسح جميع المفضلات</string>
+    <string name="dialog_confirm_clear_all_message">هل أنت متأكد أنك تريد مسح جميع المفضلات؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="dialog_btn_cancel">إلغاء</string>
+    <string name="dialog_btn_confirm">تأكيد</string>
 </resources>

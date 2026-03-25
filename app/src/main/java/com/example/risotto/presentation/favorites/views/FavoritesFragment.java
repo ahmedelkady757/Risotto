@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
 import com.example.risotto.RisottoApp;
+import com.example.risotto.core.ui.dialogs.CustomConfirmDialog;
 import com.example.risotto.data.datasource.local.favorite.FavoriteLocalDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.db.dao.FavoriteDao;
@@ -38,6 +39,7 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
     private LinearLayout layoutEmptyState;
     private android.widget.FrameLayout flContainer;
     private View toolbarView;
+    private android.widget.ImageButton btnClearAll;
     private boolean viewsInitialized = false;
 
     public FavoritesFragment() {
@@ -118,10 +120,23 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
         rvFavorites = view.findViewById(R.id.rv_favorites);
         progressBar = view.findViewById(R.id.progress_bar);
         layoutEmptyState = view.findViewById(R.id.layout_empty_state);
+        btnClearAll = view.findViewById(R.id.btn_clear_all);
+
+        if (btnClearAll != null) {
+            btnClearAll.setOnClickListener(v -> showClearAllConfirmation());
+        }
 
         adapter = new FavoritesAdapter(this);
         rvFavorites.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         rvFavorites.setAdapter(adapter);
+    }
+
+    private void showClearAllConfirmation() {
+        CustomConfirmDialog.newInstance(
+                getString(R.string.dialog_confirm_clear_all_title),
+                getString(R.string.dialog_confirm_clear_all_message),
+                () -> presenter.clearAllFavorites()
+        ).show(getChildFragmentManager(), "clear_all_dialog");
     }
 
     @Override
@@ -129,6 +144,7 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
         progressBar.setVisibility(View.VISIBLE);
         rvFavorites.setVisibility(View.GONE);
         layoutEmptyState.setVisibility(View.GONE);
+        if (btnClearAll != null) btnClearAll.setVisibility(View.GONE);
     }
 
     @Override
@@ -140,6 +156,7 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
     public void showFavorites(List<Meal> meals) {
         rvFavorites.setVisibility(View.VISIBLE);
         layoutEmptyState.setVisibility(View.GONE);
+        if (btnClearAll != null) btnClearAll.setVisibility(View.VISIBLE);
         adapter.submitList(meals);
     }
 
@@ -147,6 +164,7 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
     public void showEmptyState() {
         rvFavorites.setVisibility(View.GONE);
         layoutEmptyState.setVisibility(View.VISIBLE);
+        if (btnClearAll != null) btnClearAll.setVisibility(View.GONE);
     }
 
     @Override
@@ -166,8 +184,11 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
 
     @Override
     public void onFavoriteToggleClick(Meal meal) {
-        // We are on favorites screen, so clicking the toggle implies removing it.
-        presenter.removeFavorite(meal);
+        CustomConfirmDialog.newInstance(
+                getString(R.string.dialog_confirm_remove_favorite_title),
+                getString(R.string.dialog_confirm_remove_favorite_message, meal.getName()),
+                () -> presenter.removeFavorite(meal)
+        ).show(getChildFragmentManager(), "remove_fav_dialog");
     }
 
     @Override
@@ -182,6 +203,7 @@ public class FavoritesFragment extends Fragment implements FavoritesView, Favori
         layoutEmptyState = null;
         flContainer = null;
         toolbarView = null;
+        btnClearAll = null;
         viewsInitialized = false;
     }
 }

@@ -73,4 +73,19 @@ public class FavoritesPresenterImpl implements FavoritesPresenter {
                 );
         disposables.add(disposable);
     }
+
+    @Override
+    public void clearAllFavorites() {
+        disposables.add(repository.clearFavorites()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+                            if (view != null) view.showEmptyState();
+                        },
+                        error -> {
+                            if (view != null) view.showError("Failed to clear favorites: " + error.getMessage());
+                        }
+                ));
+    }
 }

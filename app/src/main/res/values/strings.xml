@@ -87,4 +87,11 @@
     <string name="search_no_results_subtitle">We couldn\u0027t find any meal matching your search. Try another keyword!</string>
     <string name="search_error">An error occurred during search</string>
     <string name="search_start_typing">Start typing to find delicious meals</string>
+    <!-- ── Confirmation Dialog ── -->
+    <string name="dialog_confirm_remove_favorite_title">Remove Favorite</string>
+    <string name="dialog_confirm_remove_favorite_message">Are you sure you want to remove \"%1$s\" from favorites?</string>
+    <string name="dialog_confirm_clear_all_title">Clear All Favorites</string>
+    <string name="dialog_confirm_clear_all_message">Are you sure you want to remove all items from your favorites list? This action cannot be undone.</string>
+    <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_confirm">Confirm</string>
 </resources>

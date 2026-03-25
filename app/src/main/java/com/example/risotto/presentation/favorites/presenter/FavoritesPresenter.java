@@ -8,4 +8,5 @@ public interface FavoritesPresenter {
     void detachView();
     void loadFavorites();
     void removeFavorite(Meal meal);
+    void clearAllFavorites();
 }
