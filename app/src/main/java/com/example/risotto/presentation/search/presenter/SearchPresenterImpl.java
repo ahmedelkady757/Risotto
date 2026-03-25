@@ -17,6 +17,8 @@ public class SearchPresenterImpl implements SearchPresenter {
     private MealSearchView view;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final BehaviorSubject<String> searchSubject = BehaviorSubject.create();
+    private List<com.example.risotto.data.model.Meal> lastResults;
+    private String lastSuccessfulQuery = "";
 
     public SearchPresenterImpl(MealRepository repository) {
         this.repository = repository;
@@ -32,7 +34,7 @@ public class SearchPresenterImpl implements SearchPresenter {
                         if (query.isEmpty()) {
                             view.showResults(java.util.Collections.emptyList());
                             view.showEmptyState("Start typing to find delicious meals");
-                        } else {
+                        } else if (!query.equalsIgnoreCase(lastSuccessfulQuery)) {
                             view.showLoading();
                             view.hideEmptyState();
                         }
@@ -41,10 +43,19 @@ public class SearchPresenterImpl implements SearchPresenter {
                 .observeOn(io.reactivex.rxjava3.schedulers.Schedulers.io())
                 .switchMapSingle(query -> {
                     if (query.isEmpty()) {
+                        lastResults = java.util.Collections.emptyList();
+                        lastSuccessfulQuery = "";
                         return io.reactivex.rxjava3.core.Single
                                 .just(java.util.Collections.<com.example.risotto.data.model.Meal>emptyList());
                     }
+                    if (query.equalsIgnoreCase(lastSuccessfulQuery) && lastResults != null) {
+                        return io.reactivex.rxjava3.core.Single.just(lastResults);
+                    }
                     return repository.searchMealsByName(query)
+                            .doOnSuccess(meals -> {
+                                lastResults = (List<com.example.risotto.data.model.Meal>) meals;
+                                lastSuccessfulQuery = query;
+                            })
                             .onErrorReturnItem(java.util.Collections.<com.example.risotto.data.model.Meal>emptyList());
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -71,6 +82,11 @@ public class SearchPresenterImpl implements SearchPresenter {
     @Override
     public void attachView(MealSearchView view) {
         this.view = view;
+        if (lastResults != null && !lastResults.isEmpty()) {
+            view.showResults(lastResults);
+            view.hideLoading();
+            view.hideEmptyState();
+        }
         if (disposables.size() == 0) {
             setupSearchDebounce();
         }
