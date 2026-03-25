@@ -15,7 +15,6 @@ import com.example.risotto.presentation.home.presenter.HomePresenterImpl;
 import com.google.android.material.snackbar.Snackbar;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
@@ -45,7 +44,6 @@ public class HomeFragment extends Fragment implements HomeView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("HomeFragment", "onCreate");
         initPresenter();
     }
 
@@ -61,7 +59,6 @@ public class HomeFragment extends Fragment implements HomeView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("HomeFragment", "onViewCreated");
 
         loadingView = view.findViewById(R.id.view_loading);
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh);
@@ -84,7 +81,6 @@ public class HomeFragment extends Fragment implements HomeView {
         });
 
         view.findViewById(R.id.search_bar_container).setOnClickListener(v -> {
-            AppLogger.logNav("HomeFragment -> SearchFragment via search bar");
             androidx.navigation.NavController navController =
                     Navigation.findNavController(view);
             navController.navigate(
@@ -98,7 +94,6 @@ public class HomeFragment extends Fragment implements HomeView {
         });
 
         view.findViewById(R.id.btn_see_all_categories).setOnClickListener(v -> {
-            AppLogger.logNav("HomeFragment -> AllCategoriesFragment");
             Navigation.findNavController(view).navigate(R.id.action_home_to_allCategories);
         });
 
@@ -119,7 +114,6 @@ public class HomeFragment extends Fragment implements HomeView {
         mealOfDayFragment  = null;
         categoriesFragment = null;
         topMealsFragment   = null;
-        AppLogger.logFragment("HomeFragment", "onDestroyView");
     }
 
 
@@ -178,7 +172,6 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void showMealOfDayError(String message) {
-        AppLogger.e("HomeFragment: meal of day error -> " + message);
         showSnackbar(getString(R.string.home_error_meal_of_day));
     }
 
@@ -186,7 +179,6 @@ public class HomeFragment extends Fragment implements HomeView {
     public void showCategories(List<Category> categories) {
         if (categoriesFragment == null) return;
         categoriesFragment.bindCategories(categories, category -> {
-            AppLogger.logNav("HomeFragment -> CategoryMeals: " + category.getName());
             Bundle args = new Bundle();
             args.putString("categoryName", category.getName());
             Navigation.findNavController(rootView).navigate(R.id.action_home_to_categoryMeals, args);
@@ -195,7 +187,6 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void showCategoriesError(String message) {
-        AppLogger.e("HomeFragment: categories error -> " + message);
         showSnackbar(getString(R.string.home_error_categories));
     }
 
@@ -207,7 +198,6 @@ public class HomeFragment extends Fragment implements HomeView {
 
     @Override
     public void showTopMealsError(String message) {
-        AppLogger.e("HomeFragment: top meals error -> " + message);
     }
 
     @Override
@@ -230,7 +220,6 @@ public class HomeFragment extends Fragment implements HomeView {
 
     private void navigateToDetail(Meal meal) {
         if (meal == null || rootView == null) return;
-        AppLogger.logNav("HomeFragment -> MealDetail: " + meal.getId());
         Bundle args = new Bundle();
         args.putString("mealId", meal.getId());
         args.putString("mealName", meal.getName());

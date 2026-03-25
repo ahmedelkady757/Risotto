@@ -15,7 +15,6 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Meal;
 
 public class MealOfDayFragment extends Fragment {
@@ -35,7 +34,6 @@ public class MealOfDayFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("MealOfDayFragment", "onCreate");
     }
 
     @Nullable
@@ -49,7 +47,6 @@ public class MealOfDayFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("MealOfDayFragment", "onViewCreated");
 
         ivMealOfDay   = view.findViewById(R.id.iv_meal_of_day);
         tvMealName    = view.findViewById(R.id.tv_meal_name);

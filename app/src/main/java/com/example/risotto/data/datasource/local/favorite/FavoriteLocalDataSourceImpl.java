@@ -24,12 +24,7 @@ public class FavoriteLocalDataSourceImpl implements FavoriteLocalDataSource {
         FavoriteMealEntity entity = FavoriteMealMapper.toEntity(meal, userId);
         return favoriteDao.insertFavorite(entity);
     }
-
-    @Override
-    public Completable removeFavorite(Meal meal, String userId) {
-        FavoriteMealEntity entity = FavoriteMealMapper.toEntity(meal, userId);
-        return favoriteDao.deleteFavorite(entity);
-    }
+    
 
     @Override
     public Completable removeFavoriteById(String mealId, String userId) {

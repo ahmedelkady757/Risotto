@@ -1,6 +1,5 @@
 package com.example.risotto.presentation.categories.presenter;
 
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.repository.meal.MealRepository;
 import com.example.risotto.presentation.categories.views.AllCategoriesView;
 
@@ -37,7 +36,6 @@ public class AllCategoriesPresenterImpl implements AllCategoriesPresenter {
         disposables.add(repository.getCategories()
                 .flatMap(categories -> repository.cacheCategories(categories).toSingleDefault(categories))
                 .onErrorResumeNext(error -> {
-                    AppLogger.w("AllCategoriesPresenter: Remote failed, checking local cache...");
                     return repository.getCachedCategories().firstOrError();
                 })
                 .subscribeOn(Schedulers.io())
@@ -50,7 +48,6 @@ public class AllCategoriesPresenterImpl implements AllCategoriesPresenter {
                             }
                         },
                         throwable -> {
-                            AppLogger.e("AllCategoriesPresenter: Error loading -> " + throwable.getMessage());
                             if (view != null) {
                                 view.hideLoading();
                                 view.showError("Failed to load categories. Please try again.");

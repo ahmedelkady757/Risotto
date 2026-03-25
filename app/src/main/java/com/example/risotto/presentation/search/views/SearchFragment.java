@@ -17,7 +17,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
+
 import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
@@ -45,7 +45,6 @@ public class SearchFragment extends Fragment implements MealSearchView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("SearchFragment", "onCreate");
         initPresenter();
     }
 
@@ -71,7 +70,6 @@ public class SearchFragment extends Fragment implements MealSearchView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("SearchFragment", "onViewCreated");
 
         etSearch = view.findViewById(R.id.et_search);
         rvResults = view.findViewById(R.id.rv_search_results);

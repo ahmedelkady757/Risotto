@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Ingredient;
 
 import java.util.List;
@@ -28,7 +27,6 @@ public class IngredientsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("IngredientsFragment", "onCreate");
     }
 
     @Nullable
@@ -42,7 +40,6 @@ public class IngredientsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("IngredientsFragment", "onViewCreated");
 
         rvIngredients = view.findViewById(R.id.rv_ingredients);
         rvIngredients.setLayoutManager(
@@ -63,6 +60,5 @@ public class IngredientsFragment extends Fragment {
     public void bindIngredients(List<Ingredient> ingredients) {
         if (adapter == null) return;
         adapter.submitList(ingredients);
-        AppLogger.d("IngredientsFragment: bound " + ingredients.size() + " ingredients");
     }
 }

@@ -19,7 +19,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
@@ -74,7 +73,6 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("CategoryMealsFragment", "onViewCreated: " + categoryName);
 
         tvCategoryTitle = view.findViewById(R.id.tv_category_title);
         etSearch = view.findViewById(R.id.et_category_search);

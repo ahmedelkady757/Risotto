@@ -12,7 +12,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        AppLogger.logFragment("MainActivity", "onCreate");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setVisibility(android.view.View.GONE); // hidden until home loads
@@ -84,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        AppLogger.logFragment("MainActivity", "onDestroy");
         if (networkCallback != null) {
             android.net.ConnectivityManager connectivityManager = (android.net.ConnectivityManager) getSystemService(
                     android.content.Context.CONNECTIVITY_SERVICE);
@@ -99,12 +95,10 @@ public class MainActivity extends AppCompatActivity {
                 .findFragmentById(R.id.nav_host_fragment);
 
         if (navHostFragment == null) {
-            AppLogger.e("MainActivity: NavHostFragment not found — check activity_main.xml id");
             return;
         }
 
         navController = navHostFragment.getNavController();
-        AppLogger.d("MainActivity: NavController ready");
     }
 
     private void setupBottomNavigation() {
@@ -124,14 +118,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!popped) {
                     navController.navigate(R.id.homeFragment);
                 }
-                AppLogger.logNav("BottomNav -> homeFragment (popBackStack)");
                 return true;
             }
 
             return NavigationUI.onNavDestinationSelected(item, navController);
         });
-
-        AppLogger.d("MainActivity: BottomNavigation custom listener ready");
     }
 
     private void observeDestinationChanges() {
@@ -148,10 +139,6 @@ public class MainActivity extends AppCompatActivity {
                 (@NonNull NavController controller,
                         @NonNull NavDestination destination,
                         Bundle arguments) -> {
-
-                    AppLogger.logNav(destination.getLabel() != null
-                            ? destination.getLabel().toString()
-                            : String.valueOf(destination.getId()));
 
                     if (noNavDestinations.contains(destination.getId())) {
                         hideBottomNavigation();

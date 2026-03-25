@@ -1,6 +1,5 @@
 package com.example.risotto.presentation.search.presenter;
 
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.repository.meal.MealRepository;
 import com.example.risotto.presentation.search.views.MealSearchView;
 
@@ -71,7 +70,6 @@ public class SearchPresenterImpl implements SearchPresenter {
                             }
                         },
                         throwable -> {
-                            AppLogger.e("SearchPresenter: Error in search flow: " + throwable.getMessage());
                             if (view != null) {
                                 view.hideLoading();
                                 view.showError("An error occurred during search");

@@ -1,7 +1,6 @@
 package com.example.risotto.presentation.mealdetail.presenter;
 
 import com.example.risotto.RisottoApp;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.repository.favorite.FavoriteRepository;
 import com.example.risotto.data.repository.meal.MealRepository;
@@ -28,14 +27,12 @@ public class MealDetailPresenterImpl implements MealDetailPresenter {
     @Override
     public void attachView(MealDetailView view) {
         this.view = view;
-        AppLogger.d("MealDetailPresenter: attachView");
     }
 
     @Override
     public void detachView() {
         this.view = null;
         disposables.clear();
-        AppLogger.d("MealDetailPresenter: detachView cleared");
     }
 
     @Override
@@ -47,7 +44,6 @@ public class MealDetailPresenterImpl implements MealDetailPresenter {
                         repository.getMealById(mealId)
                                 .flatMap(meal -> repository.cacheMeal(meal).toSingleDefault(meal))
                                 .onErrorResumeNext(error -> {
-                                    AppLogger.w("MealDetailPresenter: Remote failed, using cache for " + mealId);
                                     return repository.getCachedMealById(mealId);
                                 }),
                         favoriteRepository.isFavorite(mealId).onErrorReturnItem(false),

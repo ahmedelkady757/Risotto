@@ -13,7 +13,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
@@ -61,7 +60,6 @@ public class AllCategoriesFragment extends Fragment implements AllCategoriesView
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("AllCategoriesFragment", "onViewCreated");
 
         rvCategories = view.findViewById(R.id.rv_all_categories);
         viewLoading = view.findViewById(R.id.view_loading);

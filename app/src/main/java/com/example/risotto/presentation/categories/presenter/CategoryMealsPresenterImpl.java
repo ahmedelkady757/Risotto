@@ -1,6 +1,5 @@
 package com.example.risotto.presentation.categories.presenter;
 
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.repository.meal.MealRepository;
 import com.example.risotto.presentation.categories.views.CategoryMealsView;
@@ -63,7 +62,6 @@ public class CategoryMealsPresenterImpl implements CategoryMealsPresenter {
                             }
                         },
                         throwable -> {
-                            AppLogger.e("CategoryMealsPresenter: Error -> " + throwable.getMessage());
                             if (view != null) {
                                 view.hideLoading();
                                 view.showError("Failed to load category meals.");

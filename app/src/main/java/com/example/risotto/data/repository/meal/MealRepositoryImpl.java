@@ -1,6 +1,5 @@
 package com.example.risotto.data.repository.meal;
 
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.datasource.local.meal.MealLocalDataSource;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSource;
 import com.example.risotto.data.model.Category;
@@ -24,31 +23,26 @@ public class MealRepositoryImpl implements MealRepository {
 
     @Override
     public Single<Meal> getRandomMeal() {
-        AppLogger.d("MealRepository: getRandomMeal (Remote Only)");
         return remoteDataSource.getRandomMeal();
     }
 
     @Override
     public Single<List<Category>> getCategories() {
-        AppLogger.d("MealRepository: getCategories (Remote Only)");
         return remoteDataSource.getCategories();
     }
 
     @Override
     public Single<Meal> getMealById(String id) {
-        AppLogger.d("MealRepository: getMealById (Remote Only) → " + id);
         return remoteDataSource.getMealById(id);
     }
 
     @Override
     public Single<List<Meal>> searchMealsByName(String name) {
-        AppLogger.d("MealRepository: searchMealsByName → " + name);
         return remoteDataSource.searchMealsByName(name);
     }
 
     @Override
     public Single<List<Meal>> filterByCategory(String category) {
-        AppLogger.d("MealRepository: filterByCategory → " + category);
         return remoteDataSource.filterByCategory(category);
     }
 

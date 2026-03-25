@@ -1,6 +1,5 @@
 package com.example.risotto.presentation.home.presenter;
 
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.repository.meal.MealRepository;
@@ -31,14 +30,12 @@ public class HomePresenterImpl implements HomePresenter {
     @Override
     public void attachView(HomeView view) {
         this.view = view;
-        AppLogger.d("HomePresenter: attachView");
     }
 
     @Override
     public void detachView() {
         this.view = null;
         disposables.clear();
-        AppLogger.d("HomePresenter: detachView — disposables cleared");
     }
 
 
@@ -70,7 +67,6 @@ public class HomePresenterImpl implements HomePresenter {
         Disposable disposable = repository.getRandomMeal()
                 .flatMap(meal -> repository.cacheMeal(meal).toSingleDefault(meal))
                 .onErrorResumeNext(error -> {
-                    AppLogger.w("HomePresenter: Network failed, trying local cache for random meal");
                     return repository.getCachedRandomMeal();
                 })
                 .subscribeOn(Schedulers.io())
@@ -104,7 +100,6 @@ public class HomePresenterImpl implements HomePresenter {
         Disposable disposable = repository.getCategories()
                 .flatMap(categories -> repository.cacheCategories(categories).toSingleDefault(categories))
                 .onErrorResumeNext(error -> {
-                    AppLogger.w("HomePresenter: Network failed, trying local cache for categories");
                     return repository.getCachedCategories().firstOrError();
                 })
                 .subscribeOn(Schedulers.io())
@@ -143,7 +138,6 @@ public class HomePresenterImpl implements HomePresenter {
                             .toSingleDefault(meals);
                 })
                 .onErrorResumeNext(error -> {
-                    AppLogger.w("HomePresenter: Network failed, trying local cache for top meals");
                     return repository.getCachedTopMeals().firstOrError();
                 })
                 .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals)
@@ -166,11 +160,9 @@ public class HomePresenterImpl implements HomePresenter {
 
     @Override
     public void onCategorySelected(Category category) {
-        AppLogger.d("HomePresenter: category selected → " + category.getName());
     }
 
     @Override
     public void onMealOfDaySelected(Meal meal) {
-        AppLogger.d("HomePresenter: meal of day selected → " + meal.getName());
     }
 }
