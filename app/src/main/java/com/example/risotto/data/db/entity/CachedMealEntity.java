@@ -40,11 +40,8 @@ public class CachedMealEntity {
     public String getCategory() { return category; }
     public void setCategory(String category) { this.category = category; }
     public String getArea() { return area; }
-    public void setArea(String area) { this.area = area; }
     public String getInstructions() { return instructions; }
-    public void setInstructions(String instructions) { this.instructions = instructions; }
     public String getThumbnailUrl() { return thumbnailUrl; }
-    public void setThumbnailUrl(String thumbnailUrl) { this.thumbnailUrl = thumbnailUrl; }
     public String getYoutubeUrl() { return youtubeUrl; }
     public void setYoutubeUrl(String youtubeUrl) { this.youtubeUrl = youtubeUrl; }
     public List<Ingredient> getIngredients() { return ingredients; }

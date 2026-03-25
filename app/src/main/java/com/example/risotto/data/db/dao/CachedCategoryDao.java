@@ -10,7 +10,7 @@ import com.example.risotto.data.db.entity.CachedCategoryEntity;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.Observable;
 
 @Dao
 public interface CachedCategoryDao {
@@ -19,5 +19,5 @@ public interface CachedCategoryDao {
     Completable insertCategories(List<CachedCategoryEntity> categories);
 
     @Query("SELECT * FROM cached_categories")
-    Single<List<CachedCategoryEntity>> getAllCategories();
+    Observable<List<CachedCategoryEntity>> getAllCategories();
 }

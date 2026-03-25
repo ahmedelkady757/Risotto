@@ -4,30 +4,28 @@ plugins {
 }
 
 android {
-    namespace 'com.example.risotto'
-    compileSdk {
-        version = release(36)
-    }
+    namespace = 'com.example.risotto'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "com.example.risotto"
-        minSdk 24
-        targetSdk 36
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.example.risotto"
+        minSdk = 24
+        targetSdk = 36
+        versionCode = 1
+        versionName = "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 }
 
@@ -38,7 +36,7 @@ dependencies {
     implementation libs.constraintlayout
 
     // Network
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation libs.swiperefreshlayout
     implementation libs.retrofit
     implementation libs.retrofit.converter.gson
     implementation libs.retrofit.adapter.rxjava3

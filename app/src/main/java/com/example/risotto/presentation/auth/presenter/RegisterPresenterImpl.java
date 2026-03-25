@@ -1,8 +1,8 @@
 package com.example.risotto.presentation.auth.presenter;
 
-import android.text.TextUtils;
-import android.util.Patterns;
-
+import com.example.risotto.R;
+import com.example.risotto.core.utils.AuthValidator;
+import com.example.risotto.core.utils.ErrorMapper;
 import com.example.risotto.data.repository.auth.AuthRepository;
 import com.example.risotto.presentation.auth.views.RegisterView;
 
@@ -13,12 +13,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RegisterPresenterImpl implements RegisterPresenter {
 
+    private final android.content.Context context;
     private final AuthRepository repository;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private RegisterView view;
 
-    public RegisterPresenterImpl(AuthRepository repository) {
-        this.repository = repository;
+    public RegisterPresenterImpl(android.content.Context context) {
+        this.context = context;
+        com.example.risotto.data.network.services.FirebaseService service = new com.example.risotto.data.network.services.FirebaseServiceImpl();
+        com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSource dataSource = new com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl(service);
+        this.repository = new com.example.risotto.data.repository.auth.AuthRepositoryImpl(dataSource);
     }
 
     @Override
@@ -40,24 +44,24 @@ public class RegisterPresenterImpl implements RegisterPresenter {
 
         boolean hasError = false;
         
-        if (TextUtils.isEmpty(username)) {
-            view.showUsernameError("Username is required");
+        if (!AuthValidator.isNotEmpty(username)) {
+            view.showUsernameError(context.getString(R.string.auth_error_username_required));
             hasError = true;
         }
         
-        if (TextUtils.isEmpty(email)) {
-            view.showEmailError("Email is required");
+        if (!AuthValidator.isNotEmpty(email)) {
+            view.showEmailError(context.getString(R.string.auth_error_email_required));
             hasError = true;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            view.showEmailError("Invalid email format");
+        } else if (!AuthValidator.isValidEmail(email)) {
+            view.showEmailError(context.getString(R.string.auth_error_invalid_email));
             hasError = true;
         }
 
-        if (TextUtils.isEmpty(password)) {
-            view.showPasswordError("Password is required");
+        if (!AuthValidator.isNotEmpty(password)) {
+            view.showPasswordError(context.getString(R.string.auth_error_password_required));
             hasError = true;
-        } else if (password.length() < 6) {
-            view.showPasswordError("Password must be at least 6 characters");
+        } else if (!AuthValidator.isValidPassword(password)) {
+            view.showPasswordError(context.getString(R.string.auth_error_short_password));
             hasError = true;
         }
 
@@ -78,7 +82,7 @@ public class RegisterPresenterImpl implements RegisterPresenter {
                         error -> {
                             if (view != null) {
                                 view.hideLoading();
-                                view.showError(error.getMessage());
+                                view.showError(ErrorMapper.getErrorMessage(context, error));
                             }
                         }
                 );

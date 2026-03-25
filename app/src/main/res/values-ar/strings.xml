@@ -36,6 +36,8 @@
     <string name="home_see_all">عرض الكل</string>
     <string name="home_inspire_title">🍽️  هل أنت مغامر؟</string>
     <string name="home_inspire_body">استكشف مئات الوصفات من حول العالم. ابحث بالمكوّن أو البلد أو الفئة لتجد طبقك المفضّل القادم.</string>
+    <string name="home_top_meals">أفضل الأطباق</string>
+
     <!-- ── Settings ── -->
     <string name="settings_title">الإعدادات</string>
     <string name="settings_account_section">الحساب</string>
@@ -43,9 +45,59 @@
     <string name="settings_logout_success">تم تسجيل الخروج بنجاح</string>
     <string name="settings_user_name_default">اسم المستخدم</string>
     <string name="settings_user_email_default">user@example.com</string>
+
+    <!-- Splash -->
+    <string name="splash_tagline">اكتشف. اطبخ. استمتع.</string>
+
+    <!-- Auth -->
+    <string name="auth_login_title">مرحباً بعودتك</string>
+    <string name="auth_login_subtitle">سجل الدخول لحفظ وجباتك المفضلة</string>
+    <string name="auth_email_hint">البريد الإلكتروني</string>
+    <string name="auth_password_hint">كلمة المرور</string>
+    <string name="auth_btn_login">تسجيل الدخول</string>
+    <string name="auth_btn_google">المتابعة باستخدام جوجل</string>
+    <string name="auth_btn_guest">المتابعة كضيف</string>
+    <string name="auth_no_account">ليس لديك حساب؟</string>
+    <string name="auth_btn_signup">إنشاء حساب</string>
+    <string name="auth_register_title">إنشاء حساب</string>
+    <string name="auth_username_hint">اسم المستخدم</string>
+    <string name="auth_btn_register">إنشاء حساب</string>
+    <string name="auth_have_account">لديك حساب بالفعل؟</string>
+    <string name="auth_btn_signin_link">تسجيل الدخول</string>
+    <string name="auth_or">أو</string>
+    <string name="auth_error_username_required">اسم المستخدم مطلوب</string>
+    <string name="auth_error_email_required">البريد الإلكتروني مطلوب</string>
+    <string name="auth_error_password_required">كلمة المرور مطلوبة</string>
+    <string name="auth_error_empty_fields">يرجى ملء جميع الحقول</string>
+    <string name="auth_error_invalid_email">أدخل بريداً إلكترونياً صالحاً</string>
+    <string name="auth_error_short_password">يجب أن تكون كلمة المرور 6 أحرف على الأقل</string>
+    <string name="auth_error_unexpected">نوع اعتماد غير متوقع</string>
+    <string name="auth_error_google_failed">فشل تسجيل الدخول باستخدام جوجل أو تم إلغاؤه</string>
+    <!-- ── Error Handling ── -->
+    <string name="error_network">لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة والمحاولة مرة أخرى.</string>
+    <string name="error_timeout">انتهت مهلة الاتصال. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_auth_invalid_credentials">البريد الإلكتروني أو كلمة المرور غير صحيحة.</string>
+    <string name="error_auth_user_exists">هذا البريد الإلكتروني مسجل بالفعل.</string>
+    <string name="error_auth_weak_password">كلمة المرور ضعيفة للغاية.</string>
+    <string name="error_auth_generic">فشلت عملية المصادقة. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_offline_banner">وضع عدم الاتصال</string>
+
+    <!-- Auth Guard (locked screen) -->
+    <string name="locked_title">تسجيل الدخول مطلوب</string>
+    <string name="locked_message">أنشئ حساباً أو سجل الدخول للوصول إلى هذه الميزة</string>
+    <string name="locked_btn_login">تسجيل الدخول</string>
+    <string name="locked_btn_signup">إنشاء حساب</string>
+    <!-- ── Confirmation Dialog ── -->
+    <string name="dialog_confirm_remove_favorite_title">إزالة من المفضلة</string>
+    <string name="dialog_confirm_remove_favorite_message">هل أنت متأكد أنك تريد إزالة \"%1$s\" من المفضلة؟</string>
+    <string name="dialog_confirm_clear_all_title">مسح جميع المفضلات</string>
+    <string name="dialog_confirm_clear_all_message">هل أنت متأكد أنك تريد مسح جميع المفضلات؟ لا يمكن التراجع عن هذا الإجراء.</string>
+    <string name="dialog_btn_cancel">إلغاء</string>
+    <string name="dialog_btn_confirm">تأكيد</string>
     <!-- ── Search ── -->
     <string name="search_hint">ابحث عن وجبتك المفضلة…</string>
     <string name="search_no_results">لم يتم العثور على وجبات لهذا البحث</string>
+    <string name="search_no_results_subtitle">لم نتمكن من العثور على أي وجبة تطابق بحثك. جرب كلمة رئيسية أخرى!</string>
     <string name="search_error">حدث خطأ أثناء البحث</string>
     <string name="search_start_typing">ابدأ الكتابة للعثور على وجبات لذيذة</string>
 </resources>

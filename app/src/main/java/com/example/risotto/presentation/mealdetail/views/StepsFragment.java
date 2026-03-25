@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 
 public class StepsFragment extends Fragment {
 
@@ -20,7 +19,6 @@ public class StepsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("StepsFragment", "onCreate");
     }
 
     @Nullable
@@ -34,7 +32,6 @@ public class StepsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("StepsFragment", "onViewCreated");
         tvSteps = view.findViewById(R.id.tv_steps);
     }
 
@@ -48,6 +45,5 @@ public class StepsFragment extends Fragment {
     public void bindSteps(String instructions) {
         if (tvSteps == null) return;
         tvSteps.setText(instructions);
-        AppLogger.d("StepsFragment: steps bound");
     }
 }

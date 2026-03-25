@@ -7,7 +7,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public class FavoriteRepositoryImpl implements FavoriteRepository {
@@ -32,10 +32,6 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
         return localDataSource.addFavorite(meal, getCurrentUserId());
     }
 
-    @Override
-    public Completable removeFavorite(Meal meal) {
-        return localDataSource.removeFavorite(meal, getCurrentUserId());
-    }
 
     @Override
     public Completable removeFavoriteById(String mealId) {
@@ -43,13 +39,18 @@ public class FavoriteRepositoryImpl implements FavoriteRepository {
     }
 
     @Override
-    public Flowable<List<Meal>> getFavorites() {
+    public Observable<List<Meal>> getFavorites() {
         return localDataSource.getFavorites(getCurrentUserId());
     }
 
     @Override
     public Single<Boolean> isFavorite(String mealId) {
         return localDataSource.isFavorite(mealId, getCurrentUserId());
+    }
+
+    @Override
+    public Single<Meal> getFavoriteById(String mealId) {
+        return localDataSource.getFavoriteById(mealId, getCurrentUserId());
     }
 
     @Override

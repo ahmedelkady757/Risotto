@@ -11,8 +11,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.core.utils.AuthGuardHelper;
+import com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSource;
+import com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl;
+import com.example.risotto.data.network.services.FirebaseService;
+import com.example.risotto.data.network.services.FirebaseServiceImpl;
+import com.example.risotto.data.repository.auth.AuthRepository;
+import com.example.risotto.data.repository.auth.AuthRepositoryImpl;
 import com.example.risotto.presentation.settings.presenter.SettingsPresenter;
 import com.example.risotto.presentation.settings.presenter.SettingsPresenterImpl;
 
@@ -28,8 +33,10 @@ public class SettingsFragment extends Fragment implements SettingsView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("SettingsFragment", "onCreate");
-        presenter = new SettingsPresenterImpl();
+        FirebaseService firebaseService = new FirebaseServiceImpl();
+        AuthRemoteDataSource remoteDataSource = new AuthRemoteDataSourceImpl(firebaseService);
+        AuthRepository authRepository = new AuthRepositoryImpl(remoteDataSource);
+        presenter = new SettingsPresenterImpl(authRepository);
     }
 
     @Nullable
@@ -49,7 +56,6 @@ public class SettingsFragment extends Fragment implements SettingsView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("SettingsFragment", "onViewCreated");
 
         flContainer = view.findViewById(R.id.fl_container);
         flContent = view.findViewById(R.id.fl_content);

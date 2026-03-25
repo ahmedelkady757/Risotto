@@ -1,6 +1,5 @@
 package com.example.risotto.presentation.favorites.presenter;
 
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.repository.favorite.FavoriteRepository;
 import com.example.risotto.presentation.favorites.views.FavoritesView;
@@ -53,7 +52,6 @@ public class FavoritesPresenterImpl implements FavoritesPresenter {
                             if (view == null) return;
                             view.hideLoading();
                             view.showError("Failed to load favorites: " + error.getMessage());
-                            AppLogger.e("FavoritesPresenterImpl: Error loading favorites", error);
                         }
                 );
         disposables.add(disposable);
@@ -65,7 +63,8 @@ public class FavoritesPresenterImpl implements FavoritesPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        () -> AppLogger.d("FavoritesPresenterImpl: Removed favorite meal " + meal.getId()),
+                        () -> {
+                        },
                         error -> {
                             if (view != null) {
                                 view.showError("Could not remove favorite: " + error.getMessage());
@@ -73,5 +72,20 @@ public class FavoritesPresenterImpl implements FavoritesPresenter {
                         }
                 );
         disposables.add(disposable);
+    }
+
+    @Override
+    public void clearAllFavorites() {
+        disposables.add(repository.clearFavorites()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {
+                            if (view != null) view.showEmptyState();
+                        },
+                        error -> {
+                            if (view != null) view.showError("Failed to clear favorites: " + error.getMessage());
+                        }
+                ));
     }
 }

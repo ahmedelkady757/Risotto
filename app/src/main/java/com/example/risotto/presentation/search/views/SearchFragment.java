@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.search.view;
+package com.example.risotto.presentation.search.views;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,13 +17,13 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
+
 import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.NetworkModule;
-import com.example.risotto.data.network.api.MealDBApiService;
+import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 import com.example.risotto.presentation.search.presenter.SearchPresenter;
 import com.example.risotto.presentation.search.presenter.SearchPresenterImpl;
@@ -35,6 +35,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
     private EditText etSearch;
     private RecyclerView rvResults;
     private View viewEmptyState;
+    private View viewNoResults;
     private TextView tvEmptyMessage;
     private View viewLoading;
 
@@ -44,7 +45,6 @@ public class SearchFragment extends Fragment implements MealSearchView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("SearchFragment", "onCreate");
         initPresenter();
     }
 
@@ -54,6 +54,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
                 .getRetrofit().create(MealDBApiService.class);
 
         presenter = new SearchPresenterImpl(
+                requireContext(),
                 new MealRepositoryImpl(
                         new MealRemoteDataSourceImpl(apiService),
                         new MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao())));
@@ -70,31 +71,25 @@ public class SearchFragment extends Fragment implements MealSearchView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("SearchFragment", "onViewCreated");
 
         etSearch = view.findViewById(R.id.et_search);
         rvResults = view.findViewById(R.id.rv_search_results);
         viewEmptyState = view.findViewById(R.id.view_empty_state);
+        viewNoResults = view.findViewById(R.id.view_no_results);
         tvEmptyMessage = view.findViewById(R.id.tv_empty_message);
         viewLoading = view.findViewById(R.id.view_loading);
 
         setupRecyclerView();
         setupSearchListener();
-
         presenter.attachView(this);
-
-        // Restore results if there is already text (e.g. returning from detail)
-        String query = etSearch.getText().toString().trim();
-        if (!query.isEmpty()) {
-            presenter.search(query);
-        }
     }
 
     private void setupRecyclerView() {
+        rvResults.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2));
         adapter = new MealAdapter(meal -> {
             Bundle bundle = new Bundle();
             bundle.putString("mealId", meal.getId());
-            Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
+            androidx.navigation.Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
         });
         rvResults.setAdapter(adapter);
     }
@@ -137,8 +132,10 @@ public class SearchFragment extends Fragment implements MealSearchView {
         adapter.submitList(meals);
         if (meals.isEmpty()) {
             rvResults.setVisibility(View.GONE);
+            viewNoResults.setVisibility(View.VISIBLE);
         } else {
             rvResults.setVisibility(View.VISIBLE);
+            viewNoResults.setVisibility(View.GONE);
             hideEmptyState();
         }
     }
@@ -160,7 +157,13 @@ public class SearchFragment extends Fragment implements MealSearchView {
 
     @Override
     public void showEmptyState(String message) {
-        viewEmptyState.setVisibility(View.VISIBLE);
+        if (message.contains("typing")) {
+            viewEmptyState.setVisibility(View.VISIBLE);
+            viewNoResults.setVisibility(View.GONE);
+        } else {
+            viewEmptyState.setVisibility(View.GONE);
+            viewNoResults.setVisibility(View.VISIBLE);
+        }
         tvEmptyMessage.setText(message);
         rvResults.setVisibility(View.GONE);
     }
@@ -168,6 +171,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
     @Override
     public void hideEmptyState() {
         viewEmptyState.setVisibility(View.GONE);
+        viewNoResults.setVisibility(View.GONE);
     }
 
     @Override

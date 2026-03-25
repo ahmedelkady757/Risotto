@@ -1,9 +1,8 @@
 package com.example.risotto.presentation.auth.presenter;
 
-import android.text.TextUtils;
-import android.util.Patterns;
-
-import com.example.risotto.core.utils.AppLogger;
+import com.example.risotto.R;
+import com.example.risotto.core.utils.AuthValidator;
+import com.example.risotto.core.utils.ErrorMapper;
 import com.example.risotto.data.repository.auth.AuthRepository;
 import com.example.risotto.presentation.auth.views.LoginView;
 import com.google.firebase.auth.AuthCredential;
@@ -15,12 +14,16 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class LoginPresenterImpl implements LoginPresenter {
 
+    private final android.content.Context context;
     private final AuthRepository repository;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private LoginView view;
 
-    public LoginPresenterImpl(AuthRepository repository) {
-        this.repository = repository;
+    public LoginPresenterImpl(android.content.Context context) {
+        this.context = context;
+        com.example.risotto.data.network.services.FirebaseService service = new com.example.risotto.data.network.services.FirebaseServiceImpl();
+        com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSource dataSource = new com.example.risotto.data.datasource.remote.auth.AuthRemoteDataSourceImpl(service);
+        this.repository = new com.example.risotto.data.repository.auth.AuthRepositoryImpl(dataSource);
     }
 
     @Override
@@ -41,19 +44,19 @@ public class LoginPresenterImpl implements LoginPresenter {
         view.clearErrors();
 
         boolean hasError = false;
-        if (TextUtils.isEmpty(email)) {
-            view.showEmailError("Email is required");
+        if (!AuthValidator.isNotEmpty(email)) {
+            view.showEmailError(context.getString(R.string.auth_error_email_required));
             hasError = true;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            view.showEmailError("Invalid email format");
+        } else if (!AuthValidator.isValidEmail(email)) {
+            view.showEmailError(context.getString(R.string.auth_error_invalid_email));
             hasError = true;
         }
 
-        if (TextUtils.isEmpty(password)) {
-            view.showPasswordError("Password is required");
+        if (!AuthValidator.isNotEmpty(password)) {
+            view.showPasswordError(context.getString(R.string.auth_error_password_required));
             hasError = true;
-        } else if (password.length() < 6) {
-            view.showPasswordError("Password must be at least 6 characters");
+        } else if (!AuthValidator.isValidPassword(password)) {
+            view.showPasswordError(context.getString(R.string.auth_error_short_password));
             hasError = true;
         }
 
@@ -74,12 +77,19 @@ public class LoginPresenterImpl implements LoginPresenter {
                         error -> {
                             if (view != null) {
                                 view.hideLoading();
-                                view.showError(error.getMessage());
+                                view.showError(ErrorMapper.getErrorMessage(context, error));
                             }
                         }
                 );
 
         disposables.add(disposable);
+    }
+
+    @Override
+    public void onGoogleSignInClicked() {
+        if (view != null) {
+            view.showGoogleSignInPicker();
+        }
     }
 
     @Override

@@ -70,7 +70,7 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" />
 
-        <!-- Empty / Info States -->
+        <!-- Empty / Info State (Initial) -->
         <LinearLayout
             android:id="@+id/view_empty_state"
             android:layout_width="wrap_content"
@@ -95,6 +95,45 @@
                 android:gravity="center"
                 android:layout_marginTop="16dp"
                 android:textColor="?android:attr/textColorPrimary" />
+        </LinearLayout>
+
+        <!-- No Results Found State -->
+        <LinearLayout
+            android:id="@+id/view_no_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_search"
+                app:tint="@color/brand_primary"
+                android:alpha="0.15" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_no_results"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/textColorPrimary"
+                android:layout_marginTop="16dp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/tv_no_results_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_no_results_subtitle"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="?android:attr/textColorSecondary"
+                android:layout_marginTop="8dp" />
         </LinearLayout>
 
         <!-- Loading View -->

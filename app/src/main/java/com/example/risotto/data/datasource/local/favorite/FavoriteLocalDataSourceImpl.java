@@ -8,7 +8,7 @@ import com.example.risotto.data.model.Meal;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 
 public class FavoriteLocalDataSourceImpl implements FavoriteLocalDataSource {
@@ -25,11 +25,6 @@ public class FavoriteLocalDataSourceImpl implements FavoriteLocalDataSource {
         return favoriteDao.insertFavorite(entity);
     }
 
-    @Override
-    public Completable removeFavorite(Meal meal, String userId) {
-        FavoriteMealEntity entity = FavoriteMealMapper.toEntity(meal, userId);
-        return favoriteDao.deleteFavorite(entity);
-    }
 
     @Override
     public Completable removeFavoriteById(String mealId, String userId) {
@@ -37,7 +32,7 @@ public class FavoriteLocalDataSourceImpl implements FavoriteLocalDataSource {
     }
 
     @Override
-    public Flowable<List<Meal>> getFavorites(String userId) {
+    public Observable<List<Meal>> getFavorites(String userId) {
         return favoriteDao.getFavoritesForUser(userId)
                 .map(FavoriteMealMapper::toMealList);
     }
@@ -45,6 +40,12 @@ public class FavoriteLocalDataSourceImpl implements FavoriteLocalDataSource {
     @Override
     public Single<Boolean> isFavorite(String mealId, String userId) {
         return favoriteDao.isFavorite(userId, mealId);
+    }
+
+    @Override
+    public Single<Meal> getFavoriteById(String mealId, String userId) {
+        return favoriteDao.getFavoriteById(userId, mealId)
+                .map(FavoriteMealMapper::toMeal);
     }
 
     @Override

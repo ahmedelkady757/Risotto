@@ -1,8 +1,7 @@
 package com.example.risotto.presentation.categories.presenter;
 
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.repository.meal.MealRepository;
-import com.example.risotto.presentation.categories.view.AllCategoriesView;
+import com.example.risotto.presentation.categories.views.AllCategoriesView;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
@@ -35,6 +34,10 @@ public class AllCategoriesPresenterImpl implements AllCategoriesPresenter {
 
         view.showLoading();
         disposables.add(repository.getCategories()
+                .flatMap(categories -> repository.cacheCategories(categories).toSingleDefault(categories))
+                .onErrorResumeNext(error -> {
+                    return repository.getCachedCategories().firstOrError();
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -45,7 +48,6 @@ public class AllCategoriesPresenterImpl implements AllCategoriesPresenter {
                             }
                         },
                         throwable -> {
-                            AppLogger.e("AllCategoriesPresenter: Error loading -> " + throwable.getMessage());
                             if (view != null) {
                                 view.hideLoading();
                                 view.showError("Failed to load categories. Please try again.");

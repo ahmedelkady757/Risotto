@@ -7,6 +7,7 @@ public interface LoginPresenter {
     void attachView(LoginView view);
     void detachView();
     void loginWithEmail(String email, String password);
+    void onGoogleSignInClicked();
     void loginWithGoogle(AuthCredential credential);
     void loginAsGuest();
 }

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.model.Category;
 
 import java.util.List;
@@ -27,7 +26,6 @@ public class CategoriesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("CategoriesFragment", "onCreate");
     }
 
     @Nullable
@@ -41,7 +39,6 @@ public class CategoriesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("CategoriesFragment", "onViewCreated");
 
         rvCategories = view.findViewById(R.id.rv_categories);
         rvCategories.setLayoutManager(
@@ -79,6 +76,5 @@ public class CategoriesFragment extends Fragment {
         }
 
         adapter.submitList(categories);
-        AppLogger.d("CategoriesFragment: bound " + categories.size() + " categories");
     }
 }

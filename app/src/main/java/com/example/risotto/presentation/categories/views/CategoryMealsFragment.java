@@ -1,4 +1,4 @@
-package com.example.risotto.presentation.categories.view;
+package com.example.risotto.presentation.categories.views;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -19,17 +19,15 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.risotto.R;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.db.AppDatabase;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.NetworkModule;
-import com.example.risotto.data.network.api.MealDBApiService;
+import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 import com.example.risotto.presentation.categories.presenter.CategoryMealsPresenter;
 import com.example.risotto.presentation.categories.presenter.CategoryMealsPresenterImpl;
-import com.example.risotto.presentation.search.view.MealAdapter;
 
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
     private View viewLoading;
     
     private CategoryMealsPresenter presenter;
-    private com.example.risotto.presentation.search.view.MealAdapter adapter;
+    private com.example.risotto.presentation.search.views.MealAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,7 +73,6 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("CategoryMealsFragment", "onViewCreated: " + categoryName);
 
         tvCategoryTitle = view.findViewById(R.id.tv_category_title);
         etSearch = view.findViewById(R.id.et_category_search);
@@ -96,7 +93,7 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
     }
 
     private void setupRecyclerView() {
-        adapter = new com.example.risotto.presentation.search.view.MealAdapter(meal -> {
+        adapter = new com.example.risotto.presentation.search.views.MealAdapter(meal -> {
             Bundle bundle = new Bundle();
             bundle.putString("mealId", meal.getId());
             Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);

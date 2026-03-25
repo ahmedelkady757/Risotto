@@ -15,6 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.example.risotto.data.datasource.local.favorite.FavoriteLocalDataSourceImpl;
+import com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl;
+import com.example.risotto.data.db.AppDatabase;
+import com.example.risotto.data.repository.favorite.FavoriteRepositoryImpl;
 import com.example.risotto.presentation.mealdetail.presenter.MealDetailPresenter;
 import com.example.risotto.presentation.mealdetail.presenter.MealDetailPresenterImpl;
 import com.google.android.material.snackbar.Snackbar;
@@ -26,11 +30,10 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 import com.example.risotto.R;
 import com.example.risotto.core.helper.YoutubeHelper;
-import com.example.risotto.core.utils.AppLogger;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.NetworkModule;
-import com.example.risotto.data.network.api.MealDBApiService;
+import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
 
 
@@ -63,7 +66,6 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AppLogger.logFragment("MealDetailFragment", "onCreate");
         initPresenter();
     }
 
@@ -79,7 +81,6 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        AppLogger.logFragment("MealDetailFragment", "onViewCreated");
 
         bindViews(view);
         setupToolbar();
@@ -120,7 +121,6 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
         toolbar = null;
         ingredientsFragment = null;
         stepsFragment = null;
-        AppLogger.logFragment("MealDetailFragment", "onDestroyView");
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
@@ -130,18 +130,18 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
                 .getRetrofit().create(MealDBApiService.class);
         MealRemoteDataSourceImpl remoteDataSource = new MealRemoteDataSourceImpl(apiService);
 
-        com.example.risotto.data.db.AppDatabase db = com.example.risotto.data.db.AppDatabase.getInstance(requireContext());
-        com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl mealLocal =
-                new com.example.risotto.data.datasource.local.meal.MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao());
+       AppDatabase db = AppDatabase.getInstance(requireContext());
+        MealLocalDataSourceImpl mealLocal =
+                new MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao());
 
         MealRepositoryImpl repository = new MealRepositoryImpl(remoteDataSource, mealLocal);
 
         com.example.risotto.data.datasource.local.favorite.FavoriteLocalDataSourceImpl favLocal = 
-                new com.example.risotto.data.datasource.local.favorite.FavoriteLocalDataSourceImpl(db.favoriteDao());
-        com.example.risotto.data.repository.favorite.FavoriteRepositoryImpl favoriteRepository = 
-                new com.example.risotto.data.repository.favorite.FavoriteRepositoryImpl(favLocal);
+                new FavoriteLocalDataSourceImpl(db.favoriteDao());
+        FavoriteRepositoryImpl favoriteRepository =
+                new FavoriteRepositoryImpl(favLocal);
 
-        presenter = new MealDetailPresenterImpl(repository, favoriteRepository);
+        presenter = new MealDetailPresenterImpl(requireContext(), repository, favoriteRepository);
     }
 
     private void bindViews(View view) {
@@ -258,7 +258,6 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
 
         // YouTube
         String videoId = YoutubeHelper.extractVideoId(meal.getYoutubeUrl());
-        AppLogger.d("MealDetailFragment: YouTube videoId = " + videoId);
 
         if (videoId != null && !videoId.isEmpty()) {
             youTubePlayerView.setVisibility(View.VISIBLE);
@@ -266,7 +265,6 @@ public class MealDetailFragment extends Fragment implements MealDetailView {
             youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
                 public void onReady(@NonNull YouTubePlayer youTubePlayer) {
-                    AppLogger.d("MealDetailFragment: YouTube player ready → " + videoId);
                     youTubePlayer.cueVideo(videoId, 0);
                 }
             });

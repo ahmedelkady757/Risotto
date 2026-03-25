@@ -31,10 +31,7 @@ public class SplashFragment extends Fragment implements SplashView {
     }
     
     private void initPresenter() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        AuthRemoteDataSourceImpl remoteDataSource = new AuthRemoteDataSourceImpl(auth);
-        AuthRepositoryImpl repository = new AuthRepositoryImpl(remoteDataSource);
-        presenter = new SplashPresenterImpl(repository);
+        presenter = new SplashPresenterImpl(requireContext());
     }
 
     @Nullable
