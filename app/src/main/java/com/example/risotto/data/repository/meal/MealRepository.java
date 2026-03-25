@@ -19,6 +19,7 @@ public interface MealRepository {
 
     Single<List<Meal>> searchMealsByName(String name);
     Single<List<Meal>> filterByCategory(String category);
+    Single<List<Meal>> getTopMeals();
 
     Completable cacheMeal(Meal meal);
     Completable cacheCategories(List<Category> categories);

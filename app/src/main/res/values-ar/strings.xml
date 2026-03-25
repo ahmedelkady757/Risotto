@@ -45,12 +45,6 @@
     <string name="settings_logout_success">تم تسجيل الخروج بنجاح</string>
     <string name="settings_user_name_default">اسم المستخدم</string>
     <string name="settings_user_email_default">user@example.com</string>
-    <!-- ── Search ── -->
-    <string name="search_hint">ابحث عن وجبتك المفضلة…</string>
-    <string name="search_no_results">لم يتم العثور على وجبات لهذا البحث</string>
-    <string name="search_no_results_subtitle">لم نتمكن من العثور على أي وجبة تطابق بحثك. جرب كلمة رئيسية أخرى!</string>
-    <string name="search_error">حدث خطأ أثناء البحث</string>
-    <string name="search_start_typing">ابدأ الكتابة للعثور على وجبات لذيذة</string>
 
     <!-- Splash -->
     <string name="splash_tagline">اكتشف. اطبخ. استمتع.</string>
@@ -71,6 +65,9 @@
     <string name="auth_have_account">لديك حساب بالفعل؟</string>
     <string name="auth_btn_signin_link">تسجيل الدخول</string>
     <string name="auth_or">أو</string>
+    <string name="auth_error_username_required">اسم المستخدم مطلوب</string>
+    <string name="auth_error_email_required">البريد الإلكتروني مطلوب</string>
+    <string name="auth_error_password_required">كلمة المرور مطلوبة</string>
     <string name="auth_error_empty_fields">يرجى ملء جميع الحقول</string>
     <string name="auth_error_invalid_email">أدخل بريداً إلكترونياً صالحاً</string>
     <string name="auth_error_short_password">يجب أن تكون كلمة المرور 6 أحرف على الأقل</string>
@@ -97,4 +94,10 @@
     <string name="dialog_confirm_clear_all_message">هل أنت متأكد أنك تريد مسح جميع المفضلات؟ لا يمكن التراجع عن هذا الإجراء.</string>
     <string name="dialog_btn_cancel">إلغاء</string>
     <string name="dialog_btn_confirm">تأكيد</string>
+    <!-- ── Search ── -->
+    <string name="search_hint">ابحث عن وجبتك المفضلة…</string>
+    <string name="search_no_results">لم يتم العثور على وجبات لهذا البحث</string>
+    <string name="search_no_results_subtitle">لم نتمكن من العثور على أي وجبة تطابق بحثك. جرب كلمة رئيسية أخرى!</string>
+    <string name="search_error">حدث خطأ أثناء البحث</string>
+    <string name="search_start_typing">ابدأ الكتابة للعثور على وجبات لذيذة</string>
 </resources>

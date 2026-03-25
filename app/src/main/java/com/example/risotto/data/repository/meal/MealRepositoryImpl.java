@@ -47,6 +47,20 @@ public class MealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    public Single<List<Meal>> getTopMeals() {
+        return filterByCategory("Seafood")
+                .flatMap(meals -> {
+                    return io.reactivex.rxjava3.core.Observable.fromIterable(meals)
+                            .flatMapCompletable(this::cacheMeal)
+                            .toSingleDefault(meals);
+                })
+                .onErrorResumeNext(error -> {
+                    return getCachedTopMeals().firstOrError();
+                })
+                .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals);
+    }
+
+    @Override
     public Completable cacheMeal(Meal meal) {
         return localDataSource.cacheMeal(meal);
     }

@@ -54,6 +54,7 @@ public class SearchFragment extends Fragment implements MealSearchView {
                 .getRetrofit().create(MealDBApiService.class);
 
         presenter = new SearchPresenterImpl(
+                requireContext(),
                 new MealRepositoryImpl(
                         new MealRemoteDataSourceImpl(apiService),
                         new MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao())));
@@ -80,15 +81,15 @@ public class SearchFragment extends Fragment implements MealSearchView {
 
         setupRecyclerView();
         setupSearchListener();
-
         presenter.attachView(this);
     }
 
     private void setupRecyclerView() {
+        rvResults.setLayoutManager(new androidx.recyclerview.widget.GridLayoutManager(requireContext(), 2));
         adapter = new MealAdapter(meal -> {
             Bundle bundle = new Bundle();
             bundle.putString("mealId", meal.getId());
-            Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
+            androidx.navigation.Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
         });
         rvResults.setAdapter(adapter);
     }
