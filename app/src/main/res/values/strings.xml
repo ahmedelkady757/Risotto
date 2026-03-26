@@ -102,4 +102,9 @@
     <string name="dialog_confirm_clear_all_message">Are you sure you want to remove all items from your favorites list? This action cannot be undone.</string>
     <string name="dialog_btn_cancel">Cancel</string>
     <string name="dialog_btn_confirm">Confirm</string>
+
+    <!-- ── Favorites ── -->
+    <string name="favorites_empty_title">No favorites yet!</string>
+    <string name="favorites_empty_subtitle">Meals you heart will appear here.</string>
+
 </resources>

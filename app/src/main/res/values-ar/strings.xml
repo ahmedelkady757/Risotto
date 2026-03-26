@@ -100,4 +100,8 @@
     <string name="search_no_results_subtitle">لم نتمكن من العثور على أي وجبة تطابق بحثك. جرب كلمة رئيسية أخرى!</string>
     <string name="search_error">حدث خطأ أثناء البحث</string>
     <string name="search_start_typing">ابدأ الكتابة للعثور على وجبات لذيذة</string>
+
+    <!-- ── Favorites ── -->
+    <string name="favorites_empty_title">لا توجد مفضلات بعد!</string>
+    <string name="favorites_empty_subtitle">الوجبات التي تضع عليها علامة القلب ستظهر هنا.</string>
 </resources>
