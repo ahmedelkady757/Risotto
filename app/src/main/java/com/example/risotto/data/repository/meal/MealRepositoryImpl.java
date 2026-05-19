@@ -32,6 +32,11 @@ public class MealRepositoryImpl implements MealRepository {
     }
 
     @Override
+    public Single<List<com.example.risotto.data.model.Country>> getCountries() {
+        return remoteDataSource.getCountries();
+    }
+
+    @Override
     public Single<Meal> getMealById(String id) {
         return remoteDataSource.getMealById(id);
     }
@@ -39,6 +44,11 @@ public class MealRepositoryImpl implements MealRepository {
     @Override
     public Single<List<Meal>> searchMealsByName(String name) {
         return remoteDataSource.searchMealsByName(name);
+    }
+    
+    @Override
+    public Single<List<Meal>> filterByArea(String area) {
+        return remoteDataSource.filterByArea(area);
     }
 
     @Override

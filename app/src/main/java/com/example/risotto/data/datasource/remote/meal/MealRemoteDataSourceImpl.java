@@ -57,13 +57,23 @@ public class MealRemoteDataSourceImpl implements MealRemoteDataSource {
                 .map(response -> CategoryMapper.fromDtoList(response.getCategories()));
     }
 
+    @Override
+    public Single<List<com.example.risotto.data.model.Country>> getCountries() {
+        return apiService.getAreas()
+                .map(response -> com.example.risotto.core.helper.AreaMapper.map(response.getAreas()));
+    }
+
 
     @Override
     public Single<List<Meal>> filterByCategory(String category) {
         return apiService.filterByCategory(category)
                 .map(response -> MealMapper.fromFilterDtoList(response.getMeals()));
     }
-
-
+    
+    @Override
+    public Single<List<Meal>> filterByArea(String area) {
+        return apiService.filterByArea(area)
+                .map(response -> MealMapper.fromFilterDtoList(response.getMeals()));
+    }
 
 }

@@ -62,7 +62,13 @@ public class AllCategoriesFragment extends Fragment implements AllCategoriesView
         super.onViewCreated(view, savedInstanceState);
 
         rvCategories = view.findViewById(R.id.rv_all_categories);
-        viewLoading = view.findViewById(R.id.view_loading);
+        viewLoading  = view.findViewById(R.id.view_loading);
+
+        com.google.android.material.appbar.MaterialToolbar toolbar = view.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(
+                    v -> Navigation.findNavController(view).navigateUp());
+        }
 
         setupRecyclerView();
 

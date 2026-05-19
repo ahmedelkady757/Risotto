@@ -2,6 +2,7 @@ package com.example.risotto.data.repository.meal;
 
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
+import com.example.risotto.data.model.Country;
 
 import java.util.List;
 
@@ -14,10 +15,13 @@ public interface MealRepository {
 
     Single<Meal> getRandomMeal();
     Single<List<Category>> getCategories();
+    Single<List<Country>> getCountries();
 
     Single<Meal> getMealById(String id);
 
     Single<List<Meal>> searchMealsByName(String name);
+    
+    Single<List<Meal>> filterByArea(String area);
     Single<List<Meal>> filterByCategory(String category);
     Single<List<Meal>> getTopMeals();
 

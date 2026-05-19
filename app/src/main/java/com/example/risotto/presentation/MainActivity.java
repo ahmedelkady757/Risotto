@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
         noNavDestinations.add(R.id.loginFragment);
         noNavDestinations.add(R.id.registerFragment);
         noNavDestinations.add(R.id.mealDetailFragment);
+        noNavDestinations.add(R.id.categoryMealsFragment);
+        noNavDestinations.add(R.id.allCategoriesFragment);
+        noNavDestinations.add(R.id.areaMealsFragment);
 
         navController.addOnDestinationChangedListener(
                 (@NonNull NavController controller,
