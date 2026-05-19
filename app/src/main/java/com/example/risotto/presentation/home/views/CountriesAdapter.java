@@ -66,6 +66,9 @@ public class CountriesAdapter extends RecyclerView.Adapter<CountriesAdapter.Coun
             tvName.setText(country.getName());
             Glide.with(itemView.getContext())
                     .load(country.getImageUrl())
+                    .placeholder(R.drawable.ic_flag_placeholder)
+                    .error(R.drawable.ic_flag_placeholder)
+                    .transition(com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade(200))
                     .into(ivFlag);
             
             itemView.setOnClickListener(v -> {
