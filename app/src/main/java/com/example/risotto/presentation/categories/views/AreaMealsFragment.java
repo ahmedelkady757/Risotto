@@ -35,7 +35,7 @@ import java.util.List;
 public class AreaMealsFragment extends Fragment implements AreaMealsView {
 
     private String areaName;
-    private TextView tvTitle;
+    private com.google.android.material.appbar.MaterialToolbar toolbar;
     private EditText etSearch;
     private RecyclerView rvMeals;
     private View viewLoading;
@@ -75,13 +75,15 @@ public class AreaMealsFragment extends Fragment implements AreaMealsView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvTitle   = view.findViewById(R.id.tv_category_title);
-        etSearch  = view.findViewById(R.id.et_category_search);
-        rvMeals   = view.findViewById(R.id.rv_category_meals);
+        toolbar     = view.findViewById(R.id.toolbar);
+        etSearch    = view.findViewById(R.id.et_category_search);
+        rvMeals     = view.findViewById(R.id.rv_category_meals);
         viewLoading = view.findViewById(R.id.view_loading);
 
-        if (areaName != null) {
-            tvTitle.setText(areaName);
+        if (toolbar != null) {
+            toolbar.setTitle(areaName != null ? areaName : "");
+            toolbar.setNavigationOnClickListener(
+                    v -> Navigation.findNavController(view).navigateUp());
         }
 
         setupRecyclerView();

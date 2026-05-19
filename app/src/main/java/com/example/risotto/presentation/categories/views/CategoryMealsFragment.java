@@ -9,8 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +35,7 @@ import java.util.List;
 public class CategoryMealsFragment extends Fragment implements CategoryMealsView {
 
     private String categoryName;
-    private TextView tvCategoryTitle;
+    private com.google.android.material.appbar.MaterialToolbar toolbar;
     private EditText etSearch;
     private RecyclerView rvMeals;
     private View viewLoading;
@@ -74,13 +75,15 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tvCategoryTitle = view.findViewById(R.id.tv_category_title);
-        etSearch = view.findViewById(R.id.et_category_search);
-        rvMeals = view.findViewById(R.id.rv_category_meals);
+        toolbar     = view.findViewById(R.id.toolbar);
+        etSearch    = view.findViewById(R.id.et_category_search);
+        rvMeals     = view.findViewById(R.id.rv_category_meals);
         viewLoading = view.findViewById(R.id.view_loading);
 
-        if (categoryName != null) {
-            tvCategoryTitle.setText(categoryName);
+        if (toolbar != null) {
+            toolbar.setTitle(categoryName != null ? categoryName : "");
+            toolbar.setNavigationOnClickListener(
+                    v -> Navigation.findNavController(view).navigateUp());
         }
 
         setupRecyclerView();
