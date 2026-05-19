@@ -80,6 +80,10 @@
             android:id="@+id/action_home_to_categoryMeals"
             app:destination="@id/categoryMealsFragment" />
 
+        <action
+            android:id="@+id/action_home_to_areaMeals"
+            app:destination="@id/areaMealsFragment" />
+
     </fragment>
 
     <!-- ── Categories ── -->
@@ -104,6 +108,19 @@
 
         <argument
             android:name="categoryName"
+            app:argType="string" />
+
+    </fragment>
+
+    <!-- ── Area Meals ── -->
+    <fragment
+        android:id="@+id/areaMealsFragment"
+        android:name="com.example.risotto.presentation.categories.views.AreaMealsFragment"
+        android:label="Area Meals"
+        tools:layout="@layout/fragment_category_meals">
+
+        <argument
+            android:name="areaName"
             app:argType="string" />
 
     </fragment>

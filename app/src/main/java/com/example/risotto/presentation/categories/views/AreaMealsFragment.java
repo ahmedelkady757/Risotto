@@ -9,9 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,27 +26,28 @@ import com.example.risotto.data.model.Meal;
 import com.example.risotto.data.network.NetworkModule;
 import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
-import com.example.risotto.presentation.categories.presenter.CategoryMealsPresenter;
-import com.example.risotto.presentation.categories.presenter.CategoryMealsPresenterImpl;
+import com.example.risotto.presentation.categories.presenter.AreaMealsPresenter;
+import com.example.risotto.presentation.categories.presenter.AreaMealsPresenterImpl;
+import com.example.risotto.presentation.search.views.MealAdapter;
 
 import java.util.List;
 
-public class CategoryMealsFragment extends Fragment implements CategoryMealsView {
+public class AreaMealsFragment extends Fragment implements AreaMealsView {
 
-    private String categoryName;
+    private String areaName;
     private com.google.android.material.appbar.MaterialToolbar toolbar;
     private EditText etSearch;
     private RecyclerView rvMeals;
     private View viewLoading;
-    
-    private CategoryMealsPresenter presenter;
-    private com.example.risotto.presentation.search.views.MealAdapter adapter;
+
+    private AreaMealsPresenter presenter;
+    private MealAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            categoryName = getArguments().getString("categoryName");
+            areaName = getArguments().getString("areaName");
         }
         initPresenter();
     }
@@ -57,7 +57,7 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
         MealDBApiService apiService = NetworkModule.getInstance()
                 .getRetrofit().create(MealDBApiService.class);
 
-        presenter = new CategoryMealsPresenterImpl(
+        presenter = new AreaMealsPresenterImpl(
                 new MealRepositoryImpl(
                         new MealRemoteDataSourceImpl(apiService),
                         new MealLocalDataSourceImpl(db.cachedMealDao(), db.cachedCategoryDao())));
@@ -81,7 +81,7 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
         viewLoading = view.findViewById(R.id.view_loading);
 
         if (toolbar != null) {
-            toolbar.setTitle(categoryName != null ? categoryName : "");
+            toolbar.setTitle(areaName != null ? areaName : "");
             toolbar.setNavigationOnClickListener(
                     v -> Navigation.findNavController(view).navigateUp());
         }
@@ -90,13 +90,13 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
         setupSearchListener();
 
         presenter.attachView(this);
-        if (categoryName != null) {
-            presenter.loadMealsByCategory(categoryName);
+        if (areaName != null) {
+            presenter.loadMealsByArea(areaName);
         }
     }
 
     private void setupRecyclerView() {
-        adapter = new com.example.risotto.presentation.search.views.MealAdapter(meal -> {
+        adapter = new MealAdapter(meal -> {
             Bundle bundle = new Bundle();
             bundle.putString("mealId", meal.getId());
             Navigation.findNavController(requireView()).navigate(R.id.mealDetailFragment, bundle);
@@ -136,12 +136,12 @@ public class CategoryMealsFragment extends Fragment implements CategoryMealsView
 
     @Override
     public void showLoading() {
-        viewLoading.setVisibility(View.VISIBLE);
+        if (viewLoading != null) viewLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoading() {
-        viewLoading.setVisibility(View.GONE);
+        if (viewLoading != null) viewLoading.setVisibility(View.GONE);
     }
 
     @Override

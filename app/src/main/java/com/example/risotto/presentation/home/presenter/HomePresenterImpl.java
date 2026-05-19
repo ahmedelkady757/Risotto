@@ -22,7 +22,7 @@ public class HomePresenterImpl implements HomePresenter {
 
     private static Meal cachedMealOfDay;
     private static java.util.List<Category> cachedCategories;
-    private static java.util.List<Meal> cachedTopMeals;
+    private static java.util.List<com.example.risotto.data.model.Country> cachedCountries;
 
     public HomePresenterImpl(android.content.Context context, MealRepository repository) {
         this.context = context;
@@ -46,11 +46,11 @@ public class HomePresenterImpl implements HomePresenter {
     public void refreshData() {
         cachedMealOfDay = null;
         cachedCategories = null;
-        cachedTopMeals = null;
+        cachedCountries = null;
 
         loadMealOfDay();
         loadCategories();
-        loadTopMeals();
+        loadCountries();
         
         if (view != null) {
             view.hideRefresh();
@@ -126,35 +126,26 @@ public class HomePresenterImpl implements HomePresenter {
     }
 
     @Override
-    public void loadTopMeals() {
+    public void loadCountries() {
         if (view == null) return;
 
-        if (cachedTopMeals != null && !cachedTopMeals.isEmpty()) {
-            view.showTopMeals(cachedTopMeals);
+        if (cachedCountries != null && !cachedCountries.isEmpty()) {
+            view.showCountries(cachedCountries);
             return;
         }
 
-        Disposable disposable = repository.filterByCategory("Seafood")
-                .flatMap(meals -> {
-                    return io.reactivex.rxjava3.core.Observable.fromIterable(meals)
-                            .flatMapCompletable(meal -> repository.cacheMeal(meal))
-                            .toSingleDefault(meals);
-                })
-                .onErrorResumeNext(error -> {
-                    return repository.getCachedTopMeals().firstOrError();
-                })
-                .map(meals -> meals.size() > 10 ? meals.subList(0, 10) : meals)
+        Disposable disposable = repository.getCountries()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        meals -> {
+                        countries -> {
                             if (view == null) return;
-                            cachedTopMeals = meals;
-                            view.showTopMeals(meals);
+                            cachedCountries = countries;
+                            view.showCountries(countries);
                         },
                         error -> {
                             if (view != null) {
-                                view.showTopMealsError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(context, error));
+                                view.showCountriesError(com.example.risotto.core.utils.ErrorMapper.getErrorMessage(context, error));
                             }
                         }
                 );

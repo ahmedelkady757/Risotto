@@ -13,8 +13,8 @@ public interface HomeView {
     void showCategories(List<Category> categories);
     void showCategoriesError(String message);
 
-    void showTopMeals(List<Meal> topMeals);
-    void showTopMealsError(String message);
+    void showCountries(List<com.example.risotto.data.model.Country> countries);
+    void showCountriesError(String message);
 
     void showLoading();
     void hideLoading();

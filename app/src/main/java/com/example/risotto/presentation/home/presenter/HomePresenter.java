@@ -14,7 +14,7 @@ public interface HomePresenter {
 
     void loadCategories();
 
-    void loadTopMeals();
+    void loadCountries();
 
     void refreshData();
 
