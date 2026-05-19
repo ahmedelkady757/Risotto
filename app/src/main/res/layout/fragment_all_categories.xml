@@ -15,6 +15,7 @@
         android:background="?android:attr/colorBackground"
         app:title="@string/home_categories"
         app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="?attr/colorOnSurface"
         app:navigationContentDescription="Back" />
 
     <FrameLayout
