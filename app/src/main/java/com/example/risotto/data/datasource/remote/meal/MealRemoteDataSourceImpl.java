@@ -69,7 +69,11 @@ public class MealRemoteDataSourceImpl implements MealRemoteDataSource {
         return apiService.filterByCategory(category)
                 .map(response -> MealMapper.fromFilterDtoList(response.getMeals()));
     }
-
-
+    
+    @Override
+    public Single<List<Meal>> filterByArea(String area) {
+        return apiService.filterByArea(area)
+                .map(response -> MealMapper.fromFilterDtoList(response.getMeals()));
+    }
 
 }

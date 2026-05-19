@@ -20,6 +20,8 @@ public interface MealRepository {
     Single<Meal> getMealById(String id);
 
     Single<List<Meal>> searchMealsByName(String name);
+    
+    Single<List<Meal>> filterByArea(String area);
     Single<List<Meal>> filterByCategory(String category);
     Single<List<Meal>> getTopMeals();
 

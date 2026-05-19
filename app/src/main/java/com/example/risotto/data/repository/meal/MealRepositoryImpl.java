@@ -45,6 +45,11 @@ public class MealRepositoryImpl implements MealRepository {
     public Single<List<Meal>> searchMealsByName(String name) {
         return remoteDataSource.searchMealsByName(name);
     }
+    
+    @Override
+    public Single<List<Meal>> filterByArea(String area) {
+        return remoteDataSource.filterByArea(area);
+    }
 
     @Override
     public Single<List<Meal>> filterByCategory(String category) {
