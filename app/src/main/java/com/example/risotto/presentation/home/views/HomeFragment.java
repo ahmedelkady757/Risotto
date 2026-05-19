@@ -20,6 +20,7 @@ import com.example.risotto.R;
 import com.example.risotto.data.datasource.remote.meal.MealRemoteDataSourceImpl;
 import com.example.risotto.data.model.Category;
 import com.example.risotto.data.model.Meal;
+import com.example.risotto.data.model.Country;
 import com.example.risotto.data.network.services.MealDBApiService;
 import com.example.risotto.data.network.NetworkModule;
 import com.example.risotto.data.repository.meal.MealRepositoryImpl;
@@ -33,12 +34,12 @@ public class HomeFragment extends Fragment implements HomeView {
 
     private static final String TAG_MEAL_OF_DAY = "tag_meal_of_day";
     private static final String TAG_CATEGORIES  = "tag_categories";
-    private static final String TAG_TOP_MEALS   = "tag_top_meals";
+    private static final String TAG_COUNTRIES   = "tag_countries";
 
     private HomePresenter presenter;
     private MealOfDayFragment mealOfDayFragment;
     private CategoriesFragment categoriesFragment;
-    private TopMealsFragment topMealsFragment;
+    private CountriesFragment countriesFragment;
     private View loadingView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View rootView;
@@ -104,7 +105,7 @@ public class HomeFragment extends Fragment implements HomeView {
         presenter.attachView(this);
         presenter.loadMealOfDay();
         presenter.loadCategories();
-        presenter.loadTopMeals();
+        presenter.loadCountries();
     }
 
     @Override
@@ -115,7 +116,7 @@ public class HomeFragment extends Fragment implements HomeView {
         rootView           = null;
         mealOfDayFragment  = null;
         categoriesFragment = null;
-        topMealsFragment   = null;
+        countriesFragment  = null;
     }
 
 
@@ -153,12 +154,12 @@ public class HomeFragment extends Fragment implements HomeView {
                     .commit();
         }
 
-        topMealsFragment = (TopMealsFragment) getChildFragmentManager()
-                .findFragmentByTag(TAG_TOP_MEALS);
-        if (topMealsFragment == null) {
-            topMealsFragment = new TopMealsFragment();
+        countriesFragment = (CountriesFragment) getChildFragmentManager()
+                .findFragmentByTag(TAG_COUNTRIES);
+        if (countriesFragment == null) {
+            countriesFragment = new CountriesFragment();
             getChildFragmentManager().beginTransaction()
-                    .replace(R.id.container_top_meals, topMealsFragment, TAG_TOP_MEALS)
+                    .replace(R.id.container_countries, countriesFragment, TAG_COUNTRIES)
                     .commit();
         }
     }
@@ -193,13 +194,18 @@ public class HomeFragment extends Fragment implements HomeView {
     }
 
     @Override
-    public void showTopMeals(List<Meal> topMeals) {
-        if (topMealsFragment == null) return;
-        topMealsFragment.bindTopMeals(topMeals, this::navigateToDetail);
+    public void showCountries(List<Country> countries) {
+        if (countriesFragment == null) return;
+        countriesFragment.bindCountries(countries, country -> {
+            // Need to implement navigation to area meals
+            Bundle args = new Bundle();
+            args.putString("areaName", country.getName());
+            Navigation.findNavController(rootView).navigate(R.id.action_home_to_areaMeals, args);
+        });
     }
 
     @Override
-    public void showTopMealsError(String message) {
+    public void showCountriesError(String message) {
     }
 
     @Override
