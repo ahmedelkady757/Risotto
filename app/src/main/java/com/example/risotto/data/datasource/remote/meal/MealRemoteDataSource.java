@@ -18,6 +18,8 @@ public interface MealRemoteDataSource {
     Single<List<Meal>> searchMealsByName(String name);
 
     Single<List<Category>> getCategories();
+    
+    Single<List<com.example.risotto.data.model.Country>> getCountries();
 
     Single<List<Meal>> filterByCategory(String category);
 
