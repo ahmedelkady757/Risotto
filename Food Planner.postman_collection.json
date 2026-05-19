@@ -1,0 +1,246 @@
+{
+  "info": {
+    "_postman_id": "34f98b49-4453-44dc-b0fa-3f3f72482749",
+    "name": "Food Planner",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28988508"
+  },
+  "item": [
+    {
+      "name": "Random Meal",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/random.php",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "random.php"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "search meal by name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/search.php?s=pancake",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "search.php"
+          ],
+          "query": [
+            {
+              "key": "s",
+              "value": "pancake"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "list meals by first letter",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/search.php?f=as",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "search.php"
+          ],
+          "query": [
+            {
+              "key": "f",
+              "value": "as"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "categories",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/categories.php",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "categories.php"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "list cats, areas or ing",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/list.php?a=list",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "list.php"
+          ],
+          "query": [
+            {
+              "key": "c",
+              "value": "list",
+              "disabled": true
+            },
+            {
+              "key": "a",
+              "value": "list"
+            },
+            {
+              "key": "i",
+              "value": "list",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "filter by",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/filter.php?i=Melted Butter",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "filter.php"
+          ],
+          "query": [
+            {
+              "key": "i",
+              "value": "Melted Butter"
+            },
+            {
+              "key": "c",
+              "value": "Seafood",
+              "type": "text",
+              "disabled": true
+            },
+            {
+              "key": "a",
+              "value": "Egyptian",
+              "type": "text",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "random meals",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/latest.php",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "latest.php"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get meal by id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "www.themealdb.com/api/json/v1/1/lookup.php?i=52772",
+          "host": [
+            "www",
+            "themealdb",
+            "com"
+          ],
+          "path": [
+            "api",
+            "json",
+            "v1",
+            "1",
+            "lookup.php"
+          ],
+          "query": [
+            {
+              "key": "i",
+              "value": "52772"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
